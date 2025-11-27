@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 export default function Hero() {
     return (
         <section className="container py-5">
@@ -12,9 +15,12 @@ export default function Hero() {
                         eredmények.
                     </p>
 
-                    <button className="btn rounded-pill px-4 mt-2" style={{ backgroundColor: "rgb(240,128,128)" }}>
+                <Link to="/register" className="text-danger fw-bold">
+                      <button className="btn rounded-pill px-4 mt-2" style={{ backgroundColor: "rgb(240,128,128)" }}>
                         Kezdj bele
                     </button>
+                </Link>
+                  
                 </div>
 
                 <div className="col-lg-5 text-end">

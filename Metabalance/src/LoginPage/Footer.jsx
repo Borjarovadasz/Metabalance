@@ -1,11 +1,18 @@
-export default function Footer() {
+import { Link } from "react-router-dom";
+
+
+export default function LoginFooter() {
     return (
-        <footer className="meta-footer">
-            <div className="container text-center py-4">
-                <small className="text-secondary">
-                    © 2025 Metabalance. Minden jog fenntartva.
-                </small>
-            </div>
-        </footer>
+        <div className="text-center mt-4 pb-3">
+            <p className="small">
+                Ha még nincs fiókod,{" "}
+                <Link to="/register" className="text-danger fw-bold">
+                    hozd létre most!
+                </Link>
+            </p>
+            
+        </div>
+        
+        
     );
 }
