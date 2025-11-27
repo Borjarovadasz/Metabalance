@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
     return (
         <nav className="navbar bg-white border-bottom py-3">
@@ -9,7 +11,9 @@ export default function Navbar() {
                 </div>
 
                 <div className="d-flex align-items-center gap-2">
-                    <a href="#" className="text-dark small text-decoration-none">Bejelentkezés</a>
+                <Link to="/login" className="text-dark small text-decoration-none">
+                Bejelentkezés
+                 </Link>
                     <img src="src/styles/Pictures/navbar-login-icon.png" width="20" height="20" alt="login icon" />
                 </div>
             </div>
