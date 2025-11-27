@@ -1,0 +1,73 @@
+body {
+    background: #ffffff;
+}
+
+/* HERO */
+.hero-title {
+    font-size: 32px;
+}
+
+.hero-desc {
+    font-size: 15px;
+}
+
+.hero-img {
+    max-width: 360px;
+    border-radius: 12px;
+}
+
+/* FEATURES */
+.features-title {
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+.feature-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+/* WHY SECTION */
+.why-section h4 {
+    font-size: 19px;
+}
+
+/* TESTIMONIAL */
+.testimonial-box {
+    max-width: 600px;
+    background: #f9c5c7;
+    border-radius: 12px;
+    color: #5a1f1f;
+}
+
+/* CTA */
+
+/* Global: minden Inter, minden bold */
+body, p, h1, h2, h3, h4, h5, h6, button, .btn, a, small, span {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important; /* minden bold */
+}
+
+/* KIVÉTEL: logó szöveg + Bejelentkezés link */
+.navbar .text-danger, /* Metabalance */
+.navbar .text-dark {  /* Bejelentkezés */
+    font-family: system-ui, sans-serif !important;
+    font-weight: 500 !important; /* marad normál vastagság */
+}
+
+
+/* FOOTER – a screenshot alapján */
+.meta-footer {
+    background-color: #F3F3F3; /* világos szürke, mint a képen */
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 20px;
+    border-top: none;
+}
+
+.meta-footer small {
+    font-weight: 500 !important;
+    color: #8f8f8f !important;
+    font-size: 13px; /* screenshot méret */
+}
