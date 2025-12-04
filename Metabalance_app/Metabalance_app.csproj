@@ -8,4 +8,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="background-apple.png" />
+    <None Remove="background-heart.png" />
+    <None Remove="background-weight.png" />
+    <None Remove="landingpage-img.png" />
+    <None Remove="logo-removebg-preview.png" />
+    <None Remove="navbar-login-icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="background-apple.png" />
+    <Resource Include="background-heart.png" />
+    <Resource Include="background-weight.png" />
+    <Resource Include="landingpage-img.png" />
+    <Resource Include="logo-removebg-preview.png" />
+    <Resource Include="navbar-login-icon.png" />
+  </ItemGroup>
+
 </Project>
