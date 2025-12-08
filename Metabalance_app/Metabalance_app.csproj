@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,8 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Pages\background-apple.png" />
-    <Resource Include="Pages\background-heart (1).png" />
     <Resource Include="Pages\background-heart.png" />
     <Resource Include="Pages\background-weight.png" />
     <Resource Include="Pages\landingpage-img.png" />
