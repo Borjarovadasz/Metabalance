@@ -14,5 +14,9 @@ namespace Metabalance_app.Pages
         {
             NavigationService.Navigate(new LoginPage());
         }
+        private void Registracio_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new RegistrationPage());
+        }
     }
 }

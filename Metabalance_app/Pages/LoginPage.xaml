@@ -9,7 +9,7 @@
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
-        <!-- KÖZÉPRE IGAZÍTOTT DOBOZ -->
+   
         <Border Width="420"
                 Padding="40"
                 Background="White"
@@ -21,8 +21,16 @@
                 >
 
             <StackPanel>
-
-                <!-- CÍM -->
+            <Button Content="← Vissza a főoldalra"
+        HorizontalAlignment="Left"
+        Background="Transparent"
+        BorderThickness="0"
+        Foreground="#D14B4B"
+        FontSize="14"
+        Cursor="Hand"
+        Click="BackToMain_Click"
+        Margin="0,0,0,10"/>
+      
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Üdv újra!"
                                FontSize="26"
@@ -34,7 +42,7 @@
                                HorizontalAlignment="Center"/>
                 </StackPanel>
 
-                <!-- EMAIL -->
+       
                 <StackPanel>
                     <TextBlock Text="E-mail cím"
                                FontSize="14"
@@ -47,7 +55,7 @@
                              />
                 </StackPanel>
 
-                <!-- JELSZÓ -->
+
                 <StackPanel>
                     <TextBlock Text="Jelszó"
                                FontSize="14"
@@ -59,7 +67,6 @@
                                  BorderThickness="1"/>
                 </StackPanel>
 
-                <!-- ALSÓ SOR: EMLÉKEZZ RÁM + ELFELEJTETTED -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -78,7 +85,7 @@
                             FontSize="13"/>
                 </Grid>
 
-                <!-- LOGIN GOMB -->
+ 
                 <Button Content="Bejelentkezés"
                         Height="42"
                         Background="#D14B4B"
@@ -89,7 +96,7 @@
                         Margin="0,10,0,0"
                         />
 
-                <!-- REGISZTRÁCIÓ LINK -->
+  
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Margin="0,5,0,0">
@@ -100,13 +107,13 @@
                             BorderThickness="0"
                             Foreground="#D14B4B"
                             Cursor="Hand"
-                            FontSize="13"/>
+                            FontSize="13"
+                            Click="Registracio_Click"/>
                 </StackPanel>
 
             </StackPanel>
         </Border>
 
-        <!-- LÁBLÉC -->
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
