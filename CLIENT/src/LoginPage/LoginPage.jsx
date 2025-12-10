@@ -1,59 +1,90 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./LoginPage.css";
 
-export default function LoginForm() {
+export default function LoginPage() {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        const res = await fetch("http://localhost:5000/api/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email, password })
-        });
+    if (!email.trim() || !password.trim()) {
+      alert("Kérlek töltsd ki az összes mezőt!");
+      return;
+    }
 
-        const data = await res.json();
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
 
-        if (res.ok) {
-            localStorage.setItem("token", data.token);
-            alert("Sikeres bejelentkezés!");
+    const data = await res.json();
 
-            // Navigáció ha kell:
-            window.location.href = "./MainPage/Page"  // változtasd arra az oldalra ami a MainPage
-        } else {
-            alert(data.message || "Hibás email vagy jelszó!");
-        }
-    };
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
 
-    return (
-        <form className="px-4" onSubmit={handleSubmit}>
+    localStorage.setItem("token", data.token);
+    navigate("/mainpage");
+  };
 
-            <label className="fw-bold small mb-1">E-mail</label>
-            <input
-                type="email"
-                className="form-control mb-3"
-                placeholder="valaki@pelda.hu"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+  return (
+    <div className="login-page">
+      <div className="login-box">
+        <h1 className="login-title">Üdv újra!</h1>
+        <p className="login-subtitle">Jelentkezz be fiókodba</p>
 
-            <label className="fw-bold small mb-1">Jelszó</label>
-            <input
-                type="password"
-                className="form-control mb-4"
-                placeholder="********"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+        <form onSubmit={handleSubmit} className="login-form">
+          <label className="login-label">E-mail cím</label>
+          <input
+            type="email"
+            className="login-input"
+            placeholder="pelda@email.hu"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-            <button type="submit" className="btn btn-primary w-100 rounded-pill fw-bold">
-                Bejelentkezés
-            </button>
+          <label className="login-label">Jelszó</label>
+          <input
+            type="password"
+            className="login-input"
+            placeholder="********"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
+          <div className="login-options">
+            <label className="remember-me">
+              <input type="checkbox" />
+              Emlékezz rám
+            </label>
+            <a href="#" className="forgot-password">Elfelejtetted a jelszavad?</a>
+          </div>
+
+          <button type="submit" className="login-button">Bejelentkezés</button>
         </form>
-    );
+
+        <p className="signup-text">
+          Ha még nincs fiókod{" "}
+          <span
+            className="signup-link"
+            onClick={() => navigate("/register")}
+            style={{ cursor: "pointer" }}
+          >
+            hozd létre most!
+          </span>
+        </p>
+      </div>
+
+      <footer className="login-footer">
+        © 2025 Metabalance. Minden jog fenntartva.
+      </footer>
+    </div>
+  );
 }
+

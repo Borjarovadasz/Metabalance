@@ -4,5 +4,17 @@
     "name": "Szigma Fiu",
     "email": "yapatron@gmail.com",
     "password": "$2b$10$I7nb8xZ74ejMnpOQ5zlwwOtUeJc962GXveR40NnL7SwSVlXLAYWGS"
+  },
+  {
+    "id": 1765402110172,
+    "name": "Borso Muci",
+    "email": "mucikurvaracsinaljvalamit@gmail.com",
+    "password": "$2b$10$L6MmZP9IEQWlLuS61/R/zOGuzR.7DePxRbYfZj1LZTV.CzWJSSOsm"
+  },
+  {
+    "id": 1765402654558,
+    "name": " ",
+    "email": "",
+    "password": "$2b$10$NkRlL78bzvtGZ8CvY0NdAu7kciKkzsU6THVpxRCGvd7NWmJGtUmeG"
   }
 ]

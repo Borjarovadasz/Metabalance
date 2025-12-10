@@ -14,9 +14,8 @@ import LoginPage from "./LoginPage/LoginPage";
 /* REGISTER PAGE */
 import RegisterPage from "./RegisterPage/RegisterPage";
 
-
 /* DASHBOARD */
-import DashboardPage from "./MainPage/Page";
+import DashboardPage from "./MainPage/MainPage";
 
 /* STYLES */
 import "./styles/LandingPage.css";
@@ -26,7 +25,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
 
-                {/* FŐOLDAL / LANDING PAGE */}
+                {/* LANDING PAGE */}
                 <Route
                     path="/"
                     element={
@@ -47,7 +46,7 @@ export default function App() {
                 {/* REGISTER */}
                 <Route path="/register" element={<RegisterPage />} />
 
-                {/* DASHBOARD */}
+                {/* DASHBOARD / MAINPAGE */}
                 <Route path="/mainpage" element={<DashboardPage />} />
 
             </Routes>

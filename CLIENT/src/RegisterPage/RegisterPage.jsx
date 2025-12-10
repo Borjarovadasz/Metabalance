@@ -1,145 +1,153 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./RegisterPage.css";
 
-export default function RegisterForm() {
+export default function RegisterPage() {
 
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        phone: "",
-        gender: "Férfi"
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    gender: "Férfi"
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { firstName, lastName, email, password, confirmPassword, phone, gender } = formData;
+
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || !phone.trim() || !gender.trim()) {
+      alert("Kérlek töltsd ki az összes mezőt!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("A két jelszó nem egyezik!");
+      return;
+    }
+
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: `${firstName} ${lastName}`,
+        email,
+        password,
+        phone,
+        gender
+      })
     });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+    const data = await res.json();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    if (res.ok) {
+      alert("Sikeres regisztráció!");
+      navigate("/login");
+    } else {
+      alert(data.message || "Hiba történt!");
+    }
+  };
 
-        if (formData.password !== formData.confirmPassword) {
-            alert("A két jelszó nem egyezik!");
-            return;
-        }
+  return (
+    <div className="register-page">
+      <div className="register-container">
 
-        const res = await fetch("http://localhost:5000/api/auth/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: formData.firstName + " " + formData.lastName,
-                email: formData.email,
-                password: formData.password,
-                phone: formData.phone,
-                gender: formData.gender
-            })
-        });
+        <h1>Regisztráció</h1>
+        <p className="subtitle">Hozza létre fiókját, és fedezze fel a lehetőségeket.</p>
 
-        const data = await res.json();
+        <form onSubmit={handleSubmit} className="register-form">
 
-        if (res.ok) {
-            alert("Sikeres regisztráció!");
-        } else {
-            alert(data.message || "Hiba történt!");
-        }
-    };
-
-    return (
-        <form className="px-4" onSubmit={handleSubmit}>
-
-            {/* Keresztnév + Vezetéknév */}
-            <div className="row mb-3">
-                <div className="col">
-                    <label className="fw-bold small mb-1">Keresztnév</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Keresztnév"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="col">
-                    <label className="fw-bold small mb-1">Vezetéknév</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Vezetéknév"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                    />
-                </div>
+          <div className="register-row">
+            <div className="register-col">
+              <label>Keresztnév</label>
+              <input
+                type="text"
+                placeholder="Keresztnév"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
             </div>
 
-            {/* Email */}
-            <label className="fw-bold small mb-1">E-mail</label>
-            <input
-                type="email"
-                className="form-control mb-3"
-                placeholder="valaki@pelda.hu"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-            />
-
-            {/* Jelszó */}
-            <label className="fw-bold small mb-1">Jelszó</label>
-            <input
-                type="password"
-                className="form-control mb-3"
-                placeholder="********"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
-
-            {/* Jelszó megerősítése */}
-            <label className="fw-bold small mb-1">Jelszó megerősítése</label>
-            <input
-                type="password"
-                className="form-control mb-3"
-                placeholder="********"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-            />
-
-            {/* Telefonszám */}
-            <label className="fw-bold small mb-1">Telefonszám</label>
-            <input
+            <div className="register-col">
+              <label>Vezetéknév</label>
+              <input
                 type="text"
-                className="form-control mb-3"
-                name="phone"
-                value={formData.phone}
+                placeholder="Vezetéknév"
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
-            />
+              />
+            </div>
+          </div>
 
-            {/* Nem */}
-            <label className="fw-bold small mb-1">Nem</label>
-            <select
-                className="form-control mb-4"
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-            >
-                <option>Férfi</option>
-                <option>Nő</option>
-            </select>
+          <label>E-mail</label>
+          <input
+            type="email"
+            placeholder="valaki@pelda.hu"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-            {/* Gomb */}
-            <button type="submit" className="btn btn-danger w-100 rounded-pill fw-bold">
-                Regisztráció
-            </button>
+          <label>Jelszó</label>
+          <input
+            type="password"
+            placeholder="********"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
 
+          <label>Jelszó megerősítése</label>
+          <input
+            type="password"
+            placeholder="********"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+
+          <label>Telefonszám</label>
+          <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+
+          <label>Nem</label>
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+          >
+            <option value="Férfi">Férfi</option>
+            <option value="Nő">Nő</option>
+          </select>
+
+          <button type="submit" className="btn-register">
+            Regisztráció
+          </button>
         </form>
-    );
+
+      </div>
+
+      <footer className="register-footer">
+        © 2025 Metabalance. Minden jog fenntartva.
+      </footer>
+    </div>
+  );
 }

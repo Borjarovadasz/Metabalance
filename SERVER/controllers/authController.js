@@ -4,12 +4,20 @@ const jwt = require("jsonwebtoken");
 
 const usersFile = __dirname + "/../data/users.json";
 
-const readUsers = () => JSON.parse(fs.readFileSync(usersFile));
+const readUsers = () => {
+  try {
+    const data = fs.readFileSync(usersFile);
+    return JSON.parse(data);
+  } catch {
+    return [];
+  }
+};
+
 const writeUsers = (data) => fs.writeFileSync(usersFile, JSON.stringify(data, null, 2));
 
 // REGISZTRÁCIÓ
 exports.registerUser = (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone, gender } = req.body;
 
   const users = readUsers();
 
@@ -23,7 +31,9 @@ exports.registerUser = (req, res) => {
     id: Date.now(),
     name,
     email,
-    password: hashed
+    password: hashed,
+    phone: phone || "",
+    gender: gender || ""
   };
 
   users.push(newUser);
@@ -54,5 +64,7 @@ exports.getUserData = (req, res) => {
   const users = readUsers();
   const user = users.find(u => u.id === req.userId);
 
-  res.json({ id: user.id, name: user.name, email: user.email });
+  if (!user) return res.status(404).json({ message: "Felhasználó nem található" });
+
+  res.json({ id: user.id, name: user.name, email: user.email, phone: user.phone, gender: user.gender });
 };
