@@ -9,10 +9,11 @@ import Testimonial from "./LandingPage/Testimonial";
 import Footer from "./LandingPage/Footer";
 
 /* LOGIN PAGE */
-import LoginPage from "./LoginPage/Page";
+import LoginPage from "./LoginPage/LoginPage";
 
 /* REGISTER PAGE */
-import RegisterPage from "./RegisterPage/Page";
+import RegisterPage from "./RegisterPage/RegisterPage";
+
 
 /* DASHBOARD */
 import DashboardPage from "./MainPage/Page";
