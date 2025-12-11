@@ -18,5 +18,27 @@ namespace Metabalance_app.Pages
         {
             NavigationService.Navigate(new RegistrationPage());
         }
+
+        private void Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        private void Minimize(object sender, RoutedEventArgs e)
+        {
+            Window window = Window.GetWindow(this);
+            window.WindowState = WindowState.Minimized;
+
+        }
+
+        private void Maximize(object sender, RoutedEventArgs e)
+        {
+            Window window = Window.GetWindow(this);
+            if (window.WindowState == WindowState.Normal)
+                window.WindowState = WindowState.Maximized;
+            else
+                window.WindowState = WindowState.Normal;
+
+
+        }
     }
 }

@@ -1,42 +1,38 @@
-﻿<Page x:Class="Metabalance_app.Pages.MainPage"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Metabalance_app.Pages.MainPage"
       Background="#F4FAF8">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
+    <Grid Height="1744" Width="1920">
 
-        <Canvas Width="1920" Height="1744" Background="#F4FAF8">
+        <ScrollViewer
+                  HorizontalScrollBarVisibility="Hidden"
+                  VerticalScrollBarVisibility="Hidden">
+            <Canvas Background="#F4FAF8" Height="1744" Width="1920">
 
-            <Border Background="#E8F5F2"
-                    Height="93"
-                    Width="1920"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"/>
-
-            <Image Source="logo-removebg-preview.png"
-                   Canvas.Left="80"
-                   Canvas.Top="20"
+                <Image Source="logo-removebg-preview.png"
+                   Canvas.Left="130"
+                   Canvas.Top="2"
                    Height="50"/>
 
-            <TextBlock Text="Metabalance"
+                <TextBlock Text="Metabalance"
                        FontSize="32"
                        FontWeight="Bold"
-                       Canvas.Left="134"
-                       Canvas.Top="24"
+                       Canvas.Left="184"
+                       Canvas.Top="4"
                        Foreground="#264653"/>
 
-            <Button Content="Bejelentkezés"
+                <Button Content="Bejelentkezés"
                     Width="180" Height="45"
-                    Canvas.Left="1670"
-                    Canvas.Top="25"
+                    Canvas.Left="1534"
                     FontSize="20"
                     Background="Transparent"
                     Foreground="#264653"
-                    BorderBrush="#48BFAF"
-                    Click="Bejelentkezes_Click"/>
+                    BorderBrush="#FFFF7979"
+                    Click="Bejelentkezes_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="4"/>
 
-            <TextBlock Text="Érd el céljaidat a Metabalance-szal!"
+                <TextBlock Text="Érd el céljaidat a Metabalance-szal!"
                        FontSize="52"
                        FontWeight="Bold"
                        Width="700"
@@ -45,7 +41,7 @@
                        Canvas.Top="150"
                        Foreground="#264653"/>
 
-            <TextBlock Text="Kövesd nyomon étkezésedet, edzéseidet és testsúlyodat egyszerűen. Egészséges életmód, fenntartható eredmények."
+                <TextBlock Text="Kövesd nyomon étkezésedet, edzéseidet és testsúlyodat egyszerűen. Egészséges életmód, fenntartható eredmények."
                        FontSize="24"
                        Width="466"
                        TextWrapping="Wrap"
@@ -54,54 +50,54 @@
                        Foreground="#52796F"/>
 
 
-            <Image Source="landingpage-img.png"
+                <Image Source="landingpage-img.png"
                    Width="626"
                    Canvas.Left="1200"
                    Canvas.Top="130"
                    Height="418">
-                <Image.Effect>
-                    <DropShadowEffect Color="Black"
+                    <Image.Effect>
+                        <DropShadowEffect Color="Black"
                                       BlurRadius="20"
                                       ShadowDepth="6"
                                       Opacity="0.25"/>
-                </Image.Effect>
-            </Image>
+                    </Image.Effect>
+                </Image>
 
 
-            <TextBlock Text="Fő funkcióink"
+                <TextBlock Text="Fő funkcióink"
                        FontSize="48"
                        Canvas.Left="807"
                        Canvas.Top="620"
                        Foreground="#264653" FontWeight="Bold"/>
 
-            <Border Background="#FFFFFF"
+                <Border Background="#FFFFFF"
                     CornerRadius="18"
                     Height="306" Width="452"
                     Canvas.Left="151" Canvas.Top="735"/>
 
-            <Border Background="#FFFFFF"
+                <Border Background="#FFFFFF"
                     CornerRadius="18"
                     Height="306" Width="452"
                     Canvas.Left="743" Canvas.Top="735"/>
 
-            <Border Background="#FFFFFF"
+                <Border Background="#FFFFFF"
                     CornerRadius="18"
                     Height="306" Width="452"
                     Canvas.Left="1324" Canvas.Top="735"/>
 
 
 
-            <Image Source="background-apple.png"
+                <Image Source="background-apple.png"
                    Width="70"
                    Canvas.Left="342"
                    Canvas.Top="760"/>
-            <TextBlock Text="Személyre szabott étrend"
+                <TextBlock Text="Személyre szabott étrend"
                        FontSize="28"
                        FontWeight="Bold"
                        Canvas.Left="200"
                        Canvas.Top="830"
                        Foreground="#264653"/>
-            <TextBlock Text="Kapj egyedi étrendet céljaidhoz és preferenciáidhoz igazítva, könnyedén követhető receptekkel."
+                <TextBlock Text="Kapj egyedi étrendet céljaidhoz és preferenciáidhoz igazítva, könnyedén követhető receptekkel."
                        Width="369"
                        TextWrapping="Wrap"
                        FontSize="20"
@@ -111,17 +107,17 @@
 
 
 
-            <Image Source="background-heart.png"
+                <Image Source="background-heart.png"
                    Width="70"
                    Canvas.Left="934"
                    Canvas.Top="765"/>
-            <TextBlock Text="Egészséges receptek"
+                <TextBlock Text="Egészséges receptek"
                        FontSize="28"
                        FontWeight="Bold"
                        Canvas.Left="836"
                        Canvas.Top="830"
                        Foreground="#264653"/>
-            <TextBlock Text="Figyeld a súlyodat, lépéseidet, alvásodat és egyéb fontos mutatókat egy helyen."
+                <TextBlock Text="Figyeld a súlyodat, lépéseidet, alvásodat és egyéb fontos mutatókat egy helyen."
                        Width="300"
                        TextWrapping="Wrap"
                        FontSize="20"
@@ -130,17 +126,17 @@
                        Foreground="#52796F"/>
 
 
-            <Image Source="background-weight.png"
+                <Image Source="background-weight.png"
                    Width="70"
                    Canvas.Left="1515"
                    Canvas.Top="769"/>
-            <TextBlock Text="Közösségi támogatás"
+                <TextBlock Text="Közösségi támogatás"
                        FontSize="28"
                        FontWeight="Bold"
                        Canvas.Left="1400"
                        Canvas.Top="830"
                        Foreground="#264653"/>
-            <TextBlock Text="Hozd ki a legtöbbet edzéseidből a személyre szabott tervekkel és részletes elemzésekkel."
+                <TextBlock Text="Hozd ki a legtöbbet edzéseidből a személyre szabott tervekkel és részletes elemzésekkel."
                        Width="300"
                        TextWrapping="Wrap"
                        FontSize="20"
@@ -149,29 +145,29 @@
                        Foreground="#52796F"/>
 
 
-            <Border Background="#FFFFFF"
+                <Border Background="#FFFFFF"
                     CornerRadius="16"
                     Width="1353"
                     Height="110"
                     Canvas.Left="284"
                     Canvas.Top="1282"
                     Padding="20">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black"
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black"
                                       BlurRadius="12"
                                       ShadowDepth="4"
                                       Opacity="0.15"/>
-                </Border.Effect>
+                    </Border.Effect>
 
-                <TextBlock Text="“A Metabalance teljesen megváltoztatta az életmódomat!”"
+                    <TextBlock Text="“A Metabalance teljesen megváltoztatta az életmódomat!”"
                            FontSize="26"
                            TextAlignment="Center"
                            TextWrapping="Wrap"
                            Foreground="#264653" Margin="0,7,0,-7"/>
-            </Border>
+                </Border>
 
 
-            <TextBlock Text="Miért válaszd a Metabalance-t?"
+                <TextBlock Text="Miért válaszd a Metabalance-t?"
                        FontSize="52"
                        FontWeight="Bold"
                        Width="767"
@@ -180,7 +176,7 @@
                        Canvas.Top="1088"
                        Foreground="#264653"/>
 
-            <TextBlock Text="Egyszerű, intuitív felületünk segít, hogy minden nap a legjobb formádat hozd..."
+                <TextBlock Text="Egyszerű, intuitív felületünk segít, hogy minden nap a legjobb formádat hozd..."
                        Width="1074"
                        TextWrapping="Wrap"
                        FontSize="20"
@@ -188,14 +184,14 @@
                        Canvas.Top="1180"
                        Foreground="#52796F"/>
 
-            <TextBlock Text="Kezdj egy egészségesebb életet még ma!"
+                <TextBlock Text="Kezdj egy egészségesebb életet még ma!"
                        FontSize="40"
                        FontWeight="Bold"
                        Canvas.Left="577"
                        Canvas.Top="1423"
                        Foreground="#264653"/>
 
-            <Button Content="Regisztrálj most!"
+                <Button Content="Regisztrálj most!"
                     Width="766" Height="60"
                     Background="#FFFF4600"
                     Foreground="White"
@@ -204,26 +200,98 @@
                     Canvas.Left="577"
                     Canvas.Top="1511"
                     Click="Registracio_Click"/>
+                <Grid Background="#1E1E1E" Height="35" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Mozgatás (drag) -->
+                    <!-- Minimize -->
+                    <!-- Maximize / Restore -->
+                    <!-- Close -->
+                </Grid>
+
+                <Image Source="/Pages/profileicon-removebg-preview.png"
+                Canvas.Left="1714"
+                Height="51" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="1" OpacityMask="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                <Button Content="X"
+            Width="45" Foreground="White"
+            BorderThickness="0" FontSize="16"
+            Click="Exit"
+            Height="50" Canvas.Left="1877" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="#FFDC4747" Background="#FFED3C3C" 
+            />
+                <Button Content="▢"
+            Width="45" Foreground="White"
+            BorderThickness="0" FontSize="16" Click="Maximize"
+           
+            Height="50" Canvas.Left="1832" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFED3C3C" 
+            />
+                <Button Content="–"
+                Width="45" Foreground="White"
+                BorderThickness="0" FontSize="16"
+                Click="Minimize"
+                Height="50" Canvas.Left="1787" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="#FFDC4747" Background="#FFED3C3C" 
+                />
+                <StackPanel Height="1744" Width="1920"/>
 
 
-            <Border Width="1920"
-                    Height="120"
-                    Canvas.Top="1624"
-                    Background="#E8F5F2">
+            </Canvas>
+        </ScrollViewer>
+        <Canvas>
+            <Grid Height="52" Width="1920" Background="#F0F8F8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border Background="#FFED3C3C"
+                    Height="52"
+                    Width="1920"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="0.032"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="0.015"/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
 
-                <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva."
-                           FontSize="18"
-                           Foreground="#52796F"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           TextAlignment="Center"
-                           FontWeight="Bold"/>
-            </Border>
+                <Image
 
-            <Image Source="/Pages/navbar-login-icon.png"
-                Canvas.Left="1850"
-                Canvas.Top="22"
-                Height="50"/>
+
+        VerticalAlignment="Top" Source="/Pages/profileicon-removebg-preview.png" OpacityMask="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="51" HorizontalAlignment="Left" Margin="1714,1,0,0"/>
+
+
+                <Button
+
+
+        Width="45" VerticalAlignment="Center" Height="52" HorizontalAlignment="Left" FontSize="16" Foreground="White" Content="X" Click="Exit" BorderThickness="0" BorderBrush="#FFDC4747" Background="#FFED3C3C" Margin="1877,0,0,0"/>
+
+
+                <Button
+
+
+        Width="45" VerticalAlignment="Top" Height="54" HorizontalAlignment="Left" FontSize="16" Foreground="White" Content="▢" Click="Maximize" BorderThickness="0" Background="#FFED3C3C" Margin="1832,0,0,0"/>
+
+
+                <Button
+
+
+        Width="45" VerticalAlignment="Center" Height="52" HorizontalAlignment="Left" FontSize="16" Foreground="White" Content="–" Click="Minimize" BorderThickness="0" BorderBrush="#FFDC4747" Background="#FFED3C3C" Margin="1787,0,0,0"/>
+                <Image
+
+
+        Source="logo-removebg-preview.png" Margin="130,2,1741,0"/>
+                <TextBlock
+
+
+        Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653" Margin="184,4,1543,5"/>
+                <Button
+
+
+        Width="180" VerticalAlignment="Center" Height="45" HorizontalAlignment="Left" FontSize="20" Foreground="#264653" Content="Bejelentkezés" Click="Bejelentkezes_Click" BorderBrush="#FFFF7979" Background="Transparent" Margin="1534,0,0,0"/>
+            </Grid>
         </Canvas>
-    </ScrollViewer>
+    </Grid>
 </Page>

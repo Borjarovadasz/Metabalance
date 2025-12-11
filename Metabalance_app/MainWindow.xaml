@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Metabalance"
         WindowState="Maximized"
+        Background="White"
         WindowStyle="None"
-        ResizeMode="NoResize"
-        Background="White">
+        ResizeMode="CanResize">
 
     <Frame x:Name="MainFrame"
            NavigationUIVisibility="Hidden"/>
