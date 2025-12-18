@@ -1,0 +1,340 @@
+﻿<Page x:Class="Metabalance_app.Pages.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="av"
+      Background="#F4FAF8"
+      Width="1920">
+
+    <Grid>
+
+
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                      VerticalScrollBarVisibility="Hidden"
+                      Margin="10,0,0,0">
+
+            <Canvas Height="1721"
+                    RenderTransformOrigin="0.5,0.5">
+
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="0.044"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.666"/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+
+
+                <TextBlock Text="Fő funkcióink"
+                           Canvas.Top="587"
+                           Canvas.Left="806"
+                           FontSize="48"
+                           FontWeight="Bold"
+                           Foreground="#264653" />
+
+                <Border Width="1917"
+                        Height="117"
+                        Canvas.Top="1605"
+                        Canvas.Left="1"
+                        Background="#FFDAD5D5"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+
+                    <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva."
+                               TextAlignment="Center"
+                               FontSize="26"
+                               Foreground="#264653"
+                               Margin="301,46,302,-1" />
+                </Border>
+                <Border CornerRadius="20" BorderBrush="Black" BorderThickness="1" Height="632" Width="1428" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="225" Canvas.Top="159" Background="#FFAD9D9D">
+                    <Grid Height="632" Width="1428" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0">
+                        <TextBlock Width="700"
+                           Canvas.Top="42"
+                           Canvas.Left="30"
+                           Text="Üdv újra, Péter! Merre tart ma az egészséged?"
+                           TextWrapping="Wrap"
+                           FontSize="60"
+                           FontWeight="Bold"
+                           Foreground="#264653" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="55,47,0,0" />
+                        <TextBlock Canvas.Left="35" TextWrapping="Wrap" Text="Kövesd nyomon az összes egészséggel kapcsolatos adatodat egyetlen helyen. Állíts be célokat, figyeld a fejlődésedet, és élj teljesebb életet a Metabalance segítségével." Canvas.Top="222" FontSize="24" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="535" Margin="58,223,0,0"/>
+                        <Image Height="499" Canvas.Left="847" Canvas.Top="56" Width="499" Source="/Pages/img/dashboard.png" Margin="801,-6,128,138"/>
+                        <Button Content="Kalória naplózás" Canvas.Left="48" Canvas.Top="381" Height="69" Width="245" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Margin="57,368,0,0"/>
+                    </Grid>
+                </Border>
+                
+                <Border CornerRadius="20"
+        BorderThickness="1"
+        Height="277"
+        Width="442"
+        HorizontalAlignment="Left"
+        Canvas.Left="202"
+        Canvas.Top="864"
+        VerticalAlignment="Top" Background="#FFE8E8E8">
+
+    <Border.Effect>
+        <DropShadowEffect Color="Black"
+                          BlurRadius="10"
+                          ShadowDepth="4"
+                          Opacity="0.5"/>
+    </Border.Effect>
+
+    <Grid Margin="0,0,0,6" HorizontalAlignment="Left" Width="438">
+        <TextBlock HorizontalAlignment="Left" Margin="19,18,0,0"
+                   TextWrapping="Wrap" Text="Vízfogyasztás"
+                   VerticalAlignment="Top" Height="55"
+                   Width="180" FontSize="24"/>
+        <TextBlock HorizontalAlignment="Left" Margin="19,53,0,0"
+                   TextWrapping="Wrap" Text="2.3L"
+                   VerticalAlignment="Top" Height="55"
+                   Width="180" FontSize="40" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="16,120,0,0"
+                   TextWrapping="Wrap"
+                   Text="Még 0.7 L van hátra a mai cél eléréséhez!"
+                   VerticalAlignment="Top" Height="55" Width="402"
+                   FontSize="17" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.023"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0.036"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <Image Source="/Pages/img/water.png"
+               HorizontalAlignment="Left" Height="72"
+               Margin="350,8,0,0" VerticalAlignment="Top" Width="72"/>
+        <Button Content="Megtekintés" HorizontalAlignment="Left"
+                Margin="154,170,0,0" VerticalAlignment="Top"
+                Height="45" Width="89"/>
+    </Grid>
+</Border>
+                <Border CornerRadius="20" BorderThickness="1" Height="277" Width="442" Canvas.Left="708" Canvas.Top="864" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FFE8E8E8">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black"
+                            BlurRadius="10"
+                            ShadowDepth="4"
+                            Opacity="0.5"/>
+                    </Border.Effect>
+                    <Grid Margin="0,0,0,6" HorizontalAlignment="Left" Width="438">
+                        <TextBlock HorizontalAlignment="Left" Margin="19,18,0,0" TextWrapping="Wrap" Text="Kalóriabevitel" VerticalAlignment="Top" Height="55" Width="180" FontSize="24"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="19,53,0,0" TextWrapping="Wrap" Text="1850kcal" VerticalAlignment="Top" Height="55" Width="180" FontSize="40" FontWeight="Bold"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="16,120,0,0" TextWrapping="Wrap" Text="250 kcal maradt a mai keretből." VerticalAlignment="Top" Height="55" Width="402" FontSize="17" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="0.023"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0.036"/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <Image Source="/Pages/img/food.png" HorizontalAlignment="Left" Height="72" Margin="350,8,0,0" VerticalAlignment="Top" Width="72"/>
+                        <Button Content="Megtekintés" HorizontalAlignment="Left" Margin="154,170,0,0" VerticalAlignment="Top" Height="45" Width="89"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="20" BorderThickness="1" Height="277" Width="442" Canvas.Left="1210" Canvas.Top="864" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FFE8E8E8">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black"
+                            BlurRadius="10"
+                            ShadowDepth="4"
+                            Opacity="0.5"/>
+                    </Border.Effect>
+                    <Grid Margin="0,0,0,6" HorizontalAlignment="Left" Width="438">
+                        <TextBlock HorizontalAlignment="Left" Margin="19,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="180" FontSize="24"><Run Language="hu-hu" Text="Alvás"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="19,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="287" FontSize="40" FontWeight="Bold"><Run Language="hu-hu" Text="7 óra 45 perc"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="16,120,0,0" TextWrapping="Wrap" Text="Kiváló alvásminőség az elmúlt éjszaka." VerticalAlignment="Top" Height="55" Width="402" FontSize="17" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="0.023"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0.036"/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <Image Source="/Pages/img/sleep.png" HorizontalAlignment="Left" Height="72" Margin="350,8,0,0" VerticalAlignment="Top" Width="72"/>
+                        <Button Content="Megtekintés" HorizontalAlignment="Left" Margin="154,170,0,0" VerticalAlignment="Top" Height="45" Width="89"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="20" BorderThickness="1" Height="277" Width="442" Canvas.Left="202" Canvas.Top="1212" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFE8E8E8">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black"
+                            BlurRadius="10"
+                            ShadowDepth="4"
+                            Opacity="0.5"/>
+                    </Border.Effect>
+                    <Grid Margin="0,0,0,6" HorizontalAlignment="Left" Width="438">
+                        <TextBlock HorizontalAlignment="Left" Margin="19,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="180" FontSize="24"><Run Language="hu-hu" Text="Hangulatnapló"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="19,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="180" FontSize="40" FontWeight="Bold"><Run Language="hu-hu" Text="Mérges"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="16,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="402" FontSize="17" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="0.023"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0.036"/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform><Run Language="hu-hu" Text="Értékeld a mai hangulatodat!"/></TextBlock>
+                        <Image Source="/Pages/img/mood.png" HorizontalAlignment="Left" Height="72" Margin="350,8,0,0" VerticalAlignment="Top" Width="72"/>
+                        <Button Content="Megtekintés" HorizontalAlignment="Left" Margin="154,170,0,0" VerticalAlignment="Top" Height="45" Width="89"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="20" BorderThickness="1" Height="277" Width="442" Canvas.Left="708" Canvas.Top="1212" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FFE8E8E8">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black"
+                            BlurRadius="10"
+                            ShadowDepth="4"
+                            Opacity="0.5"/>
+                    </Border.Effect>
+                    <Grid Margin="0,0,0,6" HorizontalAlignment="Left" Width="438">
+                        <TextBlock HorizontalAlignment="Left" Margin="19,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="180" FontSize="24"><Run Language="hu-hu" Text="Testsúly"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="19,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="180" FontSize="40" FontWeight="Bold"><Run Language="hu-hu" Text="72"/><Run Text=".3"/><Run Language="hu-hu" Text="kg"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="16,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="55" Width="402" FontSize="17" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="0.023"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0.036"/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform><Run Language="hu-hu" Text="Csak így tovább!"/></TextBlock>
+                        <Image Source="/Pages/img/weight.png" HorizontalAlignment="Left" Height="72" Margin="350,8,0,0" VerticalAlignment="Top" Width="72"/>
+                        <Button Content="Megtekintés" HorizontalAlignment="Left" Margin="154,170,0,0" VerticalAlignment="Top" Height="45" Width="89"/>
+                    </Grid>
+                </Border>
+
+            </Canvas>
+        </ScrollViewer>
+
+        <!-- TOP NAV BAR -->
+        <Grid Height="52"
+              Width="1920"
+              Background="#F0F8F8"
+              VerticalAlignment="Top">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="443*"/>
+                <ColumnDefinition Width="37*"/>
+            </Grid.ColumnDefinitions>
+
+      
+            <Border Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="2"
+                    Width="1920"
+                    Grid.ColumnSpan="2" Margin="0,0,0,-26">
+                <Grid>
+                    <Button Width="180"
+                Height="48"
+                Content="Kezelőpult"
+                FontSize="20"
+                BorderBrush="Transparent"
+                 RenderTransformOrigin="0.733,0.542" Canvas.Left="480" Canvas.Top="15" Margin="427,13,1309,13" Background="White" />
+                    <Button Width="180"
+                Height="48"
+                Content="Kalória"
+                FontSize="20"
+                Background="White"
+                BorderBrush="Transparent"
+                 RenderTransformOrigin="-0.242,0.542" Canvas.Left="870" Canvas.Top="16" Margin="612,14,1124,12" />
+                    <Button Width="180"
+                    Height="48"
+                    Content="Alvás"
+                    FontSize="20"
+                    Background="White"
+                    BorderBrush="Transparent"
+                    RenderTransformOrigin="-0.042,0.406" Canvas.Left="692" Canvas.Top="16" Margin="800,12,936,14" />
+                    <Button Width="180"
+                    Height="48"
+                    Content="Víz"
+                    FontSize="20"
+                    Background="White"
+                    BorderBrush="Transparent"
+                    Canvas.Left="1052" Canvas.Top="15" Margin="990,12,746,14" RenderTransformOrigin="0.472,0.542" />
+                    <Button Width="180"
+                        Height="48"
+                        Content="Hangulat"
+                        FontSize="20"
+                        Background="White"
+                        BorderBrush="Transparent"
+                         Canvas.Left="1232" Canvas.Top="15" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1184,0,0,0" />
+                    <Button Width="180"
+                        Height="48"
+                        Content="Súly"
+                        FontSize="20"
+                        Background="White"
+                        BorderBrush="Transparent"
+                         Canvas.Left="1392" Canvas.Top="16" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="8.022,1.833" Margin="1369,0,0,0" />
+                    <Image Source="/Pages/img/house.png" HorizontalAlignment="Left" Height="50" Margin="427,0,0,0" VerticalAlignment="Center" Width="67"/>
+                    <Image Source="/Pages/img/foodnav-removebg-preview.png" HorizontalAlignment="Left" Height="40" Margin="630,0,0,0" VerticalAlignment="Center" Width="54"/>
+                    <Image Source="/Pages/img/sleepnav-removebg-preview.png" HorizontalAlignment="Left" Height="40" Margin="820,0,0,0" VerticalAlignment="Center" Width="54"/>
+                    <Image Source="/Pages/img/waternav-removebg-preview.png" HorizontalAlignment="Left" Height="40" Margin="1025,0,0,0" VerticalAlignment="Center" Width="54"/>
+                    <Image Source="/Pages/img/moodnav-removebg-preview.png" HorizontalAlignment="Left" Height="40" Margin="1184,0,0,0" VerticalAlignment="Center" Width="54"/>
+                    <Image Source="/Pages/img/weigthnav-removebg-preview.png" HorizontalAlignment="Left" Height="40" Margin="1378,0,0,0" VerticalAlignment="Center" Width="54" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleY="1.023"/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="0.482"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Grid>
+            </Border>
+
+            <!-- ICONS & BUTTONS -->
+            <Image Source="/Pages/img/profileicon-removebg-preview.png"
+                   Height="38"
+                   Width="38"
+                   VerticalAlignment="Top"
+                   Margin="1724,20,10,0"/>
+
+            <Button Width="45"
+                    Content="X"
+                    Margin="105,2,-2,-23"
+                    Background="White"
+                    BorderThickness="0"
+                    Click="Exit"
+                    Grid.Column="1"/>
+
+            <Button Width="45"
+                    Content="▢"
+                    Margin="10,2,93,-23"
+                    Background="White"
+                    BorderThickness="0"
+                    Click="Maximize"
+                    Grid.Column="1"/>
+
+            <Button Width="45"
+                    Content="–"
+                    Margin="57,2,46,-23"
+                    Background="White"
+                    BorderThickness="0"
+                    Click="Minimize"
+                    Grid.Column="1"/>
+
+            <Image Source="img/logo-removebg-preview.png"
+                   Margin="130,14,1593,-12" />
+
+            <TextBlock Text="Metabalance"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Foreground="#264653"
+                       Margin="184,18,1395,-8" />
+
+            <Button Width="180"
+                    Height="48"
+                    Margin="1548,15,44,-11"
+                    Content="Kijelentkezés"
+                    FontSize="20"
+                    Background="White"
+                    BorderBrush="Transparent"
+                     />
+        </Grid>
+
+    </Grid>
+</Page>

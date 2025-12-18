@@ -17,5 +17,9 @@ namespace Metabalance_app.Pages
         {
             NavigationService.Navigate(new RegistrationPage());
         }
+        private void Go_Dashboard(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Dashboard());
+        }
     }
 }

@@ -15,6 +15,22 @@
     <None Remove="Pages\background-heart %281%29.png" />
     <None Remove="Pages\background-heart.png" />
     <None Remove="Pages\background-weight.png" />
+    <None Remove="Pages\img\dashboard.png" />
+    <None Remove="Pages\img\food.png" />
+    <None Remove="Pages\img\foodnav-removebg-preview.png" />
+    <None Remove="Pages\img\house.png" />
+    <None Remove="Pages\img\mood.png" />
+    <None Remove="Pages\img\moodnav-removebg-preview.png" />
+    <None Remove="Pages\img\moodnav.png" />
+    <None Remove="Pages\img\sleep.png" />
+    <None Remove="Pages\img\sleepnav-removebg-preview.png" />
+    <None Remove="Pages\img\sleepnav.png" />
+    <None Remove="Pages\img\water.png" />
+    <None Remove="Pages\img\waternav-removebg-preview.png" />
+    <None Remove="Pages\img\waternav.png" />
+    <None Remove="Pages\img\weight.png" />
+    <None Remove="Pages\img\weigthnav-removebg-preview.png" />
+    <None Remove="Pages\img\weigthnav.png" />
     <None Remove="Pages\landingpage-img.png" />
     <None Remove="Pages\logo-removebg-preview.png" />
     <None Remove="Pages\navbar-login-icon-removebg-preview.png" />
@@ -27,14 +43,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Pages\109602.png" />
-    <Resource Include="Pages\background-apple.png" />
-    <Resource Include="Pages\background-heart.png" />
-    <Resource Include="Pages\background-weight.png" />
-    <Resource Include="Pages\landingpage-img.png" />
-    <Resource Include="Pages\logo-removebg-preview.png" />
-    <Resource Include="Pages\navbar-login-icon-removebg-preview.png" />
-    <Resource Include="Pages\profileicon-removebg-preview.png" />
+    <Resource Include="Pages\img\109602.png" />
+    <Resource Include="Pages\img\background-apple.png" />
+    <Resource Include="Pages\img\background-heart.png" />
+    <Resource Include="Pages\img\background-weight.png" />
+    <Resource Include="Pages\img\dashboard.png" />
+    <Resource Include="Pages\img\food.png" />
+    <Resource Include="Pages\img\foodnav-removebg-preview.png" />
+    <Resource Include="Pages\img\house.png" />
+    <Resource Include="Pages\img\landingpage-img.png" />
+    <Resource Include="Pages\img\logo-removebg-preview.png" />
+    <Resource Include="Pages\img\mood.png" />
+    <Resource Include="Pages\img\moodnav-removebg-preview.png" />
+    <Resource Include="Pages\img\navbar-login-icon-removebg-preview.png" />
+    <Resource Include="Pages\img\profileicon-removebg-preview.png" />
+    <Resource Include="Pages\img\sleep.png" />
+    <Resource Include="Pages\img\sleepnav-removebg-preview.png" />
+    <Resource Include="Pages\img\water.png" />
+    <Resource Include="Pages\img\waternav-removebg-preview.png" />
+    <Resource Include="Pages\img\weight.png" />
+    <Resource Include="Pages\img\weigthnav-removebg-preview.png" />
   </ItemGroup>
 
 </Project>

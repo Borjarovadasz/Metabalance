@@ -49,7 +49,7 @@
                        Height="418"
                        Canvas.Top="95"
                        Canvas.Left="1236"
-                       Source="/Pages/landingpage-img.png">
+                       Source="/Pages/img/landingpage-img.png">
 
                     <Image.Effect>
                         <DropShadowEffect ShadowDepth="6"
@@ -80,7 +80,7 @@
                         <Image Width="70"
                                Canvas.Top="61"
                                Canvas.Left="191"
-                               Source="/Pages/background-apple.png"/>
+                               Source="/Pages/img/background-apple.png"/>
 
                         <TextBlock Canvas.Top="121"
                                    Canvas.Left="107"
@@ -111,7 +111,7 @@
                         <Image Width="70"
                                Canvas.Top="70"
                                Canvas.Left="191"
-                               Source="/Pages/background-heart.png"/>
+                               Source="/Pages/img/background-heart.png"/>
 
                         <TextBlock Canvas.Top="126"
                                    Canvas.Left="55"
@@ -143,7 +143,7 @@
                         <Image Width="70"
                                Canvas.Top="60"
                                Canvas.Left="191"
-                               Source="/Pages/background-weight.png" />
+                               Source="/Pages/img/background-weight.png" />
 
                         <TextBlock Canvas.Top="126"
                                    Canvas.Left="69"
@@ -261,7 +261,7 @@
                     Grid.ColumnSpan="2"/>
 
             <!-- ICONS & BUTTONS -->
-            <Image Source="/Pages/profileicon-removebg-preview.png"
+            <Image Source="/Pages/img/profileicon-removebg-preview.png"
                    Height="38"
                    Width="38"
                    VerticalAlignment="Center"
@@ -294,7 +294,7 @@
                     Click="Minimize"
                     Grid.Column="1"/>
 
-            <Image Source="logo-removebg-preview.png"
+            <Image Source="img/logo-removebg-preview.png"
                    Margin="130,2,1593,0" />
 
             <TextBlock Text="Metabalance"
