@@ -1,317 +1,144 @@
 ﻿<Page x:Class="Metabalance_app.Pages.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="av"
-      Background="#F4FAF8"
-      Width="1920">
+      mc:Ignorable="d"
+      d:DesignWidth="1920"
+      d:DesignHeight="1080"
+      Background="#F5F6FA">
 
     <Grid>
-
-
-        <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                      VerticalScrollBarVisibility="Hidden"
-                      Margin="10,0,0,0">
-
-            <Canvas Height="1721"
-                    RenderTransformOrigin="0.5,0.5">
-
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="0.044"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="0.666"/>
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-
-                <!--HEADER-->
-                <TextBlock Width="700"
-                           Canvas.Top="90"
-                           Canvas.Left="126"
-                           Text="Érd el céljaidat a Metabalance-szal!"
-                           TextWrapping="Wrap"
-                           FontSize="60"
-                           FontWeight="Bold"
-                           Foreground="#264653" />
-
-                <TextBlock Width="466"
-                           Canvas.Top="274"
-                           Canvas.Left="126"
-                           Text="Kövesd nyomon étkezésedet, edzéseidet és testsúlyodat egyszerűen. Egészséges életmód, fenntartható eredmények."
-                           TextWrapping="Wrap"
-                           FontSize="24"
-                           Foreground="#52796F" />
-
-                <!-- HEADER IMAGE -->
-                <Image Width="626"
-                       Height="418"
-                       Canvas.Top="95"
-                       Canvas.Left="1236"
-                       Source="/Pages/img/landingpage-img.png">
-
-                    <Image.Effect>
-                        <DropShadowEffect ShadowDepth="6"
-                                          Opacity="0.25"
-                                          Color="Black"
-                                          BlurRadius="20" />
-                    </Image.Effect>
-
-                </Image>
-
-                <!-- SECTION TITLE -->
-                <TextBlock Text="Fő funkcióink"
-                           Canvas.Top="587"
-                           Canvas.Left="806"
-                           FontSize="48"
-                           FontWeight="Bold"
-                           Foreground="#264653" />
-
-                <!-- FEATURE BOX 1 -->
-                <Border Width="452"
-                        Height="306"
-                        Background="White"
-                        CornerRadius="18"
-                        Canvas.Top="707"
-                        Canvas.Left="126">
-
-                    <Canvas>
-                        <Image Width="70"
-                               Canvas.Top="61"
-                               Canvas.Left="191"
-                               Source="/Pages/img/background-apple.png"/>
-
-                        <TextBlock Canvas.Top="121"
-                                   Canvas.Left="107"
-                                   Text="Személyre szabott étrend"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#264653" />
-
-                        <TextBlock Width="341"
-                                   Canvas.Top="153"
-                                   Canvas.Left="42"
-                                   Text="Kapj egyedi étrendet céljaidhoz és preferenciáidhoz igazítva, könnyedén követhető receptekkel."
-                                   TextWrapping="Wrap"
-                                   FontSize="20"
-                                   Foreground="#52796F" />
-                    </Canvas>
-                </Border>
-
-                <!-- FEATURE BOX 2 -->
-                <Border Width="452"
-                        Height="306"
-                        Background="White"
-                        CornerRadius="18"
-                        Canvas.Top="707"
-                        Canvas.Left="732">
-
-                    <Canvas>
-                        <Image Width="70"
-                               Canvas.Top="70"
-                               Canvas.Left="191"
-                               Source="/Pages/img/background-heart.png"/>
-
-                        <TextBlock Canvas.Top="126"
-                                   Canvas.Left="55"
-                                   Width="373"
-                                   Text="Egészségügyi adatok nyomon követése"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#264653" />
-
-                        <TextBlock Canvas.Top="158"
-                                   Canvas.Left="76"
-                                   Width="300"
-                                   Text="Figyeld a súlyodat, lépéseidet, alvásodat és egyéb fontos mutatókat egy helyen."
-                                   FontSize="20"
-                                   TextWrapping="Wrap"
-                                   Foreground="#52796F" />
-                    </Canvas>
-                </Border>
-
-                <!-- FEATURE BOX 3 -->
-                <Border Width="452"
-                        Height="306"
-                        Background="White"
-                        CornerRadius="18"
-                        Canvas.Top="707"
-                        Canvas.Left="1323">
-
-                    <Canvas>
-                        <Image Width="70"
-                               Canvas.Top="60"
-                               Canvas.Left="191"
-                               Source="/Pages/img/background-weight.png" />
-
-                        <TextBlock Canvas.Top="126"
-                                   Canvas.Left="69"
-                                   Width="373"
-                                   Text="Edzésterv és tevékenységkövetés"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#264653" />
-
-                        <TextBlock Canvas.Top="153"
-                                   Canvas.Left="76"
-                                   Width="300"
-                                   Text="Hozd ki a legtöbbet edzéseidből a személyre szabott tervekkel és részletes elemzésekkel."
-                                   TextWrapping="Wrap"
-                                   FontSize="20"
-                                   Foreground="#52796F" />
-                    </Canvas>
-                </Border>
-
-                <!-- QUOTE BOX -->
-                <Border Width="1352"
-                        Height="110"
-                        Padding="20"
-                        Canvas.Top="1242"
-                        Canvas.Left="278"
-                        Background="White"
-                        CornerRadius="16">
-
-                    <Border.Effect>
-                        <DropShadowEffect ShadowDepth="4"
-                                          Opacity="0.15"
-                                          Color="Black"
-                                          BlurRadius="12" />
-                    </Border.Effect>
-
-                    <TextBlock
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"
-                               FontSize="26"
-                               Foreground="#264653" ><Run Text="“A Metabalance teljesen megváltoztatta az étkezési szokásaimat. Végre tudatosan figyelek a táplálkozásomra, és sosem éreztem magam ilyen energikusnak!”"/><LineBreak/><Run Text="- Péter, elégedett felhasználó"/></TextBlock>
-                </Border>
-
-                <!-- "WHY US" TITLE -->
-                <TextBlock Width="768"
-                           Canvas.Top="1068"
-                           Canvas.Left="570"
-                           Text="Miért válaszd a Metabalance-t?"
-                           FontSize="52"
-                           FontWeight="Bold"
-                           Foreground="#264653" />
-
-                <TextBlock Width="1074"
-                           Canvas.Top="1143"
-                           Canvas.Left="416"
-                           Text="Egyszerű, intuitív felületünk segít, hogy minden nap a legjobb formádat hozd. Személyre szabott tervek, közösségi támogatás és szakértői tanácsok egy helyen, így könnyedén elérheted és fenntarthatod egészségügyi céljaidat."
-                           TextWrapping="Wrap"
-                           FontSize="20"
-                           Foreground="#52796F" />
-
-                <!-- CTA -->
-                <TextBlock Canvas.Top="1407"
-                           Canvas.Left="576"
-                           Text="Kezdj egy egészségesebb életet még ma!"
-                           FontSize="40"
-                           FontWeight="Bold"
-                           Foreground="#264653" />
-
-                <Button Width="766"
-                        Height="60"
-                        Canvas.Top="1488"
-                        Canvas.Left="570"
-                        Content="Regisztrálj most!"
-                        FontSize="22"
-                        Background="White"
-                        BorderThickness="0"
-                        Foreground="Black"
-                        Click="Registracio_Click"/>
-
-                <!-- FOOTER -->
-                <Border Width="1917"
-                        Height="117"
-                        Canvas.Top="1605"
-                        Canvas.Left="1"
-                        Background="#FFDAD5D5"
-                        BorderBrush="Black"
-                        BorderThickness="1">
-
-                    <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva."
-                               TextAlignment="Center"
-                               FontSize="26"
-                               Foreground="#264653"
-                               Margin="301,46,302,-1" />
-                </Border>
-
-            </Canvas>
-        </ScrollViewer>
+        <!-- ROW DEFINITIONS -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Top Nav Bar -->
+            <RowDefinition Height="*"/>
+            <!-- Main Content -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer -->
+        </Grid.RowDefinitions>
 
         <!-- TOP NAV BAR -->
         <Grid Height="52"
-              Width="1920"
               Background="#F0F8F8"
-              VerticalAlignment="Top">
-
+              VerticalAlignment="Top"
+              Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="443*"/>
-                <ColumnDefinition Width="37*"/>
+                <ColumnDefinition Width="*"/>
+                <!-- Bal oldal: Logo + cím -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- Jobb oldal: Gombok + profilikon -->
             </Grid.ColumnDefinitions>
 
-            <!-- BACKGROUND BAR -->
-            <Border Background="#FFFFB5B5"
-                    BorderBrush="Black"
-                    BorderThickness="2"
-                    Height="52"
-                    Width="1920"
-                    Grid.ColumnSpan="2"/>
+            <!-- BAL OLDAL: LOGO + CÍM -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                <Image Source="img/logo-removebg-preview.png" Height="40"/>
+                <TextBlock Text="Metabalance"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           Foreground="#264653"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
 
-            <!-- ICONS & BUTTONS -->
-            <Image Source="/Pages/img/profileicon-removebg-preview.png"
-                   Height="38"
-                   Width="38"
-                   VerticalAlignment="Center"
-                   Margin="1714,0,20,0"/>
-
-            <Button Width="45"
-                    Height="48"
-                    Content="X"
-                    Margin="105,0,0,0"
-                    Background="#FFFFB5B5"
-                    BorderThickness="0"
-                    Click="Exit"
-                    Grid.Column="1"/>
-
-            <Button Width="45"
-                    Height="48"
-                    Content="▢"
-                    Margin="10,2,93,2"
-                    Background="#FFFFB5B5"
-                    BorderThickness="0"
-                    Click="Maximize"
-                    Grid.Column="1"/>
-
-            <Button Width="45"
-                    Height="48"
-                    Content="–"
-                    Margin="57,2,46,2"
-                    Background="#FFFFB5B5"
-                    BorderThickness="0"
-                    Click="Minimize"
-                    Grid.Column="1"/>
-
-            <Image Source="img/logo-removebg-preview.png"
-                   Margin="130,2,1593,0" />
-
-            <TextBlock Text="Metabalance"
-                       FontSize="32"
-                       FontWeight="Bold"
-                       Foreground="#264653"
-                       Margin="184,4,1395,5" />
-
-            <Button Width="180"
-                    Height="48"
-                    Margin="1534,2,58,2"
-                    Content="Bejelentkezés"
-                    FontSize="20"
-                    Background="#FFFFB5B5"
-                    BorderBrush="Transparent"
-                    Click="Bejelentkezes_Click" />
+            <!-- JOBB OLDAL: GOMBOK + PROFILIKON -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
+                <Button Width="45" Height="48" Content="–" Background="{x:Null}" BorderThickness="0" Click="Minimize" Margin="5,0"/>
+                <Button Width="45" Height="48" Content="▢" Background="{x:Null}" BorderThickness="0" Click="Maximize" Margin="5,0"/>
+                <Button Width="45" Height="48" Content="X" Background="{x:Null}" BorderThickness="0" Click="Exit" Margin="5,0"/>
+                <Button Width="180" Height="48" Content="Bejelentkezés" FontSize="20" Background="{x:Null}" BorderBrush="Transparent" Click="Bejelentkezes_Click" Margin="10,0,10,0"/>
+                <Image Source="img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="5,0,0,0"/>
+            </StackPanel>
         </Grid>
 
+        <!-- MAIN CONTENT -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,10">
+            <StackPanel Margin="20">
+                <!-- HEADER -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Érd el céljaidat a Metabalance-szal!" 
+                                   FontSize="60" FontWeight="Bold" Foreground="#264653" TextWrapping="Wrap"/>
+                        <TextBlock Text="Kövesd nyomon étkezésedet, edzéseidet és testsúlyodat egyszerűen. Egészséges életmód, fenntartható eredmények."
+                                   FontSize="24" Foreground="#52796F" TextWrapping="Wrap" Margin="0,20,0,0"/>
+                    </StackPanel>
+
+                    <Image Grid.Column="1" Source="img/landingpage-img.png" Width="1038" Height="400" HorizontalAlignment="Left" Margin="187,0,0,0">
+                        <Image.Effect>
+                            <DropShadowEffect ShadowDepth="6" Opacity="0.25" Color="Black" BlurRadius="20"/>
+                        </Image.Effect>
+                    </Image>
+                </Grid>
+
+                <!-- SECTION TITLE -->
+                <TextBlock Text="Fő funkcióink" FontSize="48" FontWeight="Bold" Foreground="#264653" Margin="0,40,0,20" HorizontalAlignment="Center"/>
+
+                <!-- FEATURES -->
+                <UniformGrid Columns="3" HorizontalAlignment="Center" Margin="0,0,0,40">
+                    <!-- Feature 1 -->
+                    <Border Width="386" Height="300" Background="White" CornerRadius="18">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="img/background-apple.png" Width="70" Margin="0,20,0,10"/>
+                            <TextBlock Text="Személyre szabott étrend" FontSize="20" FontWeight="Bold" Foreground="#264653" TextAlignment="Center" Margin="0,0,0,5"/>
+                            <TextBlock Text="Kapj egyedi étrendet céljaidhoz és preferenciáidhoz igazítva, könnyedén követhető receptekkel." FontSize="16" Foreground="#52796F" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Feature 2 -->
+                    <Border Width="432" Height="300" Background="White" CornerRadius="18">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="img/background-heart.png" Width="70" Margin="0,20,0,10"/>
+                            <TextBlock Text="Egészségügyi adatok nyomon követése" FontSize="20" FontWeight="Bold" Foreground="#264653" TextAlignment="Center" Margin="0,0,0,5"/>
+                            <TextBlock Text="Figyeld a súlyodat, lépéseidet, alvásodat és egyéb fontos mutatókat egy helyen." FontSize="16" Foreground="#52796F" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Feature 3 -->
+                    <Border Width="381" Height="300" Background="White" CornerRadius="18">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="img/background-weight.png" Width="70" Margin="0,20,0,10"/>
+                            <TextBlock Text="Edzésterv és tevékenységkövetés" FontSize="20" FontWeight="Bold" Foreground="#264653" TextAlignment="Center" Margin="0,0,0,5"/>
+                            <TextBlock Text="Hozd ki a legtöbbet edzéseidből a személyre szabott tervekkel és részletes elemzésekkel." FontSize="16" Foreground="#52796F" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- WHY US -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,40,0,40">
+                    <TextBlock Text="Miért válaszd a Metabalance-t?" FontSize="52" FontWeight="Bold" Foreground="#264653" TextAlignment="Center"/>
+                    <TextBlock Text="Egyszerű, intuitív felületünk segít, hogy minden nap a legjobb formádat hozd. Személyre szabott tervek, közösségi támogatás és szakértői tanácsok egy helyen, így könnyedén elérheted és fenntarthatod egészségügyi céljaidat." 
+                               FontSize="20" Foreground="#52796F" TextWrapping="Wrap" Width="800" TextAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+
+                <!-- QUOTE -->
+                <Border Width="800" Height="120" Background="White" CornerRadius="16" HorizontalAlignment="Center" Margin="0,0,0,40">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="4" Opacity="0.15" Color="Black" BlurRadius="12"/>
+                    </Border.Effect>
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="22" VerticalAlignment="Center" Margin="10,0,10,0" Height="120">
+                        “A Metabalance teljesen megváltoztatta az étkezési szokásaimat. Végre tudatosan figyelek a táplálkozásomra, és sosem éreztem magam ilyen energikusnak!”
+                        <LineBreak/>
+                        - Péter, elégedett felhasználó
+                    </TextBlock>
+                </Border>
+
+                <!-- CTA -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
+                    <TextBlock Text="Kezdj egy egészségesebb életet még ma!" FontSize="40" FontWeight="Bold" Foreground="#264653" TextAlignment="Center"/>
+                    <Button Content="Regisztrálj most!" Width="300" Height="60" FontSize="22" Background="White" Foreground="Black" BorderThickness="0" Click="Registracio_Click" Margin="0,20,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- FOOTER -->
+        <Border Grid.Row="2" Background="#FFDAD5D5" BorderBrush="Black" BorderThickness="1" Height="80">
+            <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva." TextAlignment="Center" FontSize="22" Foreground="#264653" VerticalAlignment="Center"/>
+        </Border>
     </Grid>
 </Page>

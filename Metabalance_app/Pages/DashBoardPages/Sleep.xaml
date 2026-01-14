@@ -1,0 +1,203 @@
+﻿<Page x:Class="Metabalance_app.Pages.Sleep"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      Background="#F5F6FA">
+
+    <Page.Resources>
+
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="28"/>
+            <Setter Property="Margin" Value="0 0 0 28"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="20"
+                                      ShadowDepth="3"
+                                      Opacity="0.12"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Section Title -->
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0 0 0 16"/>
+        </Style>
+
+        <!-- Label -->
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#666"/>
+            <Setter Property="Margin" Value="0 0 0 6"/>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid Height="Auto" VerticalAlignment="Top" Background="White">
+
+        <!-- ================= TARTALOM ================= -->
+        <ScrollViewer Margin="0,52,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="20" MaxWidth="1400" Width="1413">
+
+                <!-- ===== Alvásnaplózás ===== -->
+
+                <!-- ===== Teljes alvásidő ===== -->
+                <!-- ===== Alvásnaplózás ===== -->
+
+                <!-- ===== Teljes alvásidő ===== -->
+                <!-- ===== Alvásnaplózás ===== -->
+                <Border Style="{StaticResource CardStyle}" Height="183">
+                    <StackPanel>
+
+                        <TextBlock Text="Alvásnaplózás"
+                                       Style="{StaticResource SectionTitle}"/>
+
+                        <Grid Margin="0 12 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Text="Lefekvés időpontja"
+                                               Style="{StaticResource LabelText}"/>
+                                <TextBox Height="40"
+                                             FontSize="15"
+                                             Text="22:00"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1"
+                                            Margin="24 0">
+                                <TextBlock Text="Felkelés időpontja"
+                                               Style="{StaticResource LabelText}"/>
+                                <TextBox Height="40"
+                                             FontSize="15"
+                                             Text="06:00"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="2"
+                                        Content="Alvás rögzítése"
+                                        Height="44"
+                                        Padding="28 0"
+                                        Margin="24 26 0 0"
+                                        Background="#FF6B6B"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        FontWeight="SemiBold"/>
+                        </Grid>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== Teljes alvásidő ===== -->
+                <Border Style="{StaticResource CardStyle}" Height="197">
+                    <StackPanel HorizontalAlignment="Center">
+
+                        <TextBlock Text="Teljes alvásidő"
+                                       FontSize="17"
+                                       Foreground="#666"/>
+
+                        <TextBlock Text="7.5 óra"
+                                       FontSize="52"
+                                       FontWeight="Bold"
+                                       Foreground="#FF6B6B"
+                                       Margin="0 14"/>
+
+                        <TextBlock Text="Pihentető alvás! Ne feledje, a jó alvás javítja a fókuszt és a hangulatot."
+                                       TextAlignment="Center"
+                                       Foreground="#777"
+                                       MaxWidth="700"/>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== Grafikon ===== -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+
+                        <TextBlock Text="Alvás az elmúlt 7 napban"
+                                       Style="{StaticResource SectionTitle}"/>
+
+                        <lvc:CartesianChart Height="260">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries Title="Alvásóra" Values="{Binding SleepHours}" />
+                            </lvc:CartesianChart.Series>
+
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Napok" Labels="{Binding Days}" />
+                            </lvc:CartesianChart.AxisX>
+
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Órák" />
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== Alvási tippek ===== -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+
+                        <TextBlock Text="Alvási tippek"
+                                       Style="{StaticResource SectionTitle}"/>
+
+                        <TextBlock Text="• Tartson rendszeres alvási ütemtervet, még hétvégén is." Margin="0 6"/>
+                        <TextBlock Text="• Gondoskodjon róla, hogy hálószobája sötét, csendes és hűvös legyen." Margin="0 6"/>
+                        <TextBlock Text="• Korlátozza a koffein fogyasztását lefekvés előtt." Margin="0 6"/>
+                        <TextBlock Text="• Rendszeresen mozogjon, de ne közvetlenül lefekvés előtt." Margin="0 6"/>
+                        <TextBlock Text="• Kerülje a nagy étkezéseket lefekvés előtt." Margin="0 6"/>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- SZÉLES KÖZÉPSŐ KONTAINER -->
+
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Height="52" VerticalAlignment="Top" Background="White" Margin="0,0,1,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Bal oldali logo és cím -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                <Image Source="/Pages/img/logo-removebg-preview.png" Height="40"/>
+                <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
+            </StackPanel>
+
+            <!-- Jobb oldali gombok -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
+                <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
+                <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
+                <Button Width="45" Height="48" Content="X" Background="White" BorderThickness="0" Click="Exit"/>
+                <Button Width="180" Height="48" Content="Kijelentkezés" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackToMain"/>
+                <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
+            </StackPanel>
+
+            <!-- Navbar gombok + ikonok (Dashboard stílus) -->
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-110,0,214,0"/>
+                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="32,0,82,0"/>
+                <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="164,0,-42,0"/>
+                <Button Content="Víz" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="293,0,-150,0"/>
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458"/>
+                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="526,0,-397,0"/>
+                <Image  Height="40" Margin="526,0,-326,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/weigthnav-removebg-preview.png"/>
+                <Image HorizontalAlignment="Left" Height="40" Margin="-121,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>
+                <Image  Height="40" Margin="163,0,37,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/sleepnav-removebg-preview.png"/>
+                <Image  Height="40" Margin="292,0,-92,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/waternav-removebg-preview.png"/>
+                <Image  Height="40" Margin="383,0,-183,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/moodnav-removebg-preview.png" RenderTransformOrigin="0.96,0.467"/>
+                <Image HorizontalAlignment="Left" Height="40" Margin="32,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/foodnav-removebg-preview.png"/>
+            </Grid>
+        </Grid>
+
+
+    </Grid>
+</Page>

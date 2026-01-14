@@ -43,6 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Pages\img\109602.png" />
     <Resource Include="Pages\img\background-apple.png" />
     <Resource Include="Pages\img\background-heart.png" />

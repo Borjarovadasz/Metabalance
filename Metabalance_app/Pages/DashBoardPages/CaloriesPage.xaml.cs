@@ -15,15 +15,13 @@ using System.Windows.Shapes;
 
 namespace Metabalance_app.Pages
 {
-    /// <summary>
-    /// Interaction logic for Dashboard.xaml
-    /// </summary>
-    public partial class Dashboard : Page
+    public partial class CaloriesPage : Page
     {
-        public Dashboard()
+        public CaloriesPage()
         {
             InitializeComponent();
         }
+
         private void Exit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -45,14 +43,14 @@ namespace Metabalance_app.Pages
 
 
         }
-        private void Calories(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new CaloriesPage());
-        }
-
         private void SleepPage(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Sleep());
+        }
+
+        private void BackDash(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Dashboard());
         }
 
         private void BackToMain(object sender, RoutedEventArgs e)
@@ -67,8 +65,43 @@ namespace Metabalance_app.Pages
 
         private void WeightClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Weight());
+             NavigationService.Navigate(new Weight());
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+             
+        }
+        private int totalCalories = 0;
+
+        private void AddFood_Click(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(CaloriesBox.Text.Trim(), out int cal))
+            {
+                MessageBox.Show("Írj be egy számot!");
+                return;
+            }
+
+            totalCalories += cal;
+
+            // piros szám + progress
+            TotalCalories.Text = totalCalories.ToString();
+            CaloriesProgress.Value = totalCalories;
+
+            // név
+            string foodName = FoodNameBox.Text.Trim();
+            if (string.IsNullOrWhiteSpace(foodName))
+                foodName = "Ismeretlen étel";
+
+            // LISTÁHOZ HOZZÁADÁS (legfelülre)
+            FoodsList.Items.Insert(0, $"{foodName} - {cal} kcal");
+
+            // input ürítés
+            FoodNameBox.Text = "";
+            CaloriesBox.Text = "";
+        }
     }
+
+
 }
+

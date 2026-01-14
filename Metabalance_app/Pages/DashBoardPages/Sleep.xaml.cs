@@ -16,14 +16,15 @@ using System.Windows.Shapes;
 namespace Metabalance_app.Pages
 {
     /// <summary>
-    /// Interaction logic for Dashboard.xaml
+    /// Interaction logic for Sleep.xaml
     /// </summary>
-    public partial class Dashboard : Page
+    public partial class Sleep : Page
     {
-        public Dashboard()
+        public Sleep()
         {
             InitializeComponent();
         }
+
         private void Exit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -45,19 +46,19 @@ namespace Metabalance_app.Pages
 
 
         }
-        private void Calories(object sender, RoutedEventArgs e)
+        private void BackDash(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new CaloriesPage());
-        }
-
-        private void SleepPage(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Sleep());
+            NavigationService.Navigate(new Dashboard());
         }
 
         private void BackToMain(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new MainPage());
+        }
+
+        private void CaloriesClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new CaloriesPage());
         }
 
         private void WaterClick(object sender, RoutedEventArgs e)
@@ -69,6 +70,5 @@ namespace Metabalance_app.Pages
         {
             NavigationService.Navigate(new Weight());
         }
-
     }
 }
