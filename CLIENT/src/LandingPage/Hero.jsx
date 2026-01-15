@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import MainPageImg from "../styles/Pictures/MainPageImg.jpeg";
 
 
 export default function Hero() {
@@ -24,7 +25,7 @@ export default function Hero() {
                 </div>
 
                 <div className="col-lg-5 text-end">
-                    <img src="src/styles/Pictures/landingpage-img.png"
+                    <img src={MainPageImg}
                          className="img-fluid rounded hero-img" />
                 </div>
 
