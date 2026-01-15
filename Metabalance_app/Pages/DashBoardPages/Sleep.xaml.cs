@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace Metabalance_app.Pages
 {
-    /// <summary>
-    /// Interaction logic for Sleep.xaml
-    /// </summary>
+
     public partial class Sleep : Page
     {
         public Sleep()

@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace Metabalance_app.Pages
 {
-    /// <summary>
-    /// Interaction logic for Weight.xaml
-    /// </summary>
+    
     public partial class Weight : Page
     {
         public Weight()

@@ -75,14 +75,6 @@
 
                     <CheckBox Content="Emlékezz rám"
                               VerticalAlignment="Center"/>
-
-                    <Button Content="Elfelejtetted a jelszavad?"
-                            Grid.Column="1"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Foreground="#D14B4B"
-                            Cursor="Hand"
-                            FontSize="13"/>
                 </Grid>
 
  

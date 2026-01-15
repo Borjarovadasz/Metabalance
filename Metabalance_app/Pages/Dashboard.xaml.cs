@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace Metabalance_app.Pages
 {
-    /// <summary>
-    /// Interaction logic for Dashboard.xaml
-    /// </summary>
+
     public partial class Dashboard : Page
     {
         public Dashboard()

@@ -84,19 +84,18 @@ namespace Metabalance_app.Pages
 
             totalCalories += cal;
 
-            // piros szám + progress
+            
             TotalCalories.Text = totalCalories.ToString();
             CaloriesProgress.Value = totalCalories;
 
-            // név
+          
             string foodName = FoodNameBox.Text.Trim();
             if (string.IsNullOrWhiteSpace(foodName))
                 foodName = "Ismeretlen étel";
 
-            // LISTÁHOZ HOZZÁADÁS (legfelülre)
+            
             FoodsList.Items.Insert(0, $"{foodName} - {cal} kcal");
 
-            // input ürítés
             FoodNameBox.Text = "";
             CaloriesBox.Text = "";
         }

@@ -10,10 +10,9 @@
 
     <Page.Resources>
 
-        <!-- Card -->
         <Style x:Key="CardStyle" TargetType="Border">
             <Setter Property="Width" Value="1344"/>
-            <!-- 70% -->
+      
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="14"/>
             <Setter Property="Padding" Value="24"/>
@@ -28,7 +27,7 @@
             </Setter>
         </Style>
 
-        <!-- Text styles -->
+     
         <Style x:Key="PageTitle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -45,28 +44,27 @@
 
     </Page.Resources>
 
-    <!-- ================= ROOT GRID ================= -->
+
     <Grid Width="1920" 
           HorizontalAlignment="Center"  Height="1072" VerticalAlignment="Top">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <!-- MAIN -->
+ 
             <ColumnDefinition Width="400"/>
-            <!-- SIDE (később) -->
+    
         </Grid.ColumnDefinitions>
 
-        <!-- ================= MAIN CONTENT ================= -->
         <ScrollViewer Grid.Column="0"
                       VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Margin="165,10,235,110">
 
             <StackPanel>
 
-                <!-- HEADER -->
+            
                 <StackPanel HorizontalAlignment="Center"
                             Margin="0 40 0 40"/>
 
-                <!-- NAPI SÚLYBEJEGYZÉS -->
+               
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
 
@@ -93,7 +91,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- TESTSÚLY VÁLTOZÁSA -->
+               
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
 
@@ -103,7 +101,7 @@
                                    Style="{StaticResource MutedText}"
                                    Margin="0 4 0 20"/>
 
-                        <!-- SUMMARY -->
+                        
                         <Grid Margin="0 0 0 20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -138,7 +136,7 @@
                             </Border>
                         </Grid>
 
-                        <!-- CHART PLACEHOLDER -->
+                        
                         <Border Height="260"
                                 Background="#F2F3F7"
                                 CornerRadius="8">
@@ -151,7 +149,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- FOOTER -->
+                
                 <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva."
                            Foreground="#AAA"
                            FontSize="12"
@@ -161,7 +159,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ================= SIDE PANEL (EMPTY FOR NOW) ================= -->
         <Grid Height="52"
             Width="1920"
             Background="#F0F8F8"

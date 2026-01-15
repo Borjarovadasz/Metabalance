@@ -10,20 +10,19 @@
 
     <Grid>
 
-        <!-- TOP NAVBAR -->
         <Grid Height="52" Background="White" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Logo + cím balra -->
+
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <Image Source="img/logo-removebg-preview.png" Height="40"/>
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653" Margin="10,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
 
-            <!-- Gombok jobbra -->
+           
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -33,11 +32,11 @@
             </StackPanel>
         </Grid>
 
-        <!-- MAIN CONTENT -->
+   
         <ScrollViewer Grid.Row="1" Margin="0,52,0,0" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="20" Width="Auto" Height="1161">
 
-                <!-- Üdvözlés + dashboard image -->
+               
                 <Grid Margin="0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -62,10 +61,10 @@
                     </Image>
                 </Grid>
 
-                <!-- Boxok: Víz, Kalória, Alvás, Hangulat, Súly -->
+                
                 <WrapPanel ItemHeight="277" ItemWidth="442" Margin="0,40,0,40" HorizontalAlignment="Center">
 
-                    <!-- Víz -->
+                   
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Vízfogyasztás" FontSize="24" FontWeight="Bold"/>
@@ -76,9 +75,9 @@
                         </Grid>
                     </Border>
 
-                    <!-- Kalória -->
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
+                            
                             <TextBlock Text="Kalóriabevitel" FontSize="24" FontWeight="Bold"/>
                             <TextBlock Text="1850 kcal" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
                             <TextBlock Text="250 kcal maradt a mai keretből." FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
@@ -87,7 +86,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Alvás -->
+                   
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Alvás" FontSize="24" FontWeight="Bold"/>
@@ -98,7 +97,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Hangulat -->
+                   
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Hangulatnapló" FontSize="24" FontWeight="Bold"/>
@@ -109,7 +108,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Súly -->
+                    
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Testsúly" FontSize="24" FontWeight="Bold"/>
@@ -122,7 +121,7 @@
 
                 </WrapPanel>
 
-                <!-- Footer -->
+               
 
             </StackPanel>
         </ScrollViewer>

@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace Metabalance_app.Pages
 {
-    /// <summary>
-    /// Interaction logic for Water.xaml
-    /// </summary>
+ 
     public partial class Water : Page
     {
         public Water()
@@ -74,7 +72,7 @@ namespace Metabalance_app.Pages
         {
             if (int.TryParse(TbIntake.Text, out int currentValue))
             {
-                currentValue += 200;      // 200-al növel
+                currentValue += 200;      
                 TbIntake.Text = currentValue.ToString();
             }
         }
@@ -83,8 +81,8 @@ namespace Metabalance_app.Pages
         {
             if (int.TryParse(TbIntake.Text, out int currentValue))
             {
-                currentValue -= 200;      // 200-al csökkent
-                if (currentValue < 0) currentValue = 0; // nem lehet negatív
+                currentValue -= 200;      
+                if (currentValue < 0) currentValue = 0; 
                 TbIntake.Text = currentValue.ToString();
             }
         }
@@ -99,22 +97,22 @@ namespace Metabalance_app.Pages
 
                 int goal = (int)SlGoal.Value;
 
-                // Frissítjük a hátralévőt
+              
                 int remaining = goal - dailyTotal;
                 if (remaining < 0) remaining = 0;
                 TbRemaining.Text = $"Hátralévő: {remaining} ml";
 
-                // Frissítjük a progressbart
+                
                 PbDaily.Maximum = goal;
                 PbDaily.Value = dailyTotal;
 
-                // Frissítjük az üzenetet
+                
                 if (dailyTotal >= goal)
                     TbMessage.Text = "Gratulálunk! Elérted a napi célt!";
                 else
                     TbMessage.Text = "Csak így tovább, folytasd a napot vízzel!";
 
-                // FRISSÍTÉS KÖRGRÁFIKON
+                
                 double percent = Math.Min((double)dailyTotal / goal * 100, 100);
                 TbPercent.Text = $"{Math.Round(percent)}%";
 

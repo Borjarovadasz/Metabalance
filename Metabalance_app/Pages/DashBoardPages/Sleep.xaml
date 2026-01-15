@@ -6,7 +6,7 @@
 
     <Page.Resources>
 
-        <!-- Card Style -->
+  
         <Style x:Key="CardStyle" TargetType="Border">
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="14"/>
@@ -22,14 +22,14 @@
             </Setter>
         </Style>
 
-        <!-- Section Title -->
+       
         <Style x:Key="SectionTitle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Margin" Value="0 0 0 16"/>
         </Style>
 
-        <!-- Label -->
+
         <Style x:Key="LabelText" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#666"/>
             <Setter Property="Margin" Value="0 0 0 6"/>
@@ -39,17 +39,11 @@
 
     <Grid Height="Auto" VerticalAlignment="Top" Background="White">
 
-        <!-- ================= TARTALOM ================= -->
+       
         <ScrollViewer Margin="0,52,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="20" MaxWidth="1400" Width="1413">
 
-                <!-- ===== Alvásnaplózás ===== -->
-
-                <!-- ===== Teljes alvásidő ===== -->
-                <!-- ===== Alvásnaplózás ===== -->
-
-                <!-- ===== Teljes alvásidő ===== -->
-                <!-- ===== Alvásnaplózás ===== -->
+               
                 <Border Style="{StaticResource CardStyle}" Height="183">
                     <StackPanel>
 
@@ -94,7 +88,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ===== Teljes alvásidő ===== -->
+              
                 <Border Style="{StaticResource CardStyle}" Height="197">
                     <StackPanel HorizontalAlignment="Center">
 
@@ -116,7 +110,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ===== Grafikon ===== -->
+               
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
 
@@ -140,7 +134,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ===== Alvási tippek ===== -->
+                
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
 
@@ -156,7 +150,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- SZÉLES KÖZÉPSŐ KONTAINER -->
+              
 
             </StackPanel>
         </ScrollViewer>
@@ -166,13 +160,12 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Bal oldali logo és cím -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <Image Source="/Pages/img/logo-removebg-preview.png" Height="40"/>
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
             </StackPanel>
 
-            <!-- Jobb oldali gombok -->
+           
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -181,7 +174,7 @@
                 <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
             </StackPanel>
 
-            <!-- Navbar gombok + ikonok (Dashboard stílus) -->
+            
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-110,0,214,0"/>
                 <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="32,0,82,0"/>

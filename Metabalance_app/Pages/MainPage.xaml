@@ -9,29 +9,29 @@
       Background="#F5F6FA">
 
     <Grid>
-        <!-- ROW DEFINITIONS -->
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Top Nav Bar -->
+          
             <RowDefinition Height="*"/>
-            <!-- Main Content -->
+            
             <RowDefinition Height="Auto"/>
-            <!-- Footer -->
+           
         </Grid.RowDefinitions>
 
-        <!-- TOP NAV BAR -->
+       
         <Grid Height="52"
               Background="#F0F8F8"
               VerticalAlignment="Top"
               Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <!-- Bal oldal: Logo + cím -->
+               
                 <ColumnDefinition Width="Auto"/>
-                <!-- Jobb oldal: Gombok + profilikon -->
+               
             </Grid.ColumnDefinitions>
 
-            <!-- BAL OLDAL: LOGO + CÍM -->
+           
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <Image Source="img/logo-removebg-preview.png" Height="40"/>
                 <TextBlock Text="Metabalance"
@@ -42,7 +42,7 @@
                            VerticalAlignment="Center"/>
             </StackPanel>
 
-            <!-- JOBB OLDAL: GOMBOK + PROFILIKON -->
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="{x:Null}" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="{x:Null}" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -52,10 +52,10 @@
             </StackPanel>
         </Grid>
 
-        <!-- MAIN CONTENT -->
+     
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,10">
             <StackPanel Margin="20">
-                <!-- HEADER -->
+        
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -76,12 +76,11 @@
                     </Image>
                 </Grid>
 
-                <!-- SECTION TITLE -->
+                
                 <TextBlock Text="Fő funkcióink" FontSize="48" FontWeight="Bold" Foreground="#264653" Margin="0,40,0,20" HorizontalAlignment="Center"/>
 
-                <!-- FEATURES -->
                 <UniformGrid Columns="3" HorizontalAlignment="Center" Margin="0,0,0,40">
-                    <!-- Feature 1 -->
+                    
                     <Border Width="386" Height="300" Background="White" CornerRadius="18">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image Source="img/background-apple.png" Width="70" Margin="0,20,0,10"/>
@@ -90,7 +89,7 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Feature 2 -->
+                    
                     <Border Width="432" Height="300" Background="White" CornerRadius="18">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image Source="img/background-heart.png" Width="70" Margin="0,20,0,10"/>
@@ -99,7 +98,7 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Feature 3 -->
+                   
                     <Border Width="381" Height="300" Background="White" CornerRadius="18">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image Source="img/background-weight.png" Width="70" Margin="0,20,0,10"/>
@@ -109,14 +108,14 @@
                     </Border>
                 </UniformGrid>
 
-                <!-- WHY US -->
+               
                 <StackPanel HorizontalAlignment="Center" Margin="0,40,0,40">
                     <TextBlock Text="Miért válaszd a Metabalance-t?" FontSize="52" FontWeight="Bold" Foreground="#264653" TextAlignment="Center"/>
                     <TextBlock Text="Egyszerű, intuitív felületünk segít, hogy minden nap a legjobb formádat hozd. Személyre szabott tervek, közösségi támogatás és szakértői tanácsok egy helyen, így könnyedén elérheted és fenntarthatod egészségügyi céljaidat." 
                                FontSize="20" Foreground="#52796F" TextWrapping="Wrap" Width="800" TextAlignment="Center" Margin="0,10,0,0"/>
                 </StackPanel>
 
-                <!-- QUOTE -->
+                
                 <Border Width="800" Height="120" Background="White" CornerRadius="16" HorizontalAlignment="Center" Margin="0,0,0,40">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="4" Opacity="0.15" Color="Black" BlurRadius="12"/>
@@ -128,7 +127,7 @@
                     </TextBlock>
                 </Border>
 
-                <!-- CTA -->
+               
                 <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
                     <TextBlock Text="Kezdj egy egészségesebb életet még ma!" FontSize="40" FontWeight="Bold" Foreground="#264653" TextAlignment="Center"/>
                     <Button Content="Regisztrálj most!" Width="300" Height="60" FontSize="22" Background="White" Foreground="Black" BorderThickness="0" Click="Registracio_Click" Margin="0,20,0,0"/>
@@ -136,7 +135,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- FOOTER -->
+        
         <Border Grid.Row="2" Background="#FFDAD5D5" BorderBrush="Black" BorderThickness="1" Height="80">
             <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva." TextAlignment="Center" FontSize="22" Foreground="#264653" VerticalAlignment="Center"/>
         </Border>

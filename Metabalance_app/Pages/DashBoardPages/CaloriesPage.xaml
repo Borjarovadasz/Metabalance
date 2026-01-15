@@ -6,21 +6,18 @@
 
 
     <Grid>
-
-        <!-- TOP NAVBAR -->
         <Grid Height="52" VerticalAlignment="Top" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Bal oldali logo és cím -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <Image Source="/Pages/img/logo-removebg-preview.png" Height="40"/>
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
             </StackPanel>
 
-            <!-- Jobb oldali gombok -->
+            
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -29,7 +26,7 @@
                 <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
             </StackPanel>
 
-            <!-- Navbar gombok + ikonok (Dashboard stílus) -->
+            
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-38,0,263,0"/>
                 <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="445,0,-220,0"/>
@@ -47,11 +44,11 @@
             </Grid>
         </Grid>
 
-        <!-- MAIN CONTENT -->
+
         <ScrollViewer Margin="0,52,0,0" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="20" HorizontalAlignment="Center" MaxWidth="1400">
 
-                <!-- ÉTEL HOZZÁADÁSA -->
+               
                 <Border Background="White" CornerRadius="14" Padding="24" Margin="0 0 0 24">
                     <StackPanel>
                         <TextBlock Text="Étel Hozzáadása" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12" />
@@ -61,10 +58,10 @@
                     </StackPanel>
                 </Border>
 
-                <!-- WrapPanel a kártyáknak (szélesebb) -->
+              
                 <WrapPanel ItemWidth="460" ItemHeight="277" HorizontalAlignment="Center" Margin="0,0,0,20">
 
-                    <!-- MAI ÖSSZEFOGLALÓ -->
+                    
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Mai Összefoglaló" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
@@ -83,7 +80,7 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- LEGUTÓBBI ÉTELEK -->
+                    
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <StackPanel>
                             <TextBlock x:Name="LastFoodText" Text="Legutóbb naplózott ételek" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
@@ -97,7 +94,7 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- GRAFIKON -->
+                    
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <lvc:CartesianChart Height="240">
                             <lvc:CartesianChart.Series>
@@ -114,7 +111,7 @@
                         </lvc:CartesianChart>
                     </Border>
 
-                    <!-- TIPPEK -->
+                    
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Tippek a Kalória Kezeléséhez" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
@@ -127,7 +124,7 @@
 
                 </WrapPanel>
 
-                <!-- FOOTER -->
+               
 
             </StackPanel>
         </ScrollViewer>
