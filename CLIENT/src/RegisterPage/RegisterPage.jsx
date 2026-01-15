@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
+import { apiFetch } from "../api";
+import Footer from "../components/Footer";
 
 export default function RegisterPage() {
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ export default function RegisterPage() {
     password: "",
     confirmPassword: "",
     phone: "",
-    gender: "Férfi"
+    gender: "male"
   });
 
   const handleChange = (e) => {
@@ -28,35 +29,32 @@ export default function RegisterPage() {
 
     const { firstName, lastName, email, password, confirmPassword, phone, gender } = formData;
 
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || !phone.trim() || !gender.trim()) {
-      alert("Kérlek töltsd ki az összes mezőt!");
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+      alert("Kerlek toltsd ki az osszes kotelezo mezot!");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("A két jelszó nem egyezik!");
+      alert("A ket jelszo nem egyezik!");
       return;
     }
 
-    const res = await fetch("http://localhost:5000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: `${firstName} ${lastName}`,
-        email,
-        password,
-        phone,
-        gender
-      })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Sikeres regisztráció!");
+    try {
+      await apiFetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          keresztnev: firstName,
+          vezeteknev: lastName,
+          email,
+          password,
+          phone,
+          gender
+        })
+      });
+      alert("Sikeres regisztracio!");
       navigate("/login");
-    } else {
-      alert(data.message || "Hiba történt!");
+    } catch (err) {
+      alert(err.message || "Hiba tortent!");
     }
   };
 
@@ -64,17 +62,17 @@ export default function RegisterPage() {
     <div className="register-page">
       <div className="register-container">
 
-        <h1>Regisztráció</h1>
-        <p className="subtitle">Hozza létre fiókját, és fedezze fel a lehetőségeket.</p>
+        <h1>Regisztracio</h1>
+        <p className="subtitle">Hozd letre fiokodat, es fedezd fel a lehetosegeket.</p>
 
         <form onSubmit={handleSubmit} className="register-form">
 
           <div className="register-row">
             <div className="register-col">
-              <label>Keresztnév</label>
+              <label>Keresztnev</label>
               <input
                 type="text"
-                placeholder="Keresztnév"
+                placeholder="Keresztnev"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
@@ -82,10 +80,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="register-col">
-              <label>Vezetéknév</label>
+              <label>Vezeteknev</label>
               <input
                 type="text"
-                placeholder="Vezetéknév"
+                placeholder="Vezeteknev"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
@@ -102,7 +100,7 @@ export default function RegisterPage() {
             onChange={handleChange}
           />
 
-          <label>Jelszó</label>
+          <label>Jelszo</label>
           <input
             type="password"
             placeholder="********"
@@ -111,7 +109,7 @@ export default function RegisterPage() {
             onChange={handleChange}
           />
 
-          <label>Jelszó megerősítése</label>
+          <label>Jelszo megerositese</label>
           <input
             type="password"
             placeholder="********"
@@ -120,7 +118,7 @@ export default function RegisterPage() {
             onChange={handleChange}
           />
 
-          <label>Telefonszám</label>
+          <label>Telefonszam (opcionalis)</label>
           <input
             type="text"
             name="phone"
@@ -134,20 +132,20 @@ export default function RegisterPage() {
             value={formData.gender}
             onChange={handleChange}
           >
-            <option value="Férfi">Férfi</option>
-            <option value="Nő">Nő</option>
+            <option value="male">Ferfi</option>
+            <option value="female">No</option>
+            <option value="other">Egyeb</option>
+            <option value="unknown">Nem adom meg</option>
           </select>
 
           <button type="submit" className="btn-register">
-            Regisztráció
+            Regisztracio
           </button>
         </form>
 
       </div>
 
-      <footer className="register-footer">
-        © 2025 Metabalance. Minden jog fenntartva.
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -17,7 +17,6 @@
   text-align: center;
 }
 
-/* CÍM, AL CÍM */
 .login-title {
   margin: 0;
   font-size: 1.875rem; 
@@ -32,7 +31,7 @@
   color: #6b6b6b;
 }
 
-/* FORM */
+
 .login-form {
   text-align: left;
 }

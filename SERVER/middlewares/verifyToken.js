@@ -5,11 +5,16 @@ module.exports = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) return res.status(401).json({ message: "Token szükséges" });
+  if (!token) {
+    return res.status(401).json({ message: "Token szukseges" });
+  }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Érvénytelen token" });
+    if (err) {
+      return res.status(403).json({ message: "Ervenytelen vagy lejart token" });
+    }
     req.userId = decoded.id;
+    req.userRole = decoded.role || "user";
     next();
   });
 };

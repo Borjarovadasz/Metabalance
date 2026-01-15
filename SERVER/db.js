@@ -2,22 +2,22 @@ const mysql = require("mysql2/promise");
 require("dotenv").config();
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,       // pl. localhost
-  user: process.env.DB_USER,       // pl. root
-  password: process.env.DB_PASSWORD, // pl. üres XAMPP
-  database: process.env.DB_NAME,   // <-- most már a helyes név
-  port: process.env.DB_PORT || 3306,
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "metabalance",
+  port: Number(process.env.DB_PORT) || 3306,
   waitForConnections: true,
   connectionLimit: 10
 });
 
-// Teszt kapcsolat
+// Simple startup check
 (async () => {
   try {
     await pool.query("SELECT 1");
-    console.log("MySQL kapcsolat OK");
+    console.log("MySQL connection OK");
   } catch (err) {
-    console.error("MySQL HIBA:", err.code, err.message);
+    console.error("MySQL connection error:", err.message);
   }
 })();
 

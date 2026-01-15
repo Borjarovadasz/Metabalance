@@ -1,0 +1,69 @@
+﻿body {
+    background: #ffffff;
+}
+
+/* HERO */
+.hero-title {
+    font-size: 32px;
+}
+
+.hero-desc {
+    font-size: 15px;
+}
+
+.hero-img {
+    max-width: 360px;
+    border-radius: 12px;
+}
+
+.features-title {
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+.feature-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+
+.why-section h4 {
+    font-size: 19px;
+}
+
+.testimonial-box {
+    max-width: 600px;
+    background: #f9c5c7;
+    border-radius: 12px;
+    color: #5a1f1f;
+}
+
+
+body, p, h1, h2, h3, h4, h5, h6, button, .btn, a, small, span {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important; 
+}
+
+
+.navbar .text-danger, 
+.navbar .text-dark { 
+    font-family: system-ui, sans-serif !important;
+    font-weight: 500 !important; 
+}
+
+
+
+.meta-footer {
+    background-color: #F3F3F3; 
+    width: 100%;
+    padding: 20px 0;
+    border-top: none;
+    margin-top: auto;
+}
+
+.meta-footer small {
+    font-weight: 500 !important;
+    color: #8f8f8f !important;
+    font-size: 13px; 
+}

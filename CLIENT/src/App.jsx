@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /* LANDING PAGE */
 import Navbar from "./LandingPage/Navbar";
@@ -6,7 +6,7 @@ import Hero from "./LandingPage/Hero";
 import Features from "./LandingPage/Features";
 import Why from "./LandingPage/Why";
 import Testimonial from "./LandingPage/Testimonial";
-import Footer from "./LandingPage/Footer";
+import Footer from "./components/Footer";
 
 /* LOGIN PAGE */
 import LoginPage from "./LoginPage/LoginPage";
@@ -16,9 +16,13 @@ import RegisterPage from "./RegisterPage/RegisterPage";
 
 /* DASHBOARD */
 import DashboardPage from "./MainPage/MainPage";
+import WaterPage from "./WaterPage/WaterPage";
+import CaloriesPage from "./CaloriesPage/CaloriesPage";
+import SleepPage from "./SleepPage/SleepPage";
+// MoodPage and WeightPage removed
 
 /* STYLES */
-import "./styles/LandingPage.css";
+import "./LandingPage/LandingPage.css";
 
 export default function App() {
     return (
@@ -48,6 +52,9 @@ export default function App() {
 
                 {/* DASHBOARD / MAINPAGE */}
                 <Route path="/mainpage" element={<DashboardPage />} />
+                <Route path="/water" element={<WaterPage />} />
+                <Route path="/calories" element={<CaloriesPage />} />
+                <Route path="/sleep" element={<SleepPage />} />
 
             </Routes>
         </BrowserRouter>
