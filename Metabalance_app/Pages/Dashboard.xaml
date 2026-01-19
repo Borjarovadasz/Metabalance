@@ -44,7 +44,11 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" VerticalAlignment="Top">
-                        <TextBlock Text="Üdv újra, Péter! Merre tart ma az egészséged?" FontSize="48" FontWeight="Bold" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="WelcomeText"
+                       Text="Üdv újra!"
+                       FontSize="48"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"/>
                         <TextBlock Text="Kövesd nyomon az összes egészséggel kapcsolatos adatodat egyetlen helyen. Állíts be célokat, figyeld a fejlődésedet, és élj teljesebb életet a Metabalance segítségével."
                                    FontSize="24" TextWrapping="Wrap" Margin="0,20,0,0"/>
                     </StackPanel>
@@ -67,9 +71,9 @@
                    
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
-                            <TextBlock Text="Vízfogyasztás" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock Text="2.3L" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock Text="Még 0.7 L van hátra a mai cél eléréséhez!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="WaterText" Text="Vízfogyasztás" FontWeight="Bold" Margin="0,0,0,40" FontSize="24"/>
+                            <TextBlock x:Name="WaterValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
+                            <TextBlock x:Name="WaterHintText" Text="Rögzíts vizet a mai napra!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
                             <Image Source="img/water.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-16,10,201"/>
                             <Button Content="Megtekintés" Width="90" Height="46" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,178,0,0" Click="WaterClick" Background="#FFFBB6B6"/>
                         </Grid>
@@ -77,10 +81,10 @@
 
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
-                            
+
                             <TextBlock Text="Kalóriabevitel" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock Text="1850 kcal" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock Text="250 kcal maradt a mai keretből." FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="CalorieHintText" Text="Rögzíts a mai napi kalóriabeviteledet!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="CalorieValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
                             <Image Source="img/food.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-16,4,201"/>
                             <Button Content="Megtekintés" Width="88" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,178,0,0" Click="Calories" Background="#FFFBB6B6"/>
                         </Grid>
@@ -90,8 +94,8 @@
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Alvás" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock Text="7 óra 45 perc" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock Text="Kiváló alvásminőség az elmúlt éjszaka." FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="SleepValueText" />
+                           
                             <Image Source="img/sleep.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-22,0,207"/>
                             <Button Content="Megtekintés" Width="90" Height="46" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,180,0,0" Click="SleepPage" Background="#FFFBB6B6"/>
                         </Grid>
@@ -101,8 +105,8 @@
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Hangulatnapló" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock Text="Mérges" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock Text="Értékeld a mai hangulatodat!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="MoodValueText" />
+                           
                             <Image Source="img/mood.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-26,0,211"/>
                             <Button Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,172,0,0" Background="#FFFBB6B6"/>
                         </Grid>
@@ -112,8 +116,9 @@
                     <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
                         <Grid Margin="10">
                             <TextBlock Text="Testsúly" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock Text="72.3 kg" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock Text="Csak így tovább!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="WeightValueText" />
+
+                            
                             <Image Source="img/weight.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-24,10,209"/>
                             <Button Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,169,0,0" Click="WeightClick" Background="#FFFBB6B6"/>
                         </Grid>

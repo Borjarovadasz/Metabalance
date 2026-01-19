@@ -55,7 +55,8 @@
                                  Padding="8"
                                  Background="#FAFAFA"
                                  BorderBrush="#DDDDDD"
-                                 BorderThickness="1"/>
+                                 BorderThickness="1"
+                                 x:Name="FirstNameTextBox"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
@@ -64,7 +65,8 @@
                                  Padding="8"
                                  Background="#FAFAFA"
                                  BorderBrush="#DDDDDD"
-                                 BorderThickness="1"/>
+                                 BorderThickness="1"
+                                 x:Name="LastNameTextBox"/>
                     </StackPanel>
                 </Grid>
 
@@ -77,7 +79,8 @@
                              Padding="8"
                              Background="#FAFAFA"
                              BorderBrush="#DDDDDD"
-                             BorderThickness="1"/>
+                             BorderThickness="1"
+                             x:Name="EmailTextBox"/>
                 </StackPanel>
 
 
@@ -89,7 +92,8 @@
                                  Padding="8"
                                  Background="#FAFAFA"
                                  BorderBrush="#DDDDDD"
-                                 BorderThickness="1"/>
+                                 BorderThickness="1"
+                                 x:Name="PasswordBox"/>
                 </StackPanel>
 
 
@@ -101,7 +105,8 @@
                                  Padding="8"
                                  Background="#FAFAFA"
                                  BorderBrush="#DDDDDD"
-                                 BorderThickness="1"/>
+                                 BorderThickness="1"
+                                 x:Name="ConfirmPasswordBox"/>
                 </StackPanel>
 
 
@@ -113,7 +118,8 @@
                              Padding="8"
                              Background="#FAFAFA"
                              BorderBrush="#DDDDDD"
-                             BorderThickness="1"/>
+                             BorderThickness="1"
+                             x:Name="PhoneTextBox"/>
                 </StackPanel>
                 
 
@@ -124,7 +130,8 @@
                     <ComboBox Height="36"
                               Background="#FAFAFA"
                               BorderBrush="#DDDDDD"
-                              BorderThickness="1">
+                              BorderThickness="1"
+                              x:Name="GenderTextBox">
                         <ComboBoxItem Content="Férfi" />
                         <ComboBoxItem Content="Nő" />
                        
@@ -139,7 +146,8 @@
                         FontWeight="SemiBold"
                         BorderThickness="0"
                         Cursor="Hand"
-                        Margin="0,10,0,0"/>
+                        Margin="0,10,0,0"
+                        Click="Register_Click"/>
 
             </StackPanel>
         </Border>

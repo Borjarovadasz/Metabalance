@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YourAppName.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -20,6 +21,86 @@ namespace Metabalance_app.Pages
         public CaloriesPage()
         {
             InitializeComponent();
+            Loaded += CaloriesPage_Loaded;
+        }
+
+        private readonly ApiClient _api = new ApiClient();
+        private const int DailyGoalKcal = 2000;
+
+        private async void CaloriesPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await RefreshCaloriesAsync();
+        }
+
+        private async void AddFood_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // kcal beolvasás
+                if (!int.TryParse(CaloriesBox.Text.Trim(), out int cal) || cal <= 0)
+                {
+                    MessageBox.Show("Írj be egy pozitív számot a kalóriához!");
+                    return;
+                }
+
+                // ételnév
+                string foodName = FoodNameBox.Text.Trim();
+                if (string.IsNullOrWhiteSpace(foodName))
+                    foodName = "Ismeretlen étel";
+
+                // ✅ mentés backendbe
+                await _api.CreateMeasurementAsync(
+                    tipus: "KALORIA",
+                    ertek: cal,
+                    mertekegyseg: "kcal",
+                    megjegyzes: foodName
+                );
+
+                // input ürítés
+                FoodNameBox.Text = "";
+                CaloriesBox.Text = "";
+
+                // ✅ frissítés DB-ből
+                await RefreshCaloriesAsync();
+
+                MessageBox.Show("Étel rögzítve ✅");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba: " + ex.Message);
+            }
+        }
+
+        private async System.Threading.Tasks.Task RefreshCaloriesAsync()
+        {
+            try
+            {
+                // mai KALORIA mérések
+                var list = await _api.GetMeasurementsAsync(tipus: "KALORIA", datum: DateTime.Today, limit: 100);
+
+                var total = list.Sum(x => x.ertek);
+
+                // UI: összeg + progress
+                TotalCalories.Text = $"{total:0}";
+                CaloriesProgress.Maximum = DailyGoalKcal;
+                CaloriesProgress.Value = Math.Min(total, DailyGoalKcal);
+
+                // UI: lista (legfrissebb felül)
+                FoodsList.ItemsSource = list
+                    .OrderByDescending(x => x.datum)
+                    .Select(x =>
+                    {
+                        var name = string.IsNullOrWhiteSpace(x.megjegyzes) ? "Ismeretlen étel" : x.megjegyzes;
+                        return $"{name} - {x.ertek:0} kcal";
+                    })
+                    .ToList();
+            }
+            catch
+            {
+                TotalCalories.Text = "0";
+                CaloriesProgress.Value = 0;
+                FoodsList.ItemsSource = null;
+            }
         }
 
         private void Exit(object sender, RoutedEventArgs e)
@@ -68,37 +149,7 @@ namespace Metabalance_app.Pages
              NavigationService.Navigate(new Weight());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-             
-        }
-        private int totalCalories = 0;
 
-        private void AddFood_Click(object sender, RoutedEventArgs e)
-        {
-            if (!int.TryParse(CaloriesBox.Text.Trim(), out int cal))
-            {
-                MessageBox.Show("Írj be egy számot!");
-                return;
-            }
-
-            totalCalories += cal;
-
-            
-            TotalCalories.Text = totalCalories.ToString();
-            CaloriesProgress.Value = totalCalories;
-
-          
-            string foodName = FoodNameBox.Text.Trim();
-            if (string.IsNullOrWhiteSpace(foodName))
-                foodName = "Ismeretlen étel";
-
-            
-            FoodsList.Items.Insert(0, $"{foodName} - {cal} kcal");
-
-            FoodNameBox.Text = "";
-            CaloriesBox.Text = "";
-        }
     }
 
 
