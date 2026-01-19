@@ -11,15 +11,9 @@ Célja, hogy a felhasználók átlátható statisztikák, grafikonok és motivá
 
 💤 Alvási szokások követése
 
-🚶‍♂️ Lépésszámlálás
-
 📊 Statisztikák és grafikonok
 
 🎯 Rövid- és hosszútávú célok kezelése
-
-🔔 Emlékeztetők és motivációs üzenetek
-
-🏆 Rangok és fejlődéskövetés
 
 👥 Szerepkörök
 👤 Felhasználó
