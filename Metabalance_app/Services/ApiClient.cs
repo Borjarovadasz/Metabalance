@@ -1,20 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 using Metabalance_app.Services;
 
 namespace YourAppName.Services
 {
     public class ApiClient
     {
-        private readonly HttpClient _http = new HttpClient
+        private const string BaseUrl = "http://localhost:5000/";
+        private readonly HttpClient _http;
+
+        public ApiClient()
         {
-            BaseAddress = new Uri("http://localhost:5000/api/auth/")
-        };
+            _http = new HttpClient { BaseAddress = new Uri(BaseUrl) };
+        }
+
+        // ===== DTO-k =====
+
         public class MeasurementDto
         {
             public int id { get; set; }
@@ -23,77 +29,6 @@ namespace YourAppName.Services
             public string? mertekegyseg { get; set; }
             public DateTime datum { get; set; }
             public string? megjegyzes { get; set; }
-        }
-
-        public async Task CreateMeasurementAsync(string tipus, double ertek, string mertekegyseg, string? megjegyzes = null)
-        {
-            if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token");
-
-            var body = new
-            {
-                tipus,
-                ertek,
-                mertekegyseg,
-                datum = DateTime.Now.ToString("o"),
-                megjegyzes = megjegyzes 
-            };
-
-            var req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5000/api/measurements");
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
-            req.Content = JsonContent.Create(body);
-
-            var resp = await _http.SendAsync(req);
-            if (!resp.IsSuccessStatusCode)
-                throw new Exception(await resp.Content.ReadAsStringAsync());
-        }
-
-        public async Task<List<MeasurementDto>> GetMeasurementsAsync(string tipus, DateTime datum, int limit = 200)
-        {
-            if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token");
-
-            var url =
-                $"http://localhost:5000/api/measurements?tipus={Uri.EscapeDataString(tipus)}&datum={datum:yyyy-MM-dd}&limit={limit}";
-
-            var req = new HttpRequestMessage(HttpMethod.Get, url);
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
-
-            var resp = await _http.SendAsync(req);
-            if (!resp.IsSuccessStatusCode)
-                throw new Exception(await resp.Content.ReadAsStringAsync());
-
-            return await resp.Content.ReadFromJsonAsync<List<MeasurementDto>>() ?? new List<MeasurementDto>();
-        }
-
-
-        public async Task<double> GetTodayWaterTotalMlAsync()
-        {
-            var list = await GetTodayMeasurementsAsync("VIZ");
-            return list.Sum(x => x.ertek);
-        }
-
-        public async Task<double> GetTodayCaloriesTotalAsync()
-        {
-            var list = await GetTodayMeasurementsAsync("KALORIA");
-            return list.Sum(x => x.ertek);
-        }
-
-        public async Task<List<MeasurementDto>> GetTodayMeasurementsAsync(string tipus)
-        {
-            if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token");
-
-            var url = $"http://localhost:5000/api/measurements?tipus={Uri.EscapeDataString(tipus)}&datum={DateTime.Today:yyyy-MM-dd}";
-
-            var req = new HttpRequestMessage(HttpMethod.Get, url);
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
-
-            var resp = await _http.SendAsync(req);
-            if (!resp.IsSuccessStatusCode)
-                throw new Exception(await resp.Content.ReadAsStringAsync());
-
-            return await resp.Content.ReadFromJsonAsync<List<MeasurementDto>>() ?? new List<MeasurementDto>();
         }
 
         public class UserDto
@@ -109,38 +44,38 @@ namespace YourAppName.Services
             public string token { get; set; } = "";
         }
 
-        public async Task<bool> LoginAsync(string email, string password)
+        public class DailyStatsDto
         {
-            var resp = await _http.PostAsJsonAsync("login", new { email, password });
-
-            if (!resp.IsSuccessStatusCode)
-                return false;
-
-            var data = await resp.Content.ReadFromJsonAsync<LoginResponse>();
-            if (data == null || string.IsNullOrWhiteSpace(data.token))
-                throw new Exception("Sikeres login, de nem jött token a backendtől.");
-
-            // ✅ token eltárolása
-            AuthState.token = data.token;
-
-            return true;
+            public double water { get; set; }
+            public double calories { get; set; }
+            public double sleep { get; set; }
+            public string? mood { get; set; }
+            public double? weight { get; set; }
         }
 
-        public async Task<UserDto> GetMeAsync()
+        // ===== belső helper =====
+
+        private static void EnsureToken()
         {
             if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token, jelentkezz be!");
-
-            var req = new HttpRequestMessage(HttpMethod.Get, "me"); // ✅ BaseAddress miatt "me"
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
-
-            var resp = await _http.SendAsync(req);
-            if (!resp.IsSuccessStatusCode)
-                throw new Exception(await resp.Content.ReadAsStringAsync());
-
-            return await resp.Content.ReadFromJsonAsync<UserDto>()
-                   ?? throw new Exception("Üres válasz");
+                throw new Exception("Nincs token");
         }
+
+        private HttpRequestMessage Authed(HttpMethod method, string url)
+        {
+            EnsureToken();
+            var req = new HttpRequestMessage(method, url);
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
+            return req;
+        }
+
+        private static async Task EnsureSuccess(HttpResponseMessage resp)
+        {
+            if (resp.IsSuccessStatusCode) return;
+            throw new Exception(await resp.Content.ReadAsStringAsync());
+        }
+
+        // ===== AUTH =====
 
         public async Task<bool> RegisterAsync(
             string firstName,
@@ -148,8 +83,7 @@ namespace YourAppName.Services
             string email,
             string password,
             string? phone = null,
-            string? gender = null
-        )
+            string? gender = null)
         {
             var payload = new
             {
@@ -161,87 +95,130 @@ namespace YourAppName.Services
                 gender
             };
 
-            var resp = await _http.PostAsJsonAsync("register", payload);
-
+            var resp = await _http.PostAsJsonAsync("api/auth/register", payload);
             if (resp.IsSuccessStatusCode) return true;
 
-            var msg = await resp.Content.ReadAsStringAsync();
-            throw new Exception(msg);
+            throw new Exception(await resp.Content.ReadAsStringAsync());
         }
 
-        public class DailyStatsDto
+        public async Task<bool> LoginAsync(string email, string password)
         {
-            public double water { get; set; }
-            public double calories { get; set; }
-            public double sleep { get; set; }
-            public string? mood { get; set; }
-            public double? weight { get; set; }
+            var resp = await _http.PostAsJsonAsync("api/auth/login", new { email, password });
+            if (!resp.IsSuccessStatusCode) return false;
 
-            // ha van goals object, később bővíthető
+            var data = await resp.Content.ReadFromJsonAsync<LoginResponse>();
+            if (data == null || string.IsNullOrWhiteSpace(data.token))
+                throw new Exception("Sikeres login, de nem jött token a backendtől.");
+
+            AuthState.token = data.token;
+            return true;
         }
 
-        public async Task<DailyStatsDto> GetDailyStatsAsync()
+        public async Task<UserDto> GetMeAsync()
         {
-            if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token");
-
-            var req = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5000/api/statistics/daily");
-            req.Headers.Authorization =
-                new AuthenticationHeaderValue("Bearer", AuthState.token );
-
+            var req = Authed(HttpMethod.Get, "api/auth/me");
             var resp = await _http.SendAsync(req);
-            if (!resp.IsSuccessStatusCode)
-                throw new Exception(await resp.Content.ReadAsStringAsync());
+            await EnsureSuccess(resp);
 
-            return await resp.Content.ReadFromJsonAsync<DailyStatsDto>()
+            return await resp.Content.ReadFromJsonAsync<UserDto>()
                    ?? throw new Exception("Üres válasz");
         }
 
-        public class AddMeasurementRequest
-        {
-            public string type { get; set; } = "";
-            public double value { get; set; }
-            public string? unit { get; set; }
-            public string? recorded_at { get; set; }
-            public string? note { get; set; }
-        }
+        // ===== MEASUREMENTS (egységesen: tipus/ertek/mertekegyseg/datum/megjegyzes) =====
 
-        public async Task AddMeasurementAsync(AddMeasurementRequest body)
+        public async Task CreateMeasurementAsync(
+            string tipus,
+            double ertek,
+            string mertekegyseg,
+            string? megjegyzes = null,
+            DateTime? datum = null)
         {
-            if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token");
+            var body = new
+            {
+                tipus,
+                ertek,
+                mertekegyseg,
+                datum = (datum ?? DateTime.Today).ToString("o"), // TODAY -> napi szűréshez stabil
+                megjegyzes
+            };
 
-            var req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5000/api/measurements");
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
+            var req = Authed(HttpMethod.Post, "api/measurements");
             req.Content = JsonContent.Create(body);
 
             var resp = await _http.SendAsync(req);
-            if (!resp.IsSuccessStatusCode)
-                throw new Exception(await resp.Content.ReadAsStringAsync());
+            await EnsureSuccess(resp);
         }
 
-        public async Task<double> GetTodaySleepTotalAsync()
+        public async Task<List<MeasurementDto>> GetMeasurementsAsync(string tipus, DateTime datum, int limit = 200)
         {
-            var list = await GetTodayMeasurementsAsync("ALVAS"); // vagy "alvas" – ugyanaz legyen, mint mentéskor
+            var url =
+                $"api/measurements?tipus={Uri.EscapeDataString(tipus)}&datum={datum:yyyy-MM-dd}&limit={limit}";
+
+            var req = Authed(HttpMethod.Get, url);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+
+            return await resp.Content.ReadFromJsonAsync<List<MeasurementDto>>() ?? new List<MeasurementDto>();
+        }
+
+        public Task<List<MeasurementDto>> GetTodayMeasurementsAsync(string tipus)
+            => GetMeasurementsAsync(tipus, DateTime.Today);
+
+        // ===== NAPI ÖSSZEGZÉSEK =====
+
+        public async Task<double> GetTodayWaterTotalMlAsync()
+        {
+            var list = await GetTodayMeasurementsAsync("VIZ");
             return list.Sum(x => x.ertek);
         }
+
+        public async Task<double> GetTodayCaloriesTotalAsync()
+        {
+            var list = await GetTodayMeasurementsAsync("KALORIA");
+            return list.Sum(x => x.ertek);
+        }
+
+        public async Task<double> GetTodaySleepTotalHoursAsync()
+        {
+            var list = await GetTodayMeasurementsAsync("ALVAS");
+            return list.Sum(x => x.ertek); // ebben a tiszta verzióban ALVAS órában van tárolva
+        }
+
+        public async Task<MeasurementDto?> GetTodaySleepEntryAsync()
+        {
+            var list = await GetTodayMeasurementsAsync("ALVAS");
+            return list.OrderByDescending(x => x.datum).FirstOrDefault();
+        }
+
+        // ===== ALVÁS MENTÉS (ALVAS órában, note: "HH:mm-HH:mm") =====
 
         public async Task AddSleepAsync(DateTime start, DateTime end)
         {
             if (end <= start) end = end.AddDays(1);
             var diff = end - start;
 
-            // percben mentjük (biztosabb, mint double óra)
-            double minutes = diff.TotalMinutes;
+            double hours = Math.Round(diff.TotalHours, 2);
 
             await CreateMeasurementAsync(
-                "ALVAS",                 // <-- ha a backend nagybetűs típust vár
-                minutes,
-                "min",
-                $"{start:HH:mm}-{end:HH:mm}"
+                tipus: "ALVAS",
+                ertek: hours,
+                mertekegyseg: "h",
+                megjegyzes: $"{start:HH:mm}-{end:HH:mm}",
+                datum: DateTime.Today
             );
         }
 
+        // ===== STATISTICS =====
 
+        public async Task<DailyStatsDto> GetDailyStatsAsync()
+        {
+            var req = Authed(HttpMethod.Get, "api/statistics/daily");
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+
+            return await resp.Content.ReadFromJsonAsync<DailyStatsDto>()
+                   ?? throw new Exception("Üres válasz");
+        }
     }
 }

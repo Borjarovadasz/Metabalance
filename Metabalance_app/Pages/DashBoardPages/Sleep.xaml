@@ -107,11 +107,11 @@
                                        Foreground="#666"/>
 
                         <TextBlock Grid.Row="1" Grid.ColumnSpan="3"
-Margin="0,12,0,0"
-x:Name="ResultText"
-FontSize="30"
-FontWeight="SemiBold"
-IsHitTestVisible="False" Height="69"/>
+                            Margin="0,12,0,0"
+                            x:Name="ResultText"
+                            FontSize="30"
+                            FontWeight="SemiBold"
+                            IsHitTestVisible="False" Height="69"/>
 
                         <TextBlock 
                                        TextAlignment="Center"
