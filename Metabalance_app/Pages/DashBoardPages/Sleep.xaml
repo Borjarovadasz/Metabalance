@@ -2,11 +2,12 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       Background="#F5F6FA">
 
     <Page.Resources>
 
-  
+
         <Style x:Key="CardStyle" TargetType="Border">
             <Setter Property="Background" Value="White"/>
             <Setter Property="CornerRadius" Value="14"/>
@@ -22,7 +23,7 @@
             </Setter>
         </Style>
 
-       
+
         <Style x:Key="SectionTitle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -39,56 +40,65 @@
 
     <Grid Height="Auto" VerticalAlignment="Top" Background="White">
 
-       
+
         <ScrollViewer Margin="0,52,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="20" MaxWidth="1400" Width="1413">
 
-               
-                <Border Style="{StaticResource CardStyle}" Height="183">
+
+                <Border Style="{StaticResource CardStyle}" Height="209">
                     <StackPanel>
 
                         <TextBlock Text="Alvásnaplózás"
                                        Style="{StaticResource SectionTitle}"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <Grid Margin="0 12 0 0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel>
-                                <TextBlock Text="Lefekvés időpontja"
-                                               Style="{StaticResource LabelText}"/>
-                                <TextBox Height="40"
-                                             FontSize="15"
-                                             Text="22:00"/>
+                            <!-- LEFEKVÉS -->
+                            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,16,0" VerticalAlignment="Top">
+                                <TextBlock Text="Lefekvés időpontja"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox x:Name="BedHourBox" Width="300" Height="50" FontSize="30"/>
+                                    <TextBlock Text=":" VerticalAlignment="Center" Margin="4,0"/>
+                                    <ComboBox x:Name="BedMinuteBox" Width="300" Height="50" FontSize="30"/>
+                                </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1"
-                                            Margin="24 0">
-                                <TextBlock Text="Felkelés időpontja"
-                                               Style="{StaticResource LabelText}"/>
-                                <TextBox Height="40"
-                                             FontSize="15"
-                                             Text="06:00"/>
+                            <!-- FELKELÉS -->
+                            <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,16,0" VerticalAlignment="Top">
+                                <TextBlock Text="Felkelés időpontja"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox x:Name="WakeHourBox" Width="300" Height="50" FontSize="30" />
+                                    <TextBlock Text=":" VerticalAlignment="Center" Margin="4,0"/>
+                                    <ComboBox x:Name="WakeMinuteBox" Width="300" Height="50" FontSize="30"/>
+                                </StackPanel>
                             </StackPanel>
 
-                            <Button Grid.Column="2"
-                                        Content="Alvás rögzítése"
-                                        Height="44"
-                                        Padding="28 0"
-                                        Margin="24 26 0 0"
-                                        Background="#FF6B6B"
-                                        Foreground="White"
-                                        BorderThickness="0"
-                                        FontWeight="SemiBold"/>
+                            <!-- GOMB jobb oldalt -->
+                            <Button Grid.Row="0" Grid.Column="2"
+            Content="Mentés"
+            Height="50"
+            Width="100"
+            VerticalAlignment="Bottom"
+            Click="Save_Click" Background="#FFFD9090"/>
+
+                            <!-- EREDMÉNY külön sorban -->
+                            
                         </Grid>
+
 
                     </StackPanel>
                 </Border>
 
-              
+
                 <Border Style="{StaticResource CardStyle}" Height="197">
                     <StackPanel HorizontalAlignment="Center">
 
@@ -96,13 +106,14 @@
                                        FontSize="17"
                                        Foreground="#666"/>
 
-                        <TextBlock Text="7.5 óra"
-                                       FontSize="52"
-                                       FontWeight="Bold"
-                                       Foreground="#FF6B6B"
-                                       Margin="0 14"/>
+                        <TextBlock Grid.Row="1" Grid.ColumnSpan="3"
+Margin="0,12,0,0"
+x:Name="ResultText"
+FontSize="30"
+FontWeight="SemiBold"
+IsHitTestVisible="False" Height="69"/>
 
-                        <TextBlock Text="Pihentető alvás! Ne feledje, a jó alvás javítja a fókuszt és a hangulatot."
+                        <TextBlock 
                                        TextAlignment="Center"
                                        Foreground="#777"
                                        MaxWidth="700"/>
@@ -110,7 +121,7 @@
                     </StackPanel>
                 </Border>
 
-               
+
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
 
@@ -134,7 +145,7 @@
                     </StackPanel>
                 </Border>
 
-                
+
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
 
@@ -150,7 +161,7 @@
                     </StackPanel>
                 </Border>
 
-              
+
 
             </StackPanel>
         </ScrollViewer>
@@ -165,7 +176,7 @@
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
             </StackPanel>
 
-           
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -174,7 +185,7 @@
                 <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
             </StackPanel>
 
-            
+
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-110,0,214,0"/>
                 <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="32,0,82,0"/>

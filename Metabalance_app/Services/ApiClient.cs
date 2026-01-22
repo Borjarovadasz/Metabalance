@@ -220,5 +220,28 @@ namespace YourAppName.Services
                 throw new Exception(await resp.Content.ReadAsStringAsync());
         }
 
+        public async Task<double> GetTodaySleepTotalAsync()
+        {
+            var list = await GetTodayMeasurementsAsync("ALVAS"); // vagy "alvas" – ugyanaz legyen, mint mentéskor
+            return list.Sum(x => x.ertek);
+        }
+
+        public async Task AddSleepAsync(DateTime start, DateTime end)
+        {
+            if (end <= start) end = end.AddDays(1);
+            var diff = end - start;
+
+            // percben mentjük (biztosabb, mint double óra)
+            double minutes = diff.TotalMinutes;
+
+            await CreateMeasurementAsync(
+                "ALVAS",                 // <-- ha a backend nagybetűs típust vár
+                minutes,
+                "min",
+                $"{start:HH:mm}-{end:HH:mm}"
+            );
+        }
+
+
     }
 }
