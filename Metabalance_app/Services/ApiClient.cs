@@ -185,6 +185,58 @@ namespace YourAppName.Services
             return list.Sum(x => x.ertek); // ebben a tiszta verzióban ALVAS órában van tárolva
         }
 
+        public async Task<double> GetLatestWeightAsync()
+        {
+            var list = await GetTodayMeasurementsAsync("TESTSULY");
+
+            var last = list
+                .OrderByDescending(x => x.datum)   // ha datum tartalmaz időt is
+                .FirstOrDefault();
+
+            return last?.ertek ?? 0.0;
+        }
+
+        public class GoalDto
+        {
+            public int id { get; set; }
+            public string tipus { get; set; } = "";
+            public double celErtek { get; set; }
+            public string mertekegyseg { get; set; } = "";
+            public bool aktiv { get; set; }
+        }
+
+        public async Task<List<GoalDto>> GetGoalsAsync(string tipus)
+        {
+            var url = $"api/goals?tipus={Uri.EscapeDataString(tipus)}&aktiv=1";
+            var req = Authed(HttpMethod.Get, url);
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+
+            return await resp.Content.ReadFromJsonAsync<List<GoalDto>>() ?? new List<GoalDto>();
+        }
+
+        public async Task CreateGoalAsync(string tipus, double celErtek, string mertekegyseg)
+        {
+            var body = new { tipus, celErtek, mertekegyseg, aktiv = 1 };
+            var req = Authed(HttpMethod.Post, "api/goals");
+            req.Content = JsonContent.Create(body);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+        public async Task UpdateGoalAsync(int id, double celErtek, string mertekegyseg)
+        {
+            var body = new { celErtek, mertekegyseg, aktiv = 1 };
+            var req = Authed(HttpMethod.Put, $"api/goals/{id}");
+            req.Content = JsonContent.Create(body);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+
+
         public async Task<MeasurementDto?> GetTodaySleepEntryAsync()
         {
             var list = await GetTodayMeasurementsAsync("ALVAS");

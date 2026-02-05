@@ -32,14 +32,24 @@ namespace Metabalance_app.Pages
                     await RefreshDashboardAsync();
             };
         }
-        
-       private async Task RefreshDashboardAsync()
+
+        private async Task RefreshDashboardAsync()
         {
             try
             {
+                var me = await _api.GetMeAsync();
+                var parts = (me.nev ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                var firstName = parts.Length > 0 ? parts[^1] : me.nev;
+                WelcomeText.Text = $"Üdv újra, {firstName}! Merre tart ma az egészséged?";
+
                 var waterMl = await _api.GetTodayWaterTotalMlAsync();
                 var calories = await _api.GetTodayCaloriesTotalAsync();
+                var sleep = await _api.GetTodaySleepTotalHoursAsync();
 
+                // ✅ itt mindig a legutolsó súly
+                var weight = await _api.GetLatestWeightAsync();
+
+                // calories
                 if (calories <= 0.0001)
                 {
                     CalorieValueText.Text = "Nincs adat";
@@ -48,14 +58,12 @@ namespace Metabalance_app.Pages
                 else
                 {
                     CalorieValueText.Text = $"{calories:0} kcal";
-
-                    // ha van cél (most nálad fixen 2000 a UI-ban)
                     var goal = 2000.0;
                     var remaining = Math.Max(0, goal - calories);
                     CalorieHintText.Text = $"{remaining:0} kcal maradt a mai keretből.";
                 }
 
-
+                // water
                 if (waterMl <= 0.0001)
                 {
                     WaterValueText.Text = "Nincs adat";
@@ -67,50 +75,43 @@ namespace Metabalance_app.Pages
                     WaterValueText.Text = $"{liters:0.0} L";
                     WaterHintText.Text = $"Ma eddig: {waterMl:0} ml";
                 }
-            }
-            catch
-            {
-                WaterValueText.Text = "Nincs adat";
-                WaterHintText.Text = "Nem sikerült betölteni.";
-            }
 
+                // sleep
+                if (sleep <= 0.0001)
+                {
+                    SleepValueText.Text = "Nincs adat";
+                    SleepHintText.Text = "Rögzíts alvást a mai napra!";
+                }
+                else
+                {
+                    SleepValueText.Text = $"{sleep:0.0} óra";
+                    SleepHintText.Text = $"Ma eddig: {sleep:0.0} óra";
+                }
 
-        }
-
-        private async void Dashboard_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            try
-            {
-                var me = await _api.GetMeAsync();
-                WelcomeText.Text = $"Üdv újra, {me.nev}! Merre tart ma az egészséged?";
-                var d = await _api.GetDailyStatsAsync();
-                WaterValueText.Text =
-                    d.water > 0 ? $"{d.water:0.0} L" : "Nincs adat";
-                CalorieValueText.Text =
-                    d.calories > 0 ? $"{d.calories:0} kcal" : "Nincs adat";
-                SleepValueText.Text =
-                    d.sleep > 0 ? $"{d.sleep:0.0} óra" : "Nincs adat";
-                MoodValueText.Text =
-                    string.IsNullOrWhiteSpace(d.mood) ? "Nincs adat" : d.mood;
-                WeightValueText.Text =
-                    d.weight.HasValue ? $"{d.weight.Value:0.0} kg" : "Nincs adat";
-            
-         
-                var parts = (me.nev ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                var firstName = parts.Length > 0 ? parts[^1] : me.nev;
-
-                WelcomeText.Text = $"Üdv újra, {firstName}! Merre tart ma az egészséged?";
+                // weight
+                if (weight <= 0.0001)
+                {
+                    WeightValueText.Text = "Nincs adat";
+                    WeightHintText.Text = "Rögzítsd a súlyodat!";
+                }
+                else
+                {
+                    WeightValueText.Text = $"{weight:0.0} kg";
+                    WeightHintText.Text = $"Legutóbbi: {weight:0.0} kg";
+                }
             }
             catch
             {
                 WelcomeText.Text = "Üdv újra! Merre tart ma az egészséged?";
-                            WaterValueText.Text = "Nincs adat";
+                WaterValueText.Text = "Nincs adat";
                 CalorieValueText.Text = "Nincs adat";
                 SleepValueText.Text = "Nincs adat";
                 MoodValueText.Text = "Nincs adat";
                 WeightValueText.Text = "Nincs adat";
             }
         }
+
+
         private void Exit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();

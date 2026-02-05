@@ -36,7 +36,7 @@ namespace Metabalance_app.Pages
 
         private void FillTimeBoxes()
         {
-            // törlés, hogy ne duplázzon, ha mégis lefutna
+     
             BedHourBox.Items.Clear();
             BedMinuteBox.Items.Clear();
             WakeHourBox.Items.Clear();
