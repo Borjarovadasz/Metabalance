@@ -138,6 +138,10 @@ namespace Metabalance_app.Pages
             NavigationService.Navigate(new CaloriesPage());
         }
 
+        private void MoodClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Mood());
+        }
         private void SleepPage(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Sleep());

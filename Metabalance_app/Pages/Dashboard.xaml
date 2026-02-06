@@ -108,7 +108,7 @@
                             <TextBlock x:Name="MoodValueText" />
                            
                             <Image Source="img/mood.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-26,0,211"/>
-                            <Button Click="WeightClick" Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,172,0,0" Background="#FFFBB6B6"/>
+                            <Button Click="MoodClick" Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,172,0,0" Background="#FFFBB6B6"/>
                         </Grid>
                     </Border>
 

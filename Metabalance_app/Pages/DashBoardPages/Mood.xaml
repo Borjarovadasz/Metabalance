@@ -1,14 +1,256 @@
-﻿<Page x:Class="Metabalance_app.Pages.DashBoardPages.Mood"
+﻿<Page x:Class="Metabalance_app.Pages.Mood"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Metabalance_app.Pages.DashBoardPages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Mood">
+      Background="#F5F6FA">
+
+    <Page.Resources>
+        <Style x:Key="MoodRadioStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFECEC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="14"
+                                Padding="{TemplateBinding Padding}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Tag}"
+                                           FontSize="22"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,6"/>
+                                <ContentPresenter HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#FF6B6B"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#FF6B6B"/>
+                                <Setter TargetName="Root" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DayRadioStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFECEC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="14"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Ellipse x:Name="Dot"
+                                         Width="8" Height="8" Fill="#FF6B6B"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Bottom"
+                                         Margin="0,0,0,6"
+                                         Opacity="0"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#FF6B6B"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="#FF6B6B"/>
+                                <Setter TargetName="Root" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="Dot" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid>
-        
+
+        <Grid Height="52" VerticalAlignment="Top" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                <Image Source="/Pages/img/logo-removebg-preview.png" Height="40"/>
+                <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
+                <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
+                <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
+                <Button Width="45" Height="48" Content="X" Background="White" BorderThickness="0" Click="Exit"/>
+                <Button Width="180" Height="48" Content="Kijelentkezés" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackToMain"/>
+                <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
+            </StackPanel>
+
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-38,0,263,0"/>
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="445,0,-220,0"/>
+                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="586,0,-324,0"/>
+                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="105,0,143,0"/>
+                <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="SleepPage" Margin="232,0,22,0"/>
+                <Button Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="348,0,-75,0"/>
+                <Image Height="40" Margin="541,4,-269,4" Source="/Pages/img/weigthnav-removebg-preview.png" RenderTransformOrigin="0.736,0.525"/>
+                <Image Height="40" Margin="-76,0,352,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>
+                <Image Height="40" Margin="187,0,89,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/sleepnav-removebg-preview.png"/>
+                <Image Height="40" Margin="308,0,-32,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/waternav-removebg-preview.png"/>
+                <Image Height="40" Margin="401,0,-119,0" VerticalAlignment="Center" Source="/Pages/img/moodnav-removebg-preview.png" RenderTransformOrigin="0.96,0.467"/>
+                <Image Height="40" Margin="68,0,208,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/foodnav-removebg-preview.png" RenderTransformOrigin="0.234,0.475"/>
+                <Button Content="Víz" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="348,0,-75,0"/>
+            </Grid>
+        </Grid>
+
+        <ScrollViewer Margin="0,52,0,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20" HorizontalAlignment="Center" MaxWidth="1400">
+
+                <Border Background="White" CornerRadius="14" Padding="24" Margin="0 0 0 24">
+                    <StackPanel>
+                        <TextBlock Text="Hangulat rögzítése" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
+
+                        <UniformGrid Columns="6" Margin="0 0 0 12">
+                            <RadioButton GroupName="MoodGroup" Style="{StaticResource MoodRadioStyle}" Tag="😄" Content="Vidám"/>
+                            <RadioButton GroupName="MoodGroup" Style="{StaticResource MoodRadioStyle}" Tag="😊" Content="Boldog"/>
+                            <RadioButton GroupName="MoodGroup" Style="{StaticResource MoodRadioStyle}" Tag="😐" Content="Semleges"/>
+                            <RadioButton GroupName="MoodGroup" Style="{StaticResource MoodRadioStyle}" Tag="😢" Content="Szomorú"/>
+                            <RadioButton GroupName="MoodGroup" Style="{StaticResource MoodRadioStyle}" Tag="😠" Content="Dühös"/>
+                            <RadioButton GroupName="MoodGroup" Style="{StaticResource MoodRadioStyle}" Tag="🤍" Content="Stresszes"/>
+                        </UniformGrid>
+
+                        <TextBox x:Name="MoodNoteBox"
+                                 Height="90"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 Margin="0 0 0 16"
+                                 Text="Rövid jegyzet írása a hangulatodhoz..."/>
+
+                        <Button x:Name="SaveMoodBtn"
+                                Content="Hangulat rögzítése"
+                                Height="40"
+                                Background="#FF6B6B"
+                                Foreground="White"
+                                BorderThickness="0"
+                                FontWeight="SemiBold"
+                              />
+                    </StackPanel>
+                </Border>
+
+                <WrapPanel ItemWidth="460" ItemHeight="277" HorizontalAlignment="Center" Margin="0,0,0,20">
+
+                    <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
+                        <StackPanel>
+                            <TextBlock Text="Hangulatelőzmények" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
+                            <lvc:CartesianChart Height="169">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:LineSeries Title="Hangulat" Values="{Binding MoodLast7Days}" PointGeometrySize="10"/>
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Napok" Labels="{Binding Last7DaysLabels}" />
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Skála" MinValue="0" MaxValue="5"/>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
+                        <StackPanel>
+                            <TextBlock Text="Hangulat (November 2025)" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
+
+                            <UniformGrid Columns="7" Margin="0 0 0 8">
+                                <TextBlock Text="H" HorizontalAlignment="Center" Foreground="#777"/>
+                                <TextBlock Text="K" HorizontalAlignment="Center" Foreground="#777"/>
+                                <TextBlock Text="Sz" HorizontalAlignment="Center" Foreground="#777"/>
+                                <TextBlock Text="Cs" HorizontalAlignment="Center" Foreground="#777"/>
+                                <TextBlock Text="P" HorizontalAlignment="Center" Foreground="#777"/>
+                                <TextBlock Text="Szó" HorizontalAlignment="Center" Foreground="#777"/>
+                                <TextBlock Text="V" HorizontalAlignment="Center" Foreground="#777"/>
+                            </UniformGrid>
+
+                            <UniformGrid Columns="7" Rows="5">
+                                <RadioButton Style="{StaticResource DayRadioStyle}" IsEnabled="False"/>
+                                <RadioButton Style="{StaticResource DayRadioStyle}" IsEnabled="False"/>
+                                <RadioButton Style="{StaticResource DayRadioStyle}" IsEnabled="False"/>
+                                <RadioButton Style="{StaticResource DayRadioStyle}" IsEnabled="False"/>
+                                <RadioButton Style="{StaticResource DayRadioStyle}" IsEnabled="False"/>
+
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="1"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="2"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="3"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="4"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="5"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="6"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="7"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="8"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="9"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="10"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="11"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="12"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="13"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="14"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="15"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="16"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="17"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="18"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="19"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="20"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="21"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="22"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="23"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="24"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="25"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="26"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="27"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="28"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="29"/>
+                                <RadioButton GroupName="CalendarDays" Style="{StaticResource DayRadioStyle}" Content="30"/>
+                            </UniformGrid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
+                        <StackPanel>
+                            <TextBlock Text="Motiváció" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
+                            <TextBlock Text="„A belső béke a legnagyobb gazdagság.”" Foreground="#777" Margin="0 6"/>
+                        </StackPanel>
+                    </Border>
+
+                </WrapPanel>
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
