@@ -96,7 +96,7 @@
 
                     
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
-                        <lvc:CartesianChart Height="240">
+                        <lvc:CartesianChart Height="217">
                             <lvc:CartesianChart.Series>
                                 <lvc:ColumnSeries Title="Kalória" Values="{Binding CaloriesLast7Days}" />
                             </lvc:CartesianChart.Series>

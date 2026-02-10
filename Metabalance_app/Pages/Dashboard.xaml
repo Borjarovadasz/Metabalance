@@ -68,60 +68,216 @@
                 
                 <WrapPanel ItemHeight="277" ItemWidth="442" Margin="0,40,0,40" HorizontalAlignment="Center">
 
-                   
-                    <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
-                        <Grid Margin="10">
-                            <TextBlock x:Name="WaterText" Text="Vízfogyasztás" FontWeight="Bold" Margin="0,0,0,40" FontSize="24"/>
-                            <TextBlock x:Name="WaterValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock x:Name="WaterHintText" Text="Rögzíts vizet a mai napra!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
-                            <Image Source="img/water.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-16,10,201"/>
-                            <Button Content="Megtekintés" Width="90" Height="46" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,178,0,0" Click="WaterClick" Background="#FFFBB6B6"/>
-                        </Grid>
+
+                    <Border Margin="10"
+        CornerRadius="12">
+
+                        <Border.Effect>
+                            <DropShadowEffect Color="#55000000"
+                          BlurRadius="20"
+                          ShadowDepth="4"
+                          Opacity="0.6"/>
+                        </Border.Effect>
+
+                        <!-- Belső Border: kártya -->
+                        <Border Background="#FFDCC8C8"
+            Width="442"
+            Height="277"
+            CornerRadius="12">
+
+                            <Grid Margin="10">
+                                <TextBlock x:Name="WaterText"
+                       Text="Vízfogyasztás"
+                       FontWeight="Bold"
+                       FontSize="24"/>
+
+                                <TextBlock x:Name="WaterValueText"
+                       Text="Nincs adat"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Margin="0,40,0,0"/>
+
+                                <TextBlock x:Name="WaterHintText"
+                       Text="Rögzíts vizet a mai napra!"
+                       FontSize="17"
+                       Margin="0,100,0,0"
+                       TextWrapping="Wrap"/>
+
+                                <Image Source="img/water.png"
+                   Width="72"
+                   Height="72"
+                   HorizontalAlignment="Right"
+                   Margin="0,-16,10,201"/>
+
+                                <Button Content="Megtekintés"
+                    Width="90"
+                    Height="46"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,178,0,0"
+                    Click="WaterClick"
+                    Background="#FFFBB6B6"/>
+                            </Grid>
+                        </Border>
                     </Border>
 
-                    <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
-                        <Grid Margin="10">
+                    <Border Margin="10"
+        CornerRadius="12">
 
-                            <TextBlock Text="Kalóriabevitel" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock x:Name="CalorieHintText" Text="Rögzíts a mai napi kalóriabeviteledet!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
-                            <TextBlock x:Name="CalorieValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <Image Source="img/food.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-16,4,201"/>
-                            <Button Content="Megtekintés" Width="88" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,178,0,0" Click="Calories" Background="#FFFBB6B6"/>
-                        </Grid>
+                        <Border.Effect>
+                            <DropShadowEffect Color="#66000000"
+                          BlurRadius="20"
+                          ShadowDepth="6"
+                          Opacity="0.6"/>
+                        </Border.Effect>
+                        <Border Background="#FFDCC8C8"
+            Width="442"
+            Height="277"
+            CornerRadius="12">
+
+                            <Grid Margin="10">
+                                <TextBlock Text="Kalóriabevitel"
+                       FontSize="24"
+                       FontWeight="Bold"/>
+
+                                <TextBlock x:Name="CalorieHintText"
+                       Text="Rögzíts a mai napi kalóriabeviteledet!"
+                       FontSize="17"
+                       Margin="0,100,0,0"
+                       TextWrapping="Wrap"/>
+
+                                <TextBlock x:Name="CalorieValueText"
+                       Text="Nincs adat"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Margin="0,40,0,0"/>
+
+                                <Image Source="img/food.png"
+                   Width="72"
+                   Height="72"
+                   HorizontalAlignment="Right"
+                   Margin="0,-16,4,201"/>
+
+                                <Button Content="Megtekintés"
+                    Width="88"
+                    Height="45"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,178,0,0"
+                    Click="Calories"
+                    Background="#FFFBB6B6"/>
+                            </Grid>
+                        </Border>
                     </Border>
 
-                   
-                    <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
-                        <Grid Margin="10">
-                            <TextBlock Text="Alvás" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock x:Name="SleepValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock x:Name="SleepHintText" Text="Rögzíts a mai napi kalóriabeviteledet!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
-                            <Image Source="img/sleep.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-22,0,207"/>
-                            <Button Content="Megtekintés" Width="90" Height="46" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,180,0,0" Click="SleepPage" Background="#FFFBB6B6"/>
-                        </Grid>
+
+                    <!-- Külső Border: árnyék -->
+                    <Border Margin="10"
+        CornerRadius="12">
+
+                        <Border.Effect>
+                            <DropShadowEffect Color="#55000000"
+                          BlurRadius="20"
+                          ShadowDepth="4"
+                          Opacity="0.6"/>
+                        </Border.Effect>
+
+                        <!-- Belső Border: kártya -->
+                        <Border Background="#FFDCC8C8"
+            Width="442"
+            Height="277"
+            CornerRadius="12">
+
+                            <Grid Margin="10">
+                                <TextBlock Text="Alvás"
+                       FontSize="24"
+                       FontWeight="Bold"/>
+
+                                <TextBlock x:Name="SleepValueText"
+                       Text="Nincs adat"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Margin="0,40,0,0"/>
+
+                                <TextBlock x:Name="SleepHintText"
+                       Text="Rögzíts a mai napi kalóriabeviteledet!"
+                       FontSize="17"
+                       Margin="0,100,0,0"
+                       TextWrapping="Wrap"/>
+
+                                <Image Source="img/sleep.png"
+                   Width="72"
+                   Height="72"
+                   HorizontalAlignment="Right"
+                   Margin="0,-22,0,207"/>
+
+                                <Button Content="Megtekintés"
+                    Width="90"
+                    Height="46"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,180,0,0"
+                    Click="SleepPage"
+                    Background="#FFFBB6B6"/>
+                            </Grid>
+                        </Border>
                     </Border>
 
-                   
-                    <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
-                        <Grid Margin="10">
-                            <TextBlock Text="Hangulatnapló" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock x:Name="MoodValueText" />
-                           
-                            <Image Source="img/mood.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-26,0,211"/>
-                            <Button Click="MoodClick" Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,172,0,0" Background="#FFFBB6B6"/>
-                        </Grid>
+
+
+                    <Border  Background="#FFE8E8E8"  Margin="10">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#55000000"
+                                BlurRadius="20"
+                                ShadowDepth="4"
+                                Opacity="0.6"/>
+                        </Border.Effect>
+                        <Border Background="#FFDCC8C8"
+Width="442"
+Height="277"
+CornerRadius="12">
+                            <Grid Margin="10">
+                                <TextBlock Text="Hangulatnapló" FontSize="24" FontWeight="Bold"/>
+                                <TextBlock x:Name="MoodValueText"
+Text="Nincs adat"
+FontSize="40"
+FontWeight="Bold"
+Margin="0,40,0,0"/>
+
+                                <TextBlock x:Name="MoodValueHint"
+Text="Rögzíts a mai napi kalóriabeviteledet!"
+FontSize="17"
+Margin="0,100,0,0"
+TextWrapping="Wrap"/>
+                                <Image Source="img/mood.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-26,0,211"/>
+                                <Button Click="MoodClick" Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,172,0,0" Background="#FFFBB6B6"/>
+                            </Grid>
+                        </Border>
                     </Border>
 
-                    
-                    <Border CornerRadius="20" Background="#FFE8E8E8" Width="442" Height="277" Margin="10">
-                        <Grid Margin="10">
-                            <TextBlock Text="Testsúly" FontSize="24" FontWeight="Bold"/>
-                            <TextBlock x:Name="WeightValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
-                            <TextBlock x:Name="WeightHintText" Text="Rögzitsd a mai súlyodat!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
 
-                            <Image Source="img/weight.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-24,10,209"/>
-                            <Button Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,169,0,0" Click="WeightClick" Background="#FFFBB6B6"/>
-                        </Grid>
+                    <Border  Background="#FFE8E8E8"  Margin="10">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#55000000"
+                                BlurRadius="20"
+                                ShadowDepth="4"
+                                Opacity="0.6"/>
+                        </Border.Effect>
+
+                        <Border Background="#FFDCC8C8"
+                        Width="442"
+                        Height="277"
+                        CornerRadius="12">
+
+                            <Grid Margin="10">
+                                <TextBlock Text="Testsúly" FontSize="24" FontWeight="Bold"/>
+                                <TextBlock x:Name="WeightValueText" Text="Nincs adat" FontSize="40" FontWeight="Bold" Margin="0,40,0,0"/>
+                                <TextBlock x:Name="WeightHintText" Text="Rögzitsd a mai súlyodat!" FontSize="17" Margin="0,100,0,0" TextWrapping="Wrap"/>
+
+                                <Image Source="img/weight.png" Width="72" Height="72" HorizontalAlignment="Right" Margin="0,-24,10,209"/>
+                                <Button Content="Megtekintés" Width="90" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,169,0,0" Click="WeightClick" Background="#FFFBB6B6"/>
+                            </Grid>
+                        </Border>
                     </Border>
 
                 </WrapPanel>

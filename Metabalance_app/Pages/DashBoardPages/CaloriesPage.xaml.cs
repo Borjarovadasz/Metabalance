@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +13,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LiveCharts;
 using YourAppName.Services;
 
 namespace Metabalance_app.Pages
 {
+
     public partial class CaloriesPage : Page
     {
+        public ChartValues<double> CaloriesLast7Days { get; } = new ChartValues<double>();
+        public ObservableCollection<string> Last7DaysLabels { get; } = new ObservableCollection<string>();
+
         public CaloriesPage()
         {
             InitializeComponent();
+
+            DataContext = this; // <-- EZ HIÁNYZOTT, emiatt a Binding semmire nem mutatott
+
             Loaded += CaloriesPage_Loaded;
         }
 
@@ -94,6 +103,27 @@ namespace Metabalance_app.Pages
                         return $"{name} - {x.ertek:0} kcal";
                     })
                     .ToList();
+
+                                var days = Enumerable.Range(0, 7)
+                    .Select(i => DateTime.Today.AddDays(-6 + i))
+                    .ToList();
+
+                Last7DaysLabels.Clear();
+                CaloriesLast7Days.Clear();
+
+                foreach (var d in days)
+                {
+                    Last7DaysLabels.Add(d.ToString("MM.dd"));
+
+                    var dayList = await _api.GetMeasurementsAsync(
+                        tipus: "KALORIA",
+                        datum: d,
+                        limit: 500
+                    );
+
+                    var dayTotal = dayList.Sum(x => x.ertek);
+                    CaloriesLast7Days.Add(dayTotal);
+                }
             }
             catch
             {
