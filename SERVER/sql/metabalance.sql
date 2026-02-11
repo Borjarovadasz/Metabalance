@@ -63,13 +63,3 @@ CREATE TABLE errors (
 INSERT INTO users (first_name, last_name, email, password, role, active) VALUES
 ('Admin', 'User', 'admin@example.com', '$2a$10$k0bezuu9wHtkHgOWbzQ/JuXkNClg43.rC0aZf0ocqXvmnUDpOwWW2', 'admin', 1);
 
-
-CREATE TABLE errors (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NULL,
-  message TEXT NOT NULL,
-  stack TEXT,
-  url VARCHAR(255),
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_errors_user_date (user_id, created_at)
-);
