@@ -158,6 +158,14 @@ namespace Metabalance_app.Pages
                 ? System.Windows.WindowState.Maximized
                 : System.Windows.WindowState.Normal;
         }
+        private void SleepPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Sleep());
+        }
+        private void MoodClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Mood());
+        }
 
         private void BackDash(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Dashboard());
         private void BackToMain(object sender, RoutedEventArgs e) => NavigationService.Navigate(new MainPage());

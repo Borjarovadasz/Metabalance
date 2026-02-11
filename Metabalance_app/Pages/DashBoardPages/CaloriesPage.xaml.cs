@@ -24,6 +24,9 @@ namespace Metabalance_app.Pages
         public ChartValues<double> CaloriesLast7Days { get; } = new ChartValues<double>();
         public ObservableCollection<string> Last7DaysLabels { get; } = new ObservableCollection<string>();
 
+        private double _dailyGoalKcal = 2000; // default
+        private int? _goalId = null;          // goals táblából
+
         public CaloriesPage()
         {
             InitializeComponent();
@@ -33,12 +36,94 @@ namespace Metabalance_app.Pages
             Loaded += CaloriesPage_Loaded;
         }
 
-        private readonly ApiClient _api = new ApiClient();
-        private const int DailyGoalKcal = 2000;
+        private async Task LoadCalorieGoalAsync()
+        {
+            var goals = await _api.GetGoalsAsync("KALORIA");
+            var g = goals.FirstOrDefault();
+
+            if (g != null)
+            {
+                _goalId = g.id;
+                _dailyGoalKcal = g.celErtek;
+
+                SlKcalGoal.Value = _dailyGoalKcal;
+                TbKcalGoalValue.Text = $"{_dailyGoalKcal:0} kcal";
+            }
+            else
+            {
+                _goalId = null;
+                _dailyGoalKcal = 2000;
+
+                SlKcalGoal.Value = 2000;
+                TbKcalGoalValue.Text = "2000 kcal";
+            }
+        }
 
         private async void CaloriesPage_Loaded(object sender, RoutedEventArgs e)
         {
+            await LoadCalorieGoalAsync();
             await RefreshCaloriesAsync();
+        }
+
+ 
+
+        private readonly ApiClient _api = new ApiClient();
+
+        private async void BtnSaveKcalGoal_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var newGoal = SlKcalGoal.Value;
+
+                if (_goalId == null)
+                {
+                    await _api.CreateGoalAsync("KALORIA", newGoal, "kcal");
+                    var goals = await _api.GetGoalsAsync("KALORIA");
+                    _goalId = goals.FirstOrDefault()?.id;
+                }
+                else
+                {
+                    await _api.UpdateGoalAsync(_goalId.Value, newGoal, "kcal");
+                }
+
+                _dailyGoalKcal = newGoal;
+
+                await RefreshCaloriesAsync();
+                MessageBox.Show("Kalória cél elmentve ✅");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba: " + ex.Message);
+            }
+        }
+        private async void SlKcalGoal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (TbKcalGoalValue == null) return;
+
+            _dailyGoalKcal = SlKcalGoal.Value;
+
+            TbKcalGoalValue.Text = $"{_dailyGoalKcal:0} kcal";
+            GoalCaloriesText.Text = $"/ {_dailyGoalKcal:0} Kalória";
+
+            CaloriesProgress.Maximum = _dailyGoalKcal;
+
+            try
+            {
+                if (_goalId == null)
+                {
+                    await _api.CreateGoalAsync("KALORIA", _dailyGoalKcal, "kcal");
+                    var goals = await _api.GetGoalsAsync("KALORIA");
+                    _goalId = goals.FirstOrDefault()?.id;
+                }
+                else
+                {
+                    await _api.UpdateGoalAsync(_goalId.Value, _dailyGoalKcal, "kcal");
+                }
+            }
+            catch
+            {
+                // nem dobunk hibát slider húzás közben
+            }
         }
 
         private async void AddFood_Click(object sender, RoutedEventArgs e)
@@ -91,8 +176,9 @@ namespace Metabalance_app.Pages
 
                 // UI: összeg + progress
                 TotalCalories.Text = $"{total:0}";
-                CaloriesProgress.Maximum = DailyGoalKcal;
-                CaloriesProgress.Value = Math.Min(total, DailyGoalKcal);
+                GoalCaloriesText.Text = $"/ {_dailyGoalKcal:0} Kalória";
+                CaloriesProgress.Maximum = _dailyGoalKcal;
+                CaloriesProgress.Value = Math.Min(total, _dailyGoalKcal);
 
                 // UI: lista (legfrissebb felül)
                 FoodsList.ItemsSource = list
@@ -179,7 +265,10 @@ namespace Metabalance_app.Pages
              NavigationService.Navigate(new Weight());
         }
 
+        private void CaloriesBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
+        }
     }
 
 

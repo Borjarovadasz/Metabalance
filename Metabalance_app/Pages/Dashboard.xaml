@@ -10,7 +10,7 @@
 
     <Grid>
 
-        <Grid Height="52" Background="White" VerticalAlignment="Top">
+        <Grid Height="52" Background="White" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>

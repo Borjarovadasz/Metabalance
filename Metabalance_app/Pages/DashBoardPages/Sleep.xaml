@@ -191,7 +191,7 @@
                 <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="32,0,82,0"/>
                 <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="164,0,-42,0"/>
                 <Button Content="Víz" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="293,0,-150,0"/>
-                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458"/>
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458" Click="MoodClick"/>
                 <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="526,0,-397,0"/>
                 <Image  Height="40" Margin="526,0,-326,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/weigthnav-removebg-preview.png"/>
                 <Image HorizontalAlignment="Left" Height="40" Margin="-121,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>

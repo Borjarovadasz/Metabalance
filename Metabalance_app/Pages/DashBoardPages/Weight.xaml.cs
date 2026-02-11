@@ -13,23 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YourAppName.Services;
+using LiveCharts;
+
+using System.Collections.ObjectModel;
 
 namespace Metabalance_app.Pages
 {
     
     public partial class Weight : Page
     {
+        public ChartValues<double> WeightLast7Days { get; } = new ChartValues<double>();
+        public ObservableCollection<string> WeightLast7DaysLabels { get; } = new ObservableCollection<string>();
+        public ChartValues<double> GoalWeightLine { get; } = new ChartValues<double>();
+
         public Weight()
         {
             InitializeComponent();
+            DataContext = this;
             Loaded += async (_, __) => await RefreshWeightAsync();
-
-            IsVisibleChanged += async (_, __) =>
-            {
-                if (IsVisible)
-                    await RefreshWeightAsync();
-            };
         }
+
 
         private readonly ApiClient _api = new ApiClient();
 
@@ -95,13 +98,16 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                // 1) Mai súly (measurement)
-                var list = await _api.GetMeasurementsAsync("TESTSULY", DateTime.Today, limit: 100);
+                // ===== 1) Mai súly =====
+                var todayList = await _api.GetMeasurementsAsync("TESTSULY", DateTime.Today, limit: 100);
 
-                var last = list.OrderByDescending(x => x.datum).FirstOrDefault();
-                if (last != null)
+                var lastToday = todayList
+                    .OrderByDescending(x => x.datum)
+                    .FirstOrDefault();
+
+                if (lastToday != null)
                 {
-                    CurrentWeightDisplay.Text = $"{last.ertek:0.#} kg";
+                    CurrentWeightDisplay.Text = $"{lastToday.ertek:0.#} kg";
                     AddWeightButton.IsEnabled = false;
                     AddWeightButton.Content = "Ma már rögzítetted";
                 }
@@ -112,13 +118,43 @@ namespace Metabalance_app.Pages
                     AddWeightButton.Content = "+ Súly naplózása";
                 }
 
-                // 2) Cél súly (goals)  ✅ EZT MINDIG FUTTASD LE
+                // ===== 2) Cél súly =====
                 var goals = await _api.GetGoalsAsync("TESTSULY");
                 var g = goals.FirstOrDefault();
 
                 GoalWeightDisplay.Text = g == null
                     ? "Nincs adat!"
                     : $"{g.celErtek:0.#} kg";
+
+                // ===== 3) Chart: utolsó 7 nap (napi utolsó mérés) =====
+                var days = Enumerable.Range(0, 7)
+                    .Select(i => DateTime.Today.AddDays(-6 + i))
+                    .ToList();
+
+                WeightLast7DaysLabels.Clear();
+                WeightLast7Days.Clear();
+
+                foreach (var d in days)
+                {
+                    WeightLast7DaysLabels.Add(d.ToString("MM.dd"));
+
+                    var dayList = await _api.GetMeasurementsAsync("TESTSULY", d, limit: 200);
+
+                    // ha több mérés van egy nap: az utolsót rajzoljuk
+                    var last = dayList
+                        .OrderBy(x => x.datum)
+                        .LastOrDefault();
+
+                    // ha nincs adat: 0 kerül be (ha nem tetszik, lejjebb adok szebb verziót)
+                    WeightLast7Days.Add(last?.ertek ?? 0);
+                }
+                GoalWeightLine.Clear();
+
+                double goal = g?.celErtek ?? 0;
+
+                // ugyanannyi pont legyen, mint a kék vonalnál
+                for (int i = 0; i < WeightLast7Days.Count; i++)
+                    GoalWeightLine.Add(goal);
             }
             catch (Exception ex)
             {

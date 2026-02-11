@@ -12,16 +12,16 @@
         <!-- Grid Row Definitions: Navbar + Tartalom -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-          
+
             <RowDefinition />
 
         </Grid.RowDefinitions>
 
-       
+
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel HorizontalAlignment="Center" Margin="0,20,0,-20" Width="1340">
 
-               
+
                 <Border CornerRadius="12" Background="White"  BorderBrush="#FFE8E8E8" BorderThickness="1">
                     <StackPanel >
                         <TextBlock Text="Naplózza a vízbevitelét" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,8"/>
@@ -56,7 +56,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                          
+
                             <Grid Width="160" Height="160" HorizontalAlignment="Center">
                                 <Ellipse Stroke="#FFF0F0F0" StrokeThickness="12"/>
                                 <Ellipse x:Name="CircleProgress" Stroke="#FFF97979" StrokeThickness="12"
@@ -69,7 +69,7 @@
                                 <TextBlock x:Name="PercentText" Text="0%" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
 
-                            
+
                             <StackPanel Grid.Column="1" Margin="24,0,0,0" VerticalAlignment="Center">
                                 <TextBlock x:Name="GoalText" Text="Cél: 2500 ml" FontSize="16" FontWeight="SemiBold"/>
                                 <TextBlock x:Name="RemainingText" Text="Hátralévő: 2500 ml" FontSize="14" Margin="0,6,0,16" Foreground="#FF777777"/>
@@ -80,7 +80,7 @@
                     </StackPanel>
                 </Border>
 
-                
+
                 <Border CornerRadius="12" Background="White" Padding="24" BorderBrush="#FFE8E8E8" BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="Napi cél beállítása" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,8"/>
@@ -91,7 +91,7 @@
                         </StackPanel>
                         <Slider x:Name="SlGoal" Minimum="1000" Maximum="4000" Value="2500" 
             TickFrequency="250" IsSnapToTickEnabled="True" Margin="0,0,0,10"
-            ValueChanged="SlGoal_ValueChanged"/>    
+            ValueChanged="SlGoal_ValueChanged"/>
                         <TextBlock Text="Javasolt: 8–10 pohár (2000–2500 ml)." Foreground="#FF888888"/>
                     </StackPanel>
                 </Border>
@@ -104,13 +104,13 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
- 
+
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <Image Source="/Pages/img/logo-removebg-preview.png" Height="40"/>
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
             </StackPanel>
 
-         
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -119,20 +119,20 @@
                 <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
             </StackPanel>
 
- 
+
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-110,0,214,0"/>
-                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="CaloriesClick" Margin="32,0,82,0"/>
-                <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="164,0,-42,0"/>
-                <Button Content="Víz" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="293,0,-150,0"/>
-                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458"/>
-                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="526,0,-397,0"/>
-                <Image  Height="40" Margin="526,0,-326,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/weigthnav-removebg-preview.png"/>
-                <Image HorizontalAlignment="Left" Height="40" Margin="-121,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>
+                <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-148,0,236,0"/>
+                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="CaloriesClick" Margin="18,0,88,0"/>
+                <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="164,0,-42,0"  Click="SleepPage"/>
+                <Button Content="Víz" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="296,0,-153,0"/>
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="415,0,-323,0" RenderTransformOrigin="1.458,0.458" Click="MoodClick"/>
+                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="588,1,-459,-1"/>
+                <Image  Height="40" Margin="590,0,-386,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/weigthnav-removebg-preview.png"/>
+                <Image HorizontalAlignment="Left" Height="40" Margin="-148,0,0,0" VerticalAlignment="Center" Width="38" Source="/Pages/img/house.png"/>
                 <Image  Height="40" Margin="163,0,37,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/sleepnav-removebg-preview.png"/>
-                <Image  Height="40" Margin="292,0,-92,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/waternav-removebg-preview.png"/>
-                <Image  Height="40" Margin="383,0,-183,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/moodnav-removebg-preview.png" RenderTransformOrigin="0.96,0.467"/>
-                <Image HorizontalAlignment="Left" Height="40" Margin="32,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/foodnav-removebg-preview.png"/>
+                <Image  Height="40" Margin="297,0,-93,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/waternav-removebg-preview.png"/>
+                <Image  Height="40" Margin="415,0,-203,0" VerticalAlignment="Center" Source="/Pages/img/moodnav-removebg-preview.png" RenderTransformOrigin="0.96,0.467"/>
+                <Image HorizontalAlignment="Left" Height="40" Margin="23,0,0,0" VerticalAlignment="Center" Width="47" Source="/Pages/img/foodnav-removebg-preview.png"/>
             </Grid>
         </Grid>
     </Grid>

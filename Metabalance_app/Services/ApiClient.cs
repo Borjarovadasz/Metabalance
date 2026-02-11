@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -12,11 +13,22 @@ namespace YourAppName.Services
     public class ApiClient
     {
         private const string BaseUrl = "http://localhost:5000/";
-        private readonly HttpClient _http;
 
-        public ApiClient()
+        // 🔥 KÖZÖS HttpClient + CookieContainer (ne vesszen el a cookie oldalváltáskor)
+        private static readonly HttpClient _http = CreateHttp();
+
+        private static HttpClient CreateHttp()
         {
-            _http = new HttpClient { BaseAddress = new Uri(BaseUrl) };
+            var handler = new HttpClientHandler
+            {
+                UseCookies = true,
+                CookieContainer = AuthState.Cookies
+            };
+
+            return new HttpClient(handler)
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
         }
 
         // ===== DTO-k =====
@@ -39,9 +51,13 @@ namespace YourAppName.Services
             public string szerepkor { get; set; } = "";
         }
 
+        // Backended login-ja: { lejarat, felhasznalo } + cookie-ban token
+        // Ha valaha küld token mezőt is, ezt is kezeljük.
         private class LoginResponse
         {
-            public string token { get; set; } = "";
+            public string? token { get; set; }
+            public string? lejarat { get; set; }
+            public UserDto? felhasznalo { get; set; }
         }
 
         public class DailyStatsDto
@@ -55,17 +71,14 @@ namespace YourAppName.Services
 
         // ===== belső helper =====
 
-        private static void EnsureToken()
+        // Auth: ha van Bearer token -> küldjük, amúgy cookie megy automatikusan
+        private static HttpRequestMessage Authed(HttpMethod method, string url)
         {
-            if (string.IsNullOrWhiteSpace(AuthState.token))
-                throw new Exception("Nincs token");
-        }
-
-        private HttpRequestMessage Authed(HttpMethod method, string url)
-        {
-            EnsureToken();
             var req = new HttpRequestMessage(method, url);
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
+
+            if (!string.IsNullOrWhiteSpace(AuthState.token))
+                req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AuthState.token);
+
             return req;
         }
 
@@ -106,11 +119,13 @@ namespace YourAppName.Services
             var resp = await _http.PostAsJsonAsync("api/auth/login", new { email, password });
             if (!resp.IsSuccessStatusCode) return false;
 
+            // ✅ nem várunk kötelező token mezőt, mert a backend cookie-ba teszi
             var data = await resp.Content.ReadFromJsonAsync<LoginResponse>();
-            if (data == null || string.IsNullOrWhiteSpace(data.token))
-                throw new Exception("Sikeres login, de nem jött token a backendtől.");
 
-            AuthState.token = data.token;
+            // ha a backend egyszer mégis küld token-t is, eltesszük
+            if (data != null && !string.IsNullOrWhiteSpace(data.token))
+                AuthState.token = data.token;
+
             return true;
         }
 
@@ -124,7 +139,7 @@ namespace YourAppName.Services
                    ?? throw new Exception("Üres válasz");
         }
 
-        // ===== MEASUREMENTS (egységesen: tipus/ertek/mertekegyseg/datum/megjegyzes) =====
+        // ===== MEASUREMENTS =====
 
         public async Task CreateMeasurementAsync(
             string tipus,
@@ -138,7 +153,7 @@ namespace YourAppName.Services
                 tipus,
                 ertek,
                 mertekegyseg,
-                datum = (datum ?? DateTime.Today).ToString("o"), // TODAY -> napi szűréshez stabil
+                datum = (datum ?? DateTime.Today).ToString("o"),
                 megjegyzes
             };
 
@@ -182,19 +197,64 @@ namespace YourAppName.Services
         public async Task<double> GetTodaySleepTotalHoursAsync()
         {
             var list = await GetTodayMeasurementsAsync("ALVAS");
-            return list.Sum(x => x.ertek); // ebben a tiszta verzióban ALVAS órában van tárolva
+            return list.Sum(x => x.ertek);
         }
 
         public async Task<double> GetLatestWeightAsync()
         {
             var list = await GetTodayMeasurementsAsync("TESTSULY");
-
-            var last = list
-                .OrderByDescending(x => x.datum)   // ha datum tartalmaz időt is
-                .FirstOrDefault();
-
+            var last = list.OrderByDescending(x => x.datum).FirstOrDefault();
             return last?.ertek ?? 0.0;
         }
+
+        // ===== ADMIN =====
+
+        public class AdminUserDto
+        {
+            public int azonosito { get; set; }
+            public string nev { get; set; } = "";
+            public string email { get; set; } = "";
+            public string szerepkor { get; set; } = "";
+            public bool aktiv { get; set; }
+        }
+
+        public async Task<List<AdminUserDto>> AdminListUsersAsync()
+        {
+            var req = Authed(HttpMethod.Get, "api/admin/users");
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+
+            return await resp.Content.ReadFromJsonAsync<List<AdminUserDto>>() ?? new();
+        }
+
+        public async Task AdminCreateUserAsync(string keresztnev, string vezeteknev, string email, string jelszo, string szerepkor, bool aktiv)
+        {
+            var body = new { email, jelszo, szerepkor, aktiv = aktiv ? 1 : 0, keresztnev, vezeteknev };
+            var req = Authed(HttpMethod.Post, "api/admin/users");
+            req.Content = JsonContent.Create(body);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+        public async Task AdminUpdateUserAsync(int id, string email, string? jelszo, bool aktiv)
+        {
+            var body = new { email, jelszo = string.IsNullOrWhiteSpace(jelszo) ? null : jelszo, aktiv = aktiv ? 1 : 0 };
+            var req = Authed(HttpMethod.Put, $"api/admin/users/{id}");
+            req.Content = JsonContent.Create(body);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+        public async Task AdminDeleteUserAsync(int id)
+        {
+            var req = Authed(HttpMethod.Delete, $"api/admin/users/{id}");
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+        // ===== GOALS =====
 
         public class GoalDto
         {
@@ -235,15 +295,13 @@ namespace YourAppName.Services
             await EnsureSuccess(resp);
         }
 
-
+        // ===== ALVÁS =====
 
         public async Task<MeasurementDto?> GetTodaySleepEntryAsync()
         {
             var list = await GetTodayMeasurementsAsync("ALVAS");
             return list.OrderByDescending(x => x.datum).FirstOrDefault();
         }
-
-        // ===== ALVÁS MENTÉS (ALVAS órában, note: "HH:mm-HH:mm") =====
 
         public async Task AddSleepAsync(DateTime start, DateTime end)
         {
@@ -272,5 +330,17 @@ namespace YourAppName.Services
             return await resp.Content.ReadFromJsonAsync<DailyStatsDto>()
                    ?? throw new Exception("Üres válasz");
         }
+
+        public async Task AdminUpdateRoleAsync(int id, string szerepkor)
+        {
+            var body = new { szerepkor };
+            var req = Authed(HttpMethod.Put, $"api/admin/users/{id}/role");
+            req.Content = JsonContent.Create(body);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+
     }
 }

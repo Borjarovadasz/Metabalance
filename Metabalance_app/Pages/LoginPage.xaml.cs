@@ -30,15 +30,18 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                bool ok = await _api.LoginAsync(
-                    EmailTextBox.Text.Trim(),
-                    PasswordBox.Password
-                );
+                string email = EmailTextBox.Text.Trim();
+                string password = PasswordBox.Password;
+
+                bool ok = await _api.LoginAsync(EmailTextBox.Text.Trim(), PasswordBox.Password);
 
                 if (ok)
                 {
-                    MessageBox.Show("Sikeres bejelentkezés ✅");
-                    NavigationService.Navigate(new Dashboard());
+                    var me = await _api.GetMeAsync(); // ez már cookie-val működik
+                    if (me.szerepkor == "admin")
+                        NavigationService.Navigate(new AdminPage());
+                    else
+                        NavigationService.Navigate(new Dashboard());
                 }
                 else
                 {

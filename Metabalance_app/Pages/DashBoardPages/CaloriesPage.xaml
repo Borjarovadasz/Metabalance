@@ -17,7 +17,7 @@
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653"/>
             </StackPanel>
 
-            
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
@@ -26,21 +26,21 @@
                 <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
             </StackPanel>
 
-            
+
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-38,0,263,0"/>
+                <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-26,0,274,0"/>
                 <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="445,0,-220,0"/>
-                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="586,0,-324,0" />
+                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="567,0,-352,0" />
                 <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="105,0,143,0"/>
-                <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="SleepPage" Margin="232,0,22,0"/>
+                <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="SleepPage" Margin="237,0,22,0"/>
                 <Button Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="348,0,-75,0"/>
-                <Image  Height="40" Margin="541,4,-269,4"  Source="/Pages/img/weigthnav-removebg-preview.png" RenderTransformOrigin="0.736,0.525"/>
-                <Image  Height="40" Margin="-76,0,352,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>
+                <Image  Height="40" Margin="550,4,-278,4"  Source="/Pages/img/weigthnav-removebg-preview.png" RenderTransformOrigin="0.736,0.525"/>
+                <Image  Height="40" Margin="-70,0,378,0" VerticalAlignment="Center" Source="/Pages/img/house.png"/>
                 <Image  Height="40" Margin="187,0,89,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/sleepnav-removebg-preview.png"/>
                 <Image  Height="40" Margin="308,0,-32,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/waternav-removebg-preview.png"/>
                 <Image  Height="40" Margin="401,0,-119,0" VerticalAlignment="Center" Source="/Pages/img/moodnav-removebg-preview.png" RenderTransformOrigin="0.96,0.467"/>
-                <Image  Height="40" Margin="68,0,208,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/foodnav-removebg-preview.png" RenderTransformOrigin="0.234,0.475"/>
-                <Button Content="Víz" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="348,0,-75,0"/>
+                <Image  Height="40" Margin="64,0,224,0" VerticalAlignment="Center" Source="/Pages/img/foodnav-removebg-preview.png" RenderTransformOrigin="0.234,0.475"/>
+                <Button Content="Víz" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="361,0,-62,0"/>
             </Grid>
         </Grid>
 
@@ -48,20 +48,20 @@
         <ScrollViewer Margin="0,52,0,0" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="20" HorizontalAlignment="Center" MaxWidth="1400">
 
-               
+
                 <Border Background="White" CornerRadius="14" Padding="24" Margin="0 0 0 24">
                     <StackPanel>
                         <TextBlock Text="Étel Hozzáadása" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12" />
-                        <TextBox Height="36" Margin="0 0 0 10" Text="Étel neve"  x:Name="FoodNameBox"  />
-                        <TextBox Height="36" Margin="0 0 0 16" Text="Kalória (pl. 250)" x:Name="CaloriesBox"/>
+                        <TextBox Height="36" Margin="0 0 0 10" Text="Étel neve (Banán, Alma)"  x:Name="FoodNameBox"  />
+                        <TextBox Height="36" Margin="0 0 0 16" Text="Kalória (pl. 250kcal)" x:Name="CaloriesBox" TextChanged="CaloriesBox_TextChanged"/>
                         <Button  Click="AddFood_Click" Content="Étel hozzáadása" Height="40" Background="#FF6B6B" Foreground="White" BorderThickness="0" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
 
-              
+
                 <WrapPanel ItemWidth="460" ItemHeight="277" HorizontalAlignment="Center" Margin="0,0,0,20">
 
-                    
+
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Mai Összefoglaló" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
@@ -74,13 +74,15 @@
                                     <TextBlock Text="Kalóriabevitel a célhoz képest" Foreground="#777"/>
                                     <TextBlock x:Name="TotalCalories" Text="0" FontSize="32" FontWeight="Bold" Foreground="#FF6B6B"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="1" Text="/ 2000 Kalória" VerticalAlignment="Bottom" Margin="8 0"/>
+                                <TextBlock x:Name="GoalCaloriesText" Grid.Column="1"
+           Text="/ 2000 Kalória"
+           VerticalAlignment="Bottom" Margin="8 0"/>
                             </Grid>
                             <ProgressBar x:Name="CaloriesProgress" Height="8" Margin="0 12 0 0" Maximum="2000" Value="0" Foreground="#FF6B6B" Background="#FFECEC"/>
                         </StackPanel>
                     </Border>
 
-                    
+
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <StackPanel>
                             <TextBlock x:Name="LastFoodText" Text="Legutóbb naplózott ételek" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
@@ -94,7 +96,7 @@
                         </StackPanel>
                     </Border>
 
-                    
+
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <lvc:CartesianChart Height="217">
                             <lvc:CartesianChart.Series>
@@ -111,7 +113,7 @@
                         </lvc:CartesianChart>
                     </Border>
 
-                    
+
                     <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
                         <StackPanel>
                             <TextBlock Text="Tippek a Kalória Kezeléséhez" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
@@ -121,10 +123,30 @@
                             <TextBlock Text="✔ Étkezzen lassan és élvezze az ételt, ez segít felismerni, mikor lakott jól." Margin="0 6"/>
                         </StackPanel>
                     </Border>
+                    <Border Background="White" CornerRadius="14" Padding="24" Margin="10">
+                        <StackPanel>
+                            <TextBlock Text="Napi cél beállítása" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12"/>
+                            <TextBlock Text="Állítsd be a napi kalória célt." Foreground="#777" Margin="0 0 0 18"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 12">
+                                <TextBlock Text="Aktuális cél:" Margin="0,0,8,0"/>
+                                <TextBlock x:Name="TbKcalGoalValue" Text="2000 kcal" FontWeight="SemiBold"/>
+                            </StackPanel>
+
+                            <Slider x:Name="SlKcalGoal"
+                Minimum="1200"
+                Maximum="4000"
+                Value="2000"
+                TickFrequency="50"
+                IsSnapToTickEnabled="True"
+                Margin="0 0 0 10"
+                ValueChanged="SlKcalGoal_ValueChanged"/>
+                        </StackPanel>
+                    </Border>
 
                 </WrapPanel>
 
-               
+
 
             </StackPanel>
         </ScrollViewer>
