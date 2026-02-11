@@ -3,7 +3,13 @@ require("dotenv").config();
 
 module.exports = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const headerToken = authHeader && authHeader.split(" ")[1];
+  const cookieHeader = req.headers["cookie"] || "";
+  const cookieToken = cookieHeader
+    .split(";")
+    .map((c) => c.trim())
+    .find((c) => c.startsWith("token="));
+  const token = headerToken || (cookieToken ? decodeURIComponent(cookieToken.split("=")[1]) : null);
 
   if (!token) {
     return res.status(401).json({ message: "Token szukseges" });

@@ -1,6 +1,6 @@
 ﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-/* LANDING PAGE */
+
 import Navbar from "./LandingPage/Navbar";
 import Hero from "./LandingPage/Hero";
 import Features from "./LandingPage/Features";
@@ -8,20 +8,25 @@ import Why from "./LandingPage/Why";
 import Testimonial from "./LandingPage/Testimonial";
 import Footer from "./components/Footer";
 
-/* LOGIN PAGE */
+
 import LoginPage from "./LoginPage/LoginPage";
 
-/* REGISTER PAGE */
+
 import RegisterPage from "./RegisterPage/RegisterPage";
 
-/* DASHBOARD */
+
 import DashboardPage from "./MainPage/MainPage";
 import WaterPage from "./WaterPage/WaterPage";
 import CaloriesPage from "./CaloriesPage/CaloriesPage";
 import SleepPage from "./SleepPage/SleepPage";
-// MoodPage and WeightPage removed
+import MoodPage from "./MoodPage/MoodPage";
+import WeightPage from "./WeightPage/WeightPage";
+import ProfilePage from "./ProfilePage/ProfilePage";
+import AdminPage from "./AdminPages/AdminPage";
+import ReportsPage from "./AdminPages/ReportsPage";
 
-/* STYLES */
+
+
 import "./LandingPage/LandingPage.css";
 
 export default function App() {
@@ -29,7 +34,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
 
-                {/* LANDING PAGE */}
+              
                 <Route
                     path="/"
                     element={
@@ -44,17 +49,22 @@ export default function App() {
                     }
                 />
 
-                {/* LOGIN */}
+            
                 <Route path="/login" element={<LoginPage />} />
 
-                {/* REGISTER */}
+            
                 <Route path="/register" element={<RegisterPage />} />
 
-                {/* DASHBOARD / MAINPAGE */}
+               
                 <Route path="/mainpage" element={<DashboardPage />} />
                 <Route path="/water" element={<WaterPage />} />
                 <Route path="/calories" element={<CaloriesPage />} />
                 <Route path="/sleep" element={<SleepPage />} />
+                <Route path="/mood" element={<MoodPage />} />
+                <Route path="/weight" element={<WeightPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/reports" element={<ReportsPage />} />
 
             </Routes>
         </BrowserRouter>

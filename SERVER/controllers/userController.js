@@ -7,9 +7,8 @@ exports.getOwnProfile = async (req, res) => {
   try {
     const userId = req.userId;
     const [rows] = await db.query(
-      `SELECT u.*, p.start_weight_kg, p.current_weight_kg, p.daily_goal_count
+      `SELECT u.*
        FROM users u
-       LEFT JOIN profiles p ON p.user_id = u.id
        WHERE u.id = ?`,
       [userId]
     );
@@ -37,19 +36,17 @@ exports.getOwnProfile = async (req, res) => {
       azonosito: user.id,
       nev: buildName(user.first_name, user.last_name),
       email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      profile_image: user.profile_image,
       szerepkor: user.role,
       regisztracio_datum: user.created_at,
-      profil: {
-        kezdo_suly: user.start_weight_kg,
-        aktualis_suly: user.current_weight_kg,
-        napi_celok_szama: user.daily_goal_count || 0,
-        ossz_statisztikak: {
-          viz: statsMap.VIZ || "0",
-          alvas: statsMap.ALVAS || "0",
-          kaloria: statsMap.KALORIA || "0",
-          testsuly: statsMap.TESTSULY || "0",
-          hangulat: statsMap.HANGULAT || "0"
-        }
+      ossz_statisztikak: {
+        viz: statsMap.VIZ || "0",
+        alvas: statsMap.ALVAS || "0",
+        kaloria: statsMap.KALORIA || "0",
+        testsuly: statsMap.TESTSULY || "0",
+        hangulat: statsMap.HANGULAT || "0"
       }
     });
   } catch (err) {
@@ -63,7 +60,7 @@ exports.updateProfile = async (req, res) => {
     const userId = req.userId;
     const firstName = req.body.keresztnev || req.body.firstName;
     const lastName = req.body.vezeteknev || req.body.lastName;
-    const { email, phone, gender, suly, startSuly } = req.body;
+    const { email, phone, gender, profileImage } = req.body;
 
     const [userRows] = await db.query("SELECT * FROM users WHERE id = ?", [userId]);
     if (userRows.length === 0) {
@@ -71,20 +68,9 @@ exports.updateProfile = async (req, res) => {
     }
 
     await db.query(
-      "UPDATE users SET first_name = COALESCE(?, first_name), last_name = COALESCE(?, last_name), email = COALESCE(?, email), phone = COALESCE(?, phone), gender = COALESCE(?, gender) WHERE id = ?",
-      [firstName, lastName, email, phone, gender, userId]
+      "UPDATE users SET first_name = COALESCE(?, first_name), last_name = COALESCE(?, last_name), email = COALESCE(?, email), phone = COALESCE(?, phone), gender = COALESCE(?, gender), profile_image = COALESCE(?, profile_image) WHERE id = ?",
+      [firstName, lastName, email, phone, gender, profileImage, userId]
     );
-
-    if (suly !== undefined || startSuly !== undefined) {
-      await db.query(
-        `INSERT INTO profiles (user_id, start_weight_kg, current_weight_kg)
-         VALUES (?, ?, ?)
-         ON DUPLICATE KEY UPDATE
-            start_weight_kg = COALESCE(VALUES(start_weight_kg), start_weight_kg),
-            current_weight_kg = COALESCE(VALUES(current_weight_kg), current_weight_kg)`
-        , [userId, startSuly || null, suly || null]
-      );
-    }
 
     return res.json({
       uzenet: "Profil sikeresen frissitve",

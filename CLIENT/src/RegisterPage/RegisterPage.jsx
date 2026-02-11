@@ -18,9 +18,13 @@ export default function RegisterPage() {
   });
 
   const handleChange = (e) => {
+    const isPhone = e.target.name === "phone";
+    const value = isPhone
+      ? e.target.value.replace(/[^0-9+ ]/g, "")
+      : e.target.value;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: value
     });
   };
 
@@ -29,7 +33,7 @@ export default function RegisterPage() {
 
     const { firstName, lastName, email, password, confirmPassword, phone, gender } = formData;
 
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || !gender) {
       alert("Kerlek toltsd ki az osszes kotelezo mezot!");
       return;
     }
@@ -121,9 +125,12 @@ export default function RegisterPage() {
           <label>Telefonszam (opcionalis)</label>
           <input
             type="text"
+            placeholder="+36 30 123 4567"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
+            inputMode="tel"
+            maxLength={20}
           />
 
           <label>Nem</label>

@@ -13,22 +13,10 @@ CREATE TABLE users (
     phone VARCHAR(30),
     gender ENUM('male','female','other','unknown') DEFAULT 'unknown',
     role ENUM('user','admin') DEFAULT 'user',
+    profile_image LONGTEXT,
     active TINYINT(1) DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Profiles table (optional extended user info)
-CREATE TABLE profiles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL UNIQUE,
-    start_weight_kg DECIMAL(6,2),
-    current_weight_kg DECIMAL(6,2),
-    height_cm DECIMAL(6,2),
-    daily_goal_count INT DEFAULT 0,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_profiles_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Goals table
@@ -60,7 +48,28 @@ CREATE TABLE measurements (
     INDEX idx_measurements_type_date (type, recorded_at)
 );
 
+-- Errors table
+CREATE TABLE errors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    message TEXT NOT NULL,
+    stack TEXT,
+    url VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_errors_user_date (user_id, created_at)
+);
+
 -- Seed admin user (password: Admin123!)
 INSERT INTO users (first_name, last_name, email, password, role, active) VALUES
 ('Admin', 'User', 'admin@example.com', '$2a$10$k0bezuu9wHtkHgOWbzQ/JuXkNClg43.rC0aZf0ocqXvmnUDpOwWW2', 'admin', 1);
 
+
+CREATE TABLE errors (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NULL,
+  message TEXT NOT NULL,
+  stack TEXT,
+  url VARCHAR(255),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_errors_user_date (user_id, created_at)
+);

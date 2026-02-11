@@ -1,0 +1,169 @@
+.mood-page {
+  background: #f8f8f8;
+  min-height: 100vh;
+  font-family: Inter, sans-serif;
+}
+
+.mood-container {
+  max-width: 860px;
+  margin: 20px auto 50px;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mood-card {
+  background: #fff;
+  border: 1px solid #ededed;
+  border-radius: 6px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.mood-card h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.mood-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mood-btn {
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 6px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.mood-btn.active {
+  border-color: #ef6b6b;
+  box-shadow: 0 0 0 2px rgba(239,107,107,0.15);
+}
+
+.mood-icon {
+  font-size: 18px;
+}
+
+.mood-label {
+  color: #444;
+}
+
+.mood-note {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  resize: vertical;
+}
+
+.mood-save {
+  margin-top: 8px;
+  width: 100%;
+  height: 34px;
+  background: #f3b6b6;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mood-chart {
+  width: 100%;
+  overflow: hidden;
+}
+
+.mood-chart-placeholder {
+  height: 200px;
+  border: 1px dashed #e0e0e0;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  color: #999;
+  font-size: 12px;
+  background: #fafafa;
+}
+
+.mood-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.mood-cal-head {
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  padding-bottom: 4px;
+}
+
+.mood-cal-cell {
+  height: 34px;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  position: relative;
+}
+
+.mood-cal-cell.selected {
+  border-color: #ef6b6b;
+  box-shadow: 0 0 0 2px rgba(239,107,107,0.15);
+}
+
+.mood-cal-cell.empty {
+  border: none;
+  background: transparent;
+  cursor: default;
+}
+
+.mood-dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: #ef6b6b;
+}
+
+.mood-day-details {
+  margin-top: 12px;
+}
+
+.mood-day-title {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.mood-day-empty {
+  font-size: 12px;
+  color: #999;
+}
+
+.mood-day-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 12px;
+  color: #444;
+  display: grid;
+  gap: 4px;
+}

@@ -4,33 +4,38 @@ import { apiFetch } from "../api";
 import { useAuthGuard } from "../hooks/useAuthGuard";
 import Footer from "../components/Footer";
 import "./SleepPage.css";
+import SleepChart from "./SleepChart";
+import SleepLog from "./SleepLog";
+import SleepSummary from "./SleepSummary";
 
 export default function SleepPage() {
   useAuthGuard();
-  const [goal, setGoal] = useState(null);
-  const [goalInput, setGoalInput] = useState(8);
   const [bedtime, setBedtime] = useState("22:00");
   const [wakeTime, setWakeTime] = useState("06:00");
   const [totalSleep, setTotalSleep] = useState(7.5);
   const [todayLogged, setTodayLogged] = useState(false);
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const goals = await apiFetch("/api/goals?tipus=ALVAS&aktiv=true");
-        if (goals.length) {
-          setGoal(goals[0]);
-          setGoalInput(goals[0].celErtek);
-        }
-      } catch (err) {
-        console.error(err.message);
-      }
-      try {
-        const items = await apiFetch("/api/measurements?tipus=ALVAS&limit=7");
-        const today = new Date().toISOString().slice(0, 10);
-        const hasToday = items.some((i) => i.datum && i.datum.slice(0, 10) === today);
+        const today = new Date();
+        const from = new Date(today.getTime() - 6 * 24 * 60 * 60 * 1000);
+        const fromStr = `${from.toISOString().slice(0, 10)}T00:00:00`;
+        const toStr = `${today.toISOString().slice(0, 10)}T23:59:59`;
+        const items = await apiFetch(
+          `/api/measurements?tipus=ALVAS&datum_tol=${fromStr}&datum_ig=${toStr}&limit=500`
+        );
+        setList(items);
+        const todayKey = today.toISOString().slice(0, 10);
+        const hasToday = items.some((i) => i.datum && i.datum.slice(0, 10) === todayKey);
         setTodayLogged(hasToday);
-        if (items.length) {
+        const todayTotal = items
+          .filter((i) => i.datum && i.datum.slice(0, 10) === todayKey)
+          .reduce((sum, i) => sum + Number(i.ertek || 0), 0);
+        if (todayTotal > 0) {
+          setTotalSleep(todayTotal);
+        } else if (items.length) {
           const latest = items[0];
           setTotalSleep(Number(latest.ertek) || totalSleep);
         }
@@ -41,23 +46,6 @@ export default function SleepPage() {
     load();
   }, []);
 
-  const saveGoal = async () => {
-    if (!goalInput) return;
-    const body = { celErtek: Number(goalInput), mertekegyseg: "óra", aktiv: true };
-    try {
-      if (goal) {
-        await apiFetch(`/api/goals/${goal.id}`, { method: "PUT", body: JSON.stringify(body) });
-      } else {
-        await apiFetch("/api/goals", {
-          method: "POST",
-          body: JSON.stringify({ ...body, tipus: "ALVAS" })
-        });
-      }
-      setGoal({ id: goal?.id || 0, celErtek: Number(goalInput) });
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
 
   const addSleep = async () => {
     if (todayLogged) return;
@@ -77,43 +65,67 @@ export default function SleepPage() {
         })
       });
       setTodayLogged(true);
+      const todayKey = new Date().toISOString().slice(0, 10);
+      setList((prev) => [
+        {
+          id: `tmp-${todayKey}`,
+          tipus: "ALVAS",
+          ertek: hours,
+          mertekegyseg: "óra",
+          datum: new Date().toISOString()
+        },
+        ...prev
+      ]);
     } catch (err) {
       console.error(err.message);
     }
   };
 
+  const dayTotals = () => {
+    const days = [];
+    const map = {};
+    for (let i = 6; i >= 0; i -= 1) {
+      const d = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+      const key = d.toISOString().slice(0, 10);
+      days.push(key);
+      map[key] = 0;
+    }
+    list.forEach((item) => {
+      if (!item.datum) return;
+      const key = item.datum.slice(0, 10);
+      if (map[key] !== undefined) {
+        map[key] += Number(item.ertek || 0);
+      }
+    });
+    const labels = ["Vas", "Hét", "Kedd", "Sze", "Csü", "Pén", "Szo"];
+    return days.map((key) => {
+      const dayIdx = new Date(key + "T00:00:00").getDay();
+      return {
+        label: labels[dayIdx],
+        value: map[key]
+      };
+    });
+  };
+  const chartData = dayTotals();
+
   return (
     <div className="sleep-page">
       <TopNav />
       <div className="sleep-container">
-        <section className="sleep-card">
-          <h3>Alvásnaplózás</h3>
-          <div className="sleep-form-row">
-            <div>
-              <label>Lefekvés időpontja</label>
-              <input type="time" value={bedtime} onChange={(e) => setBedtime(e.target.value)} />
-            </div>
-            <div>
-              <label>Felkelés időpontja</label>
-              <input type="time" value={wakeTime} onChange={(e) => setWakeTime(e.target.value)} />
-            </div>
-            <button onClick={addSleep} disabled={todayLogged}>
-              {todayLogged ? "Már rögzítve" : "Alvás rögzítése"}
-            </button>
-          </div>
-        </section>
+        <SleepLog
+          bedtime={bedtime}
+          setBedtime={setBedtime}
+          wakeTime={wakeTime}
+          setWakeTime={setWakeTime}
+          addSleep={addSleep}
+          todayLogged={todayLogged}
+        />
 
-        <section className="sleep-card center">
-          <h3>Teljes alvásidő</h3>
-          <div className="sleep-total">{totalSleep.toFixed(1)} óra</div>
-          <div className="sleep-note">
-            Pihentető alvás! Ne feledje, a jó alvás javítja a fókuszt és a hangulatot.
-          </div>
-        </section>
+        <SleepSummary totalSleep={totalSleep} />
 
         <section className="sleep-card">
           <h3>Alvási idő az elmúlt 7 napban</h3>
-          <div className="sleep-chart-placeholder">A grafikon ideiglenesen nem érhető el.</div>
+          <SleepChart data={chartData} />
         </section>
 
         <section className="sleep-card">

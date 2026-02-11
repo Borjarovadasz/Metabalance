@@ -22,8 +22,9 @@ export default function LoginPage() {
         method: "POST",
         body: JSON.stringify({ email, password })
       });
-      localStorage.setItem("token", data.token);
-      navigate("/mainpage");
+      const user = await apiFetch("/api/users/me");
+      const role = user?.szerepkor || "user";
+      navigate(role === "admin" ? "/admin" : "/mainpage");
     } catch (err) {
       alert(err.message || "Bejelentkezesi hiba");
     }
@@ -59,7 +60,6 @@ export default function LoginPage() {
               <input type="checkbox" />
               Emlekezz ram
             </label>
-            <a href="#" className="forgot-password">Elfelejtetted a jelszavad?</a>
           </div>
 
           <button type="submit" className="login-button">Bejelentkezes</button>

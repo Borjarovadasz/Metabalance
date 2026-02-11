@@ -40,6 +40,17 @@
   margin: 0 0 10px;
 }
 
+.cal-subtext {
+  font-size: 12px;
+  color: #777;
+  margin: 2px 0;
+}
+
+.cal-strong {
+  font-weight: 600;
+  color: #555;
+}
+
 .cal-card {
   background: #fff;
   border: 1px solid #ededed;
@@ -111,9 +122,36 @@
   background: #ef6b6b;
 }
 
+.cal-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.cal-slider {
+  width: 100%;
+  accent-color: #ef6b6b;
+}
+
+.cal-slider-value {
+  min-width: 90px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ef6b6b;
+}
+
 .cal-chart {
   width: 100%;
   overflow: hidden;
+}
+
+.cal-chart-legend {
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  margin-top: 4px;
 }
 
 .cal-chart-placeholder {

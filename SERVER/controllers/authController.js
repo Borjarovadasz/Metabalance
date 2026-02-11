@@ -20,7 +20,7 @@ exports.registerUser = async (req, res) => {
     const lastName = req.body.vezeteknev || req.body.lastName;
     const { email, password, phone, gender } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !gender) {
       return res.status(400).json({ message: "Hianyzo kotelezo mezok" });
     }
 
@@ -32,7 +32,7 @@ exports.registerUser = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const [result] = await db.query(
       "INSERT INTO users (first_name, last_name, email, password, phone, gender) VALUES (?, ?, ?, ?, ?, ?)",
-      [firstName, lastName, email, hashed, phone || null, gender || "unknown"]
+      [firstName, lastName, email, hashed, phone || null, gender]
     );
 
     const registeredAt = new Date().toISOString();
@@ -75,10 +75,15 @@ exports.loginUser = async (req, res) => {
       console.error("Token log write failed", logErr.message);
     }
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false,
+      maxAge: expiresInSec * 1000
+    });
     return res.json({
       lejarat: expDate,
-      felhasznalo: mapUserRow(user),
-      token
+      felhasznalo: mapUserRow(user)
     });
   } catch (err) {
     console.error(err);
@@ -87,6 +92,7 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.logoutUser = async (_req, res) => {
+  res.clearCookie("token");
   return res.json({ uzenet: "Sikeres kijelentkezes", sikeres: true });
 };
 

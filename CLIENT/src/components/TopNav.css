@@ -79,11 +79,25 @@
   margin-left: 12px;
 }
 
+.avatar-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .avatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background: url("data:image/svg+xml;utf8,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='100' cy='100' r='90' fill='%2325292f' /%3E%3Ccircle cx='100' cy='78' r='36' fill='%23f8f8f8' /%3Cpath d='M55 156c0-25 20-45 45-45h0c25 0 45 20 45 45v8H55v-8z' fill='%23f8f8f8' /%3E%3C/svg%3E") center/cover no-repeat;
+}
+
+.avatar-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .logout-btn {

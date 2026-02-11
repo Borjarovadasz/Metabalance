@@ -10,6 +10,8 @@ import iconSleep from "../styles/Pictures/sleep.png";
 import iconMood from "../styles/Pictures/mood.png";
 import iconWeight from "../styles/Pictures/weight.png";
 import Footer from "../components/Footer";
+import MainHero from "./MainHero";
+import StatCard from "./StatCard";
 import "./MainPage.css";
 
 export default function MainPage() {
@@ -50,6 +52,10 @@ export default function MainPage() {
           if (lastSleep.length) {
             newStats.alvas = Number(lastSleep[0].ertek) || newStats.alvas || 0;
           }
+          const lastMood = await apiFetch("/api/measurements?tipus=HANGULAT&limit=1");
+          if (lastMood.length) {
+            newStats.hangulat = Number(lastMood[0].ertek) || newStats.hangulat;
+          }
         } catch (err) {
           console.error("Alvás backup fetch error", err.message);
         }
@@ -73,6 +79,18 @@ export default function MainPage() {
   const weightProgress = stats.testsuly
     ? Math.min(100, Math.round((stats.testsuly / weightGoal) * 100))
     : 0;
+
+  const moodLabel = (value) => {
+    const map = {
+      6: "Vidám",
+      5: "Boldog",
+      4: "Semleges",
+      3: "Szomorú",
+      2: "Dühös",
+      1: "Stresszes"
+    };
+    return map[Number(value)] || "Ismeretlen";
+  };
 
   const cards = [
     {
@@ -105,16 +123,16 @@ export default function MainPage() {
     },
     {
       title: "Hangulatnapló",
-      value: stats.hangulat ? stats.hangulat.toFixed(1) : "-",
-      hint: "Értékeld a mai hangulatod!",
+      value: stats.hangulat !== null ? moodLabel(stats.hangulat) : "-",
+      hint: "Legutóbbi hangulatod.",
       bar: null,
       icon: iconMood,
       link: () => navigate("/mood")
     },
     {
       title: "Testsúly",
-      value: stats.testsuly ? `${stats.testsuly.toFixed(1)} kg` : "-",
-      hint: "Jól haladsz!",
+      value: stats.testsuly !== null ? `${stats.testsuly} kg` : "-",
+      hint: "Legutóbbi testsúlyod.",
       bar: weightProgress,
       icon: iconWeight,
       link: () => navigate("/weight")
@@ -125,45 +143,16 @@ export default function MainPage() {
     <div className="mainpage">
       <TopNav />
       <div className="mp-container">
-        <div className="hero">
-          <div className="hero-text">
-            <h1>
-              Üdv újra, {username}!<br />
-              Merre tart ma az egészséged?
-            </h1>
-            <p>
-              Kövesd nyomon az összes egészséggel kapcsolatos adatodat egyetlen helyen.
-              Állíts be célokat, figyeld a fejlődésedet, és élj teljesebb életet
-              a Metabalance segítségével.
-            </p>
-            <button className="hero-btn" onClick={() => navigate("/calories")}>
-              Kalória naplózás
-            </button>
-          </div>
-          <div className="hero-img-wrap">
-            <img src={heroImg} alt="hero" className="hero-img" />
-          </div>
-        </div>
+        <MainHero
+          username={username}
+          heroImg={heroImg}
+          onCta={() => navigate("/calories")}
+        />
 
         <h2 className="section-title">Napi áttekintés</h2>
         <div className="card-grid">
           {cards.map((card) => (
-            <div className="stat-card" key={card.title} onClick={card.link}>
-              <div className="stat-head">
-                <div className="stat-title">{card.title}</div>
-                {card.icon && (
-                  <img src={card.icon} alt={card.title} className="stat-icon" />
-                )}
-              </div>
-              <div className="stat-value">{card.value}</div>
-              <div className="stat-hint">{card.hint}</div>
-              {card.bar !== null && (
-                <div className="stat-bar">
-                  <div style={{ width: `${card.bar}%` }} />
-                </div>
-              )}
-              <div className="stat-link">Megtekintés</div>
-            </div>
+            <StatCard key={card.title} card={card} />
           ))}
         </div>
       </div>

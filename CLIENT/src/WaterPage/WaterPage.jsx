@@ -3,6 +3,9 @@ import TopNav from "../components/TopNav";
 import { apiFetch } from "../api";
 import { useAuthGuard } from "../hooks/useAuthGuard";
 import Footer from "../components/Footer";
+import WaterLog from "./WaterLog";
+import WaterProgress from "./WaterProgress";
+import WaterGoal from "./WaterGoal";
 import "./WaterPage.css";
 
 export default function WaterPage() {
@@ -15,7 +18,7 @@ export default function WaterPage() {
 
   const loadData = async () => {
     try {
-      const goals = await apiFetch("/api/goals?tipus=VIZ&aktiv=true");
+      const goals = await apiFetch("/api/goals?tipus=VIZ&aktiv=1");
       if (goals.length) {
         setGoal(goals[0]);
         setGoalInput(goals[0].celErtek);
@@ -91,87 +94,29 @@ export default function WaterPage() {
   return (
     <div className="water-page">
       <TopNav />
-      <div className="water-container">
+        <div className="water-container">
         <div className="water-title">Vízfogyasztás követése</div>
 
-        <div className="water-box outline">
-          <div className="water-label">Vízbevitel naplózása</div>
-          <div className="water-subtext">Adja hozzá a napi vízfogyasztását.</div>
-          <div className="d-flex justify-content-between align-items-center mb-1">
-            <div className="water-subtext">Jelenlegi bevitel:</div>
-            <div className="water-goal-text">{`${totalToday} ml / ${target || 0} ml`}</div>
-          </div>
-          <div className="water-input-row mb-2">
-            <button
-              className="water-round-btn"
-              onClick={() => setAmount((p) => Math.max(0, p - 50))}
-            >
-              -
-            </button>
-            <input
-              type="number"
-              className="water-input"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-            />
-            <button
-              className="water-round-btn"
-              onClick={() => setAmount((p) => p + 50)}
-            >
-              +
-            </button>
-            <div className="water-unit">ml</div>
-          </div>
-          <button className="water-primary-btn" onClick={addMeasurement} disabled={loading}>
-            {loading ? "Mentés..." : "Vízmennyiség rögzítése"}
-          </button>
-        </div>
+        <WaterLog
+          totalToday={totalToday}
+          target={target}
+          amount={amount}
+          setAmount={setAmount}
+          addMeasurement={addMeasurement}
+          loading={loading}
+        />
 
-        <div className="water-box">
-          <div className="water-label mb-2">Napi haladás</div>
-          <div className="water-subtext">
-            Tekintse meg, hogyan teljesít a napi céljához képest.
-          </div>
-          <div className="water-progress-wrapper">
-            <div className="water-progress-circle">
-              <div
-                className="water-progress-inner"
-                style={{ background: `conic-gradient(#ef6b6b ${progress}%, #f2f2f2 0)` }}
-              >
-                <div className="water-progress-center">
-                  <div className="water-progress-number">{progress}%</div>
-                  <div className="water-progress-text">Cél: {target ? `${target} ml` : "-"}</div>
-                  <div className="water-progress-text">Hátralévő: {target ? `${Math.max(target - totalToday, 0)} ml` : "-"}</div>
-                </div>
-              </div>
-            </div>
-            <div className="water-progress-bar">
-              <div style={{ width: `${progress}%` }} />
-            </div>
-            <div className="water-helper">Majdnem elérted a célodat! Folytasd!</div>
-          </div>
-        </div>
+        <WaterProgress
+          progress={progress}
+          target={target}
+          totalToday={totalToday}
+        />
 
-        <div className="water-box">
-          <div className="water-label mb-1">Napi cél beállítása</div>
-          <div className="water-subtext">Állítsa be a napi vízfogyasztási célját.</div>
-          <div className="water-subtext fw-semibold">Aktuális cél:</div>
-          <div className="water-slider-row">
-            <input
-              type="range"
-              className="water-slider"
-              min="500"
-              max="4000"
-              step="100"
-              value={goalInput || 0}
-              onChange={(e) => setGoalInput(e.target.value)}
-              onMouseUp={(e) => saveGoal(e.target.value)}
-              onTouchEnd={(e) => saveGoal(e.target.value)}
-            />
-            <div className="water-slider-value">{goalInput || 0} ml</div>
-          </div>
-          <div className="water-subtext mt-1">Javasolt: 8-10 pohár (2000-2500 ml).</div>
-        </div>
+        <WaterGoal
+          goalInput={goalInput}
+          setGoalInput={setGoalInput}
+          saveGoal={saveGoal}
+        />
       </div>
       <Footer />
     </div>

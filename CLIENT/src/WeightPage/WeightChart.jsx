@@ -1,6 +1,6 @@
-export default function SleepChart({ data = [] }) {
+export default function WeightChart({ data = [], goal = null }) {
   if (!Array.isArray(data) || data.length === 0) {
-    return <div className="sleep-chart-placeholder">Nincs adat.</div>;
+    return <div className="weight-chart-placeholder">Nincs adat.</div>;
   }
 
   const width = 640;
@@ -12,10 +12,10 @@ export default function SleepChart({ data = [] }) {
   const innerW = width - padLeft - padRight;
   const innerH = height - padTop - padBottom;
 
-  const values = data.map((d) => Number(d.value ?? d.osszeg ?? 0));
-  const labels = data.map((d) => String(d.label ?? d.datum ?? ""));
-  const minV = Math.min(...values, 0);
-  const maxV = Math.max(...values, 1);
+  const values = data.map((d) => Number(d.value || 0));
+  const labels = data.map((d) => String(d.label || ""));
+  const minV = Math.min(...values, goal ?? Infinity, 0);
+  const maxV = Math.max(...values, goal ?? -Infinity, 1);
   const range = maxV - minV || 1;
 
   const points = values.map((v, i) => {
@@ -25,12 +25,15 @@ export default function SleepChart({ data = [] }) {
   });
 
   const pointStr = points.map((p) => `${p.x},${p.y}`).join(" ");
+  const goalY =
+    goal !== null
+      ? padTop + innerH - ((goal - minV) / range) * innerH
+      : null;
 
   return (
-    <div className="sleep-chart">
+    <div className="weight-chart">
       <svg viewBox={`0 0 ${width} ${height}`} width="100%" height="220">
         <rect x="0" y="0" width={width} height={height} fill="#fff" />
-
         <line x1={padLeft} y1={padTop} x2={padLeft} y2={height - padBottom} stroke="#eee" />
         <line x1={padLeft} y1={height - padBottom} x2={width - padRight} y2={height - padBottom} stroke="#eee" />
 
@@ -41,19 +44,24 @@ export default function SleepChart({ data = [] }) {
             <g key={i}>
               <line x1={padLeft} y1={y} x2={width - padRight} y2={y} stroke="#f2f2f2" />
               <text x={padLeft - 6} y={y + 3} textAnchor="end" fontSize="9" fill="#777">
-                {v}h
+                {v}
               </text>
             </g>
           );
         })}
 
-        <polyline
-          points={pointStr}
-          fill="none"
-          stroke="#ef6b6b"
-          strokeWidth="2"
-        />
+        {goalY !== null ? (
+          <line
+            x1={padLeft}
+            y1={goalY}
+            x2={width - padRight}
+            y2={goalY}
+            stroke="#888"
+            strokeDasharray="4 4"
+          />
+        ) : null}
 
+        <polyline points={pointStr} fill="none" stroke="#ef6b6b" strokeWidth="2" />
         {points.map((p, i) => (
           <circle key={i} cx={p.x} cy={p.y} r="3" fill="#ef6b6b" />
         ))}
@@ -71,6 +79,10 @@ export default function SleepChart({ data = [] }) {
           </text>
         ))}
       </svg>
+      <div className="weight-chart-legend">
+        <span className="weight-legend-dot" /> Súly (kg)
+        <span className="weight-legend-line" /> Cél (kg)
+      </div>
     </div>
   );
 }

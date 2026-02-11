@@ -78,6 +78,11 @@
   color: #666;
 }
 
+.sleep-chart {
+  width: 100%;
+  overflow: hidden;
+}
+
 .sleep-chart-placeholder {
   height: 200px;
   border: 1px dashed #e0e0e0;

@@ -95,6 +95,14 @@ exports.updateRole = async (req, res) => {
     if (!szerepkor) {
       return res.status(400).json({ message: "szerepkor kotelezo" });
     }
+    const [rows] = await db.query("SELECT role FROM users WHERE id = ?", [userId]);
+    if (!rows.length) {
+      return res.status(404).json({ message: "Felhasznalo nem talalhato" });
+    }
+    const currentRole = rows[0].role;
+    if (currentRole === "admin" && szerepkor === "user") {
+      return res.status(400).json({ message: "Admin szerepkor nem valtoztathato userre" });
+    }
     await db.query("UPDATE users SET role = ? WHERE id = ?", [szerepkor, userId]);
     return res.json({ felhasznalo_id: Number(userId), uj_szerepkor: szerepkor, sikeres: true, uzenet: "Szerepkor modositva" });
   } catch (err) {
