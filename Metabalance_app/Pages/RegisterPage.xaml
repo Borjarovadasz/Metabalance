@@ -115,11 +115,13 @@
                                FontSize="14"
                                Margin="5,0,0,3"/>
                     <TextBox Height="36"
-                             Padding="8"
-                             Background="#FAFAFA"
-                             BorderBrush="#DDDDDD"
-                             BorderThickness="1"
-                             x:Name="PhoneTextBox"/>
+         Padding="8"
+         Background="#FAFAFA"
+         BorderBrush="#DDDDDD"
+         BorderThickness="1"
+         x:Name="PhoneTextBox"
+         PreviewTextInput="PhoneTextBox_PreviewTextInput"
+         DataObject.Pasting="PhoneTextBox_Pasting"/>
                 </StackPanel>
                 
 
