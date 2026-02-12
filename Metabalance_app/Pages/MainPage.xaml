@@ -48,7 +48,6 @@
                 <Button Width="45" Height="48" Content="▢" Background="{x:Null}" BorderThickness="0" Click="Maximize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="X" Background="{x:Null}" BorderThickness="0" Click="Exit" Margin="5,0"/>
                 <Button Width="180" Height="48" Content="Bejelentkezés" FontSize="20" Background="{x:Null}" BorderBrush="Transparent" Click="Bejelentkezes_Click" Margin="10,0,10,0"/>
-                <Image Source="img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="5,0,0,0"/>
             </StackPanel>
         </Grid>
 

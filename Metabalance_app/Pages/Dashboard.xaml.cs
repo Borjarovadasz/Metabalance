@@ -133,6 +133,10 @@ namespace Metabalance_app.Pages
 
 
         }
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
         private void Calories(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new CaloriesPage());

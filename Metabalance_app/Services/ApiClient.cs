@@ -51,6 +51,95 @@ namespace YourAppName.Services
             public string szerepkor { get; set; } = "";
         }
 
+        public class ProfileDto
+        {
+            public int azonosito { get; set; }
+            public string nev { get; set; } = "";
+            public string email { get; set; } = "";
+            public string? phone { get; set; }
+            public string? gender { get; set; }
+            public string? profile_image { get; set; }
+            public string szerepkor { get; set; } = "";
+            public DateTime regisztracio_datum { get; set; }
+
+            public class OsszStats
+            {
+                public string viz { get; set; } = "0";
+                public string alvas { get; set; } = "0";
+                public string kaloria { get; set; } = "0";
+                public string testsuly { get; set; } = "0";
+                public string hangulat { get; set; } = "0";
+            }
+            public OsszStats ossz_statisztikak { get; set; } = new();
+        }
+
+        public class UserProfileDto
+        {
+            public int azonosito { get; set; }
+            public string nev { get; set; } = "";
+            public string email { get; set; } = "";
+            public string? phone { get; set; }
+            public string? gender { get; set; }
+            public string? profile_image { get; set; }
+            public string szerepkor { get; set; } = "";
+            public DateTime regisztracio_datum { get; set; }
+
+            public OsszStatsDto? ossz_statisztikak { get; set; }
+            public class OsszStatsDto
+            {
+                public string viz { get; set; } = "0";
+                public string alvas { get; set; } = "0";
+                public string kaloria { get; set; } = "0";
+                public string testsuly { get; set; } = "0";
+                public string hangulat { get; set; } = "0";
+            }
+        }
+
+        public async Task<UserProfileDto> GetOwnProfileAsync()
+        {
+            var req = Authed(HttpMethod.Get, "api/users/me"); // <-- NEM api/me
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+
+            return await resp.Content.ReadFromJsonAsync<UserProfileDto>()
+                   ?? throw new Exception("Üres válasz");
+        }
+
+
+        public async Task UpdateMyProfileAsync(
+    string? keresztnev,
+    string? vezeteknev,
+    string? email,
+    string? phone,
+    string? gender,
+    string? profileImage)
+        {
+            var body = new
+            {
+                keresztnev,
+                vezeteknev,
+                email,
+                phone,
+                gender,
+                profileImage
+            };
+
+            var req = Authed(HttpMethod.Put, "api/users/me"); // <-- EZ A JÓ
+            req.Content = JsonContent.Create(body);
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
+        public async Task DeleteAccountAsync(string jelszo)
+        {
+            var req = Authed(HttpMethod.Delete, "api/delete"); // ✅ DELETE /delete
+            req.Content = JsonContent.Create(new { jelszo });
+
+            var resp = await _http.SendAsync(req);
+            await EnsureSuccess(resp);
+        }
+
         // Backended login-ja: { lejarat, felhasznalo } + cookie-ban token
         // Ha valaha küld token mezőt is, ezt is kezeljük.
         private class LoginResponse
