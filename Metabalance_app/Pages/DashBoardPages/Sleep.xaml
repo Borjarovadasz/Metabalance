@@ -45,11 +45,11 @@
             <StackPanel Margin="20" MaxWidth="1400" Width="1413">
 
 
-                <Border Style="{StaticResource CardStyle}" Height="209">
+                <Border Height="209">
                     <StackPanel>
 
                         <TextBlock Text="Alvásnaplózás"
-                                       Style="{StaticResource SectionTitle}"/>
+                                      />
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -91,7 +91,7 @@
             Click="Save_Click" Background="#FFFD9090"/>
 
                             <!-- EREDMÉNY külön sorban -->
-                            
+
                         </Grid>
 
 
@@ -99,7 +99,7 @@
                 </Border>
 
 
-                <Border Style="{StaticResource CardStyle}" Height="197">
+                <Border  Height="197">
                     <StackPanel HorizontalAlignment="Center">
 
                         <TextBlock Text="Teljes alvásidő"
@@ -122,35 +122,24 @@
                 </Border>
 
 
-                <Border Style="{StaticResource CardStyle}">
+                <Border >
                     <StackPanel>
 
                         <TextBlock Text="Alvás az elmúlt 7 napban"
-                                       Style="{StaticResource SectionTitle}"/>
+                   />
 
-                        <lvc:CartesianChart Height="260">
-                            <lvc:CartesianChart.Series>
-                                <lvc:ColumnSeries Title="Alvásóra" Values="{Binding SleepHours}" />
-                            </lvc:CartesianChart.Series>
-
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Napok" Labels="{Binding Days}" />
-                            </lvc:CartesianChart.AxisX>
-
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Órák" />
-                            </lvc:CartesianChart.AxisY>
-                        </lvc:CartesianChart>
+                        <lvc:CartesianChart Height="260"
+                           />
 
                     </StackPanel>
                 </Border>
 
 
-                <Border Style="{StaticResource CardStyle}">
+                <Border>
                     <StackPanel>
 
                         <TextBlock Text="Alvási tippek"
-                                       Style="{StaticResource SectionTitle}"/>
+                                       />
 
                         <TextBlock Text="• Tartson rendszeres alvási ütemtervet, még hétvégén is." Margin="0 6"/>
                         <TextBlock Text="• Gondoskodjon róla, hogy hálószobája sötét, csendes és hűvös legyen." Margin="0 6"/>
@@ -188,10 +177,10 @@
 
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-110,0,214,0"/>
-                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="32,0,82,0" Click="CaloriesClick"/>
+                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="CaloriesClick" Margin="32,0,82,0"/>
                 <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="164,0,-42,0"/>
                 <Button Content="Víz" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="293,0,-150,0"/>
-                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458" Click="MoodClick"/>
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458"/>
                 <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="526,0,-397,0"/>
                 <Image  Height="40" Margin="526,0,-326,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/weigthnav-removebg-preview.png"/>
                 <Image HorizontalAlignment="Left" Height="40" Margin="-121,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>

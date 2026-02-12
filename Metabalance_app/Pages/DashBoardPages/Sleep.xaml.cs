@@ -36,7 +36,7 @@ namespace Metabalance_app.Pages
 
         private void FillTimeBoxes()
         {
-     
+
             BedHourBox.Items.Clear();
             BedMinuteBox.Items.Clear();
             WakeHourBox.Items.Clear();
@@ -54,7 +54,6 @@ namespace Metabalance_app.Pages
                 WakeMinuteBox.Items.Add(m);
             }
 
-            // default (csak ha nincs adat)
             BedHourBox.SelectedItem = 22;
             BedMinuteBox.SelectedItem = 0;
             WakeHourBox.SelectedItem = 6;
@@ -67,8 +66,8 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                var list = await _api.GetTodayMeasurementsAsync("ALVAS"); // ugyanaz mint mentés!
-                var entry = list.OrderByDescending(x => x.id).FirstOrDefault(); 
+                var list = await _api.GetTodayMeasurementsAsync("ALVAS");
+                var entry = list.OrderByDescending(x => x.id).FirstOrDefault();
 
                 if (entry == null)
                 {
@@ -76,7 +75,6 @@ namespace Metabalance_app.Pages
                     return;
                 }
 
-                // megjegyzes pl: "22:00-06:00"
                 var note = entry.megjegyzes ?? "";
                 var parts = note.Split('-', StringSplitOptions.RemoveEmptyEntries);
 
@@ -90,8 +88,7 @@ namespace Metabalance_app.Pages
                     WakeMinuteBox.SelectedItem = wake.Minutes;
                 }
 
-                // A képed szerint unit="h", ertek=8.00 -> órában van!
-                // (Ha egyszer még percben mentetted, akkor az entry.mertekegyseg alapján kezeljük)
+
                 int totalMinutes = entry.mertekegyseg == "min"
                     ? (int)Math.Round(entry.ertek)
                     : (int)Math.Round(entry.ertek * 60.0);
@@ -123,25 +120,38 @@ namespace Metabalance_app.Pages
                 int wh = (int)WakeHourBox.SelectedItem;
                 int wm = (int)WakeMinuteBox.SelectedItem;
 
-                var start = DateTime.Today.AddHours(bh).AddMinutes(bm);
-                var endRaw = DateTime.Today.AddHours(wh).AddMinutes(wm);
+                var today = DateTime.Today;
+                var yesterday = today.AddDays(-1);
 
-                // UI számolás (éjfél átlógás)
-                var endCalc = endRaw <= start ? endRaw.AddDays(1) : endRaw;
-                var diff = endCalc - start;
+                var start = yesterday.AddHours(bh).AddMinutes(bm); // lefekvés TEGNAP
+                var end = today.AddHours(wh).AddMinutes(wm);       // kelés MA
+
+                if (end <= start)
+                {
+                    ResultText.Text = "Érvénytelen idő: a felkelés nem lehet korábban, mint a lefekvés.";
+                    return;
+                }
+
+                var diff = end - start;
+
+                // ✅ biztonsági limit, nehogy 50 óra legyen
+                if (diff.TotalHours > 16 || diff.TotalHours <= 0)
+                {
+                    ResultText.Text = "Érvénytelen alvásidő (0-16 óra engedélyezett).";
+                    return;
+                }
 
                 ResultText.Text = $"Alvás: {(int)diff.TotalHours} óra {diff.Minutes:00} perc";
 
-                await _api.AddSleepAsync(start, endRaw);
+                // ⚠️ fontos: a backend kapja meg a dátumot (yesterday), hogy arra a napra mentse
+                await _api.AddSleepAsync(start, end);
 
-                // visszatöltjük a mentettet
                 await LoadSavedSleepAsync();
             }
             catch (Exception ex)
             {
                 ResultText.Text = "Mentés hiba: " + ex.Message;
             }
-
         }
         private void Exit(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
@@ -157,14 +167,6 @@ namespace Metabalance_app.Pages
             window.WindowState = window.WindowState == System.Windows.WindowState.Normal
                 ? System.Windows.WindowState.Maximized
                 : System.Windows.WindowState.Normal;
-        }
-        private void SleepPage(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Sleep());
-        }
-        private void MoodClick(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Mood());
         }
 
         private void BackDash(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Dashboard());
