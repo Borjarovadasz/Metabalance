@@ -119,8 +119,8 @@
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-38,0,263,0"/>
                 <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="445,0,-220,0"/>
-                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="586,0,-324,0"/>
-                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="105,0,143,0"/>
+                <Button Click="WeightClick" Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="586,0,-324,0"/>
+                <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="Calories" Margin="105,0,143,0"/>
                 <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="SleepPage" Margin="232,0,22,0"/>
                 <Button Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="348,0,-75,0"/>
                 <Image Height="40" Margin="541,4,-269,4" Source="/Pages/img/weigthnav-removebg-preview.png" RenderTransformOrigin="0.736,0.525"/>

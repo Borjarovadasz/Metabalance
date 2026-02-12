@@ -1,259 +1,175 @@
 ﻿<Page x:Class="Metabalance_app.Pages.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Background="#FFF5F7FB" Height="796" Width="771">
-
-    <Page.Resources>
-
-        <!-- Kártya -->
-        <Style x:Key="CardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="18"/>
-            <Setter Property="BorderBrush" Value="#FFE8E8E8"/>
-            <Setter Property="BorderThickness" Value="1"/>
-        </Style>
-
-        <!-- Címek -->
-        <Style x:Key="H1" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="26"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#264653"/>
-        </Style>
-
-        <Style x:Key="SectionTitle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="#264653"/>
-            <Setter Property="Margin" Value="0,0,0,10"/>
-        </Style>
-
-        <Style x:Key="Label" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#777"/>
-            <Setter Property="Margin" Value="0,10,0,6"/>
-        </Style>
-
-        <!-- Input -->
-        <Style x:Key="InputStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Padding" Value="12,0"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="#FFE6E6E6"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="White"/>
-        </Style>
-
-        <!-- Primary gomb -->
-        <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Padding" Value="18,0"/>
-            <Setter Property="Background" Value="#FFF97979"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#FFF97979"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Ghost gomb -->
-        <Style x:Key="GhostButton" TargetType="Button">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Padding" Value="18,0"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#264653"/>
-            <Setter Property="BorderBrush" Value="#FFE6E6E6"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Topbar ikon gomb -->
-        <Style x:Key="TopIconButton" TargetType="Button">
-            <Setter Property="Width" Value="42"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-
-    </Page.Resources>
+      Background="#FFF5F7FB" Width="1127">
 
     <Grid>
+        <!-- NAVBAR + CONTENT -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="56"/>
+            <RowDefinition Height="52"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="44"/>
+            <RowDefinition Height="42"/>
+            <!-- footer -->
         </Grid.RowDefinitions>
 
-        <!-- TOP BAR -->
-        <Grid Grid.Row="0" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="18,0,0,0">
-                <Border Background="#FFF97979" CornerRadius="8" Width="32" Height="32" VerticalAlignment="Center">
-                    <TextBlock Text="👤" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
-                </Border>
-                <TextBlock Text="Profilom" Margin="10,0,0,0" VerticalAlignment="Center"
-                           FontSize="16" FontWeight="SemiBold" Foreground="#264653"/>
-            </StackPanel>
-
-            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
-                <!-- kis profil ikon -->
-                <Border Width="32" Height="32" CornerRadius="16" Background="#FFF5F7FB" Margin="0,0,10,0" ClipToBounds="True">
-                    <Image x:Name="TopAvatar" Stretch="UniformToFill"/>
-                </Border>
-
-                <Button Content="Kijelentkezés"
-                        Style="{StaticResource GhostButton}"
-                        Height="32"
-                        Padding="12,0"
-                        Click="Logout_Click"
-                        Margin="0,0,12,0" Width="88"/>
-
-                <!-- ablak gombok (ha WindowStyle=None) -->
-                <Button Style="{StaticResource TopIconButton}" Content="–" Click="Minimize_Click"/>
-                <Button Style="{StaticResource TopIconButton}" Content="▢" Click="Maximize_Click"/>
-                <Button Style="{StaticResource TopIconButton}" Content="X" Click="Close_Click"/>
-            </StackPanel>
-        </Grid>
-
-        <!-- CONTENT -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <Grid Margin="24" MaxWidth="1200" HorizontalAlignment="Center">
+        <!-- ===== TOP BAR (teljes szélesség) ===== -->
+        <Border Grid.Row="0" Background="White" BorderBrush="#FFE8E8E8" BorderThickness="0,0,0,1">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="280" MinWidth="220"/>
-                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- LEFT SIDEBAR CARD -->
-                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <Border Width="86" Height="86" CornerRadius="43" Background="#FFF5F7FB" ClipToBounds="True" HorizontalAlignment="Center" Margin="0,8,0,10">
-                            <Image x:Name="SideAvatar" Stretch="UniformToFill"/>
-                        </Border>
-
-                        <TextBlock x:Name="SideNameText"
-                                   Text="Mészáros Nándor"
-                                   HorizontalAlignment="Center"
-                                   FontWeight="SemiBold"
-                                   Foreground="#264653"/>
-
-                        <TextBlock x:Name="SideEmailText"
-                                   Text="nandor.meszaros@example.com"
-                                   HorizontalAlignment="Center"
-                                   Foreground="#888"
-                                   Margin="0,4,0,14"
-                                   TextWrapping="Wrap"/>
-
-                        <Border CornerRadius="10" Background="#FFFFEDED" Padding="10">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Text="👤" Margin="0,0,8,0"/>
-                                <TextBlock Text="Profilom" Foreground="#E74C3C" FontWeight="SemiBold"/>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </Border>
-
-                <!-- RIGHT CONTENT -->
-                <StackPanel Grid.Column="2">
-
-                    <TextBlock Text="Profil szerkesztése" Style="{StaticResource H1}" Margin="0,0,0,18"/>
-
-                    <!-- Profilkép -->
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
-                        <StackPanel>
-                            <TextBlock Text="Profilkép" Style="{StaticResource SectionTitle}"/>
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="16"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border Width="72" Height="72" CornerRadius="36" Background="#FFF5F7FB" ClipToBounds="True">
-                                    <Image x:Name="MainAvatar" Stretch="UniformToFill"/>
-                                </Border>
-
-                                <Button Grid.Column="2"
-                                        Content="Kép feltöltése"
-                                        Style="{StaticResource GhostButton}"
-                                        Width="140"
-                                        HorizontalAlignment="Left"
-                                        Click="UploadPhoto_Click"/>
-                            </Grid>
-                        </StackPanel>
+                <!-- bal: oldal cím -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
+                    <Border Background="#FFF97979" CornerRadius="8" Width="28" Height="28" VerticalAlignment="Center">
+                        <TextBlock Text="👤" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
                     </Border>
-
-                    <!-- Alapinfók -->
-                    <Border Style="{StaticResource CardStyle}">
-                        <StackPanel>
-                            <TextBlock Text="Alapvető információk" Style="{StaticResource SectionTitle}"/>
-
-                            <TextBlock Text="Név" Style="{StaticResource Label}"/>
-                            <TextBox x:Name="NameBox" Style="{StaticResource InputStyle}" Text="Mészáros Nándor"/>
-
-                            <TextBlock Text="E-mail" Style="{StaticResource Label}"/>
-                            <TextBox x:Name="EmailBox" Style="{StaticResource InputStyle}" Text="nandor.meszaros@example.com"/>
-
-                            <TextBlock Text="Telefonszám" Style="{StaticResource Label}"/>
-                            <TextBox x:Name="PhoneBox" Style="{StaticResource InputStyle}" Text="+36 30 123 4567"/>
-
-                            <TextBlock Text="Nem" Style="{StaticResource Label}"/>
-                            <ComboBox x:Name="GenderBox" Height="36" Padding="10,0" VerticalContentAlignment="Center">
-                                <ComboBoxItem Content="Férfi" IsSelected="True"/>
-                                <ComboBoxItem Content="Nő"/>
-                                <ComboBoxItem Content="Egyéb"/>
-                            </ComboBox>
-
-                            <!-- gombok -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
-                                <Button Content="✕  Mégse" Style="{StaticResource GhostButton}" Click="Cancel_Click" Margin="0,0,10,0" Width="70"/>
-                                <Button Content="💾  Változtatások mentése" Style="{StaticResource PrimaryButton}" Click="Save_Click" Width="165"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
+                    <TextBlock Text="Profilom" Margin="10,0,0,0" VerticalAlignment="Center"
+                               FontSize="16" FontWeight="SemiBold" Foreground="#264653"/>
                 </StackPanel>
 
+                <!-- közép: üresen hagyható / breadcrumb stb. -->
+                <Grid Grid.Column="1"/>
+
+                <!-- jobb: avatar + kijelentkezés + ablak gombok -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
+                    <Image x:Name="TopAvatar" Width="28" Height="28" Margin="0,0,10,0"/>
+                    <Button Content="Kijelentkezés" Click="Logout_Click"
+                            Height="30" Padding="12,0" Margin="0,0,14,0"
+                            Background="White" BorderBrush="#FFE6E6E6"/>
+
+                    <Button Width="40" Height="30" Content="–" Background="White" BorderThickness="0"
+                            Click="Minimize_Click" Margin="2,0"/>
+                    <Button Width="40" Height="30" Content="▢" Background="White" BorderThickness="0"
+                            Click="Maximize_Click" Margin="2,0"/>
+                    <Button Width="40" Height="30" Content="X" Background="White" BorderThickness="0"
+                            Click="Close_Click" Margin="2,0"/>
+                </StackPanel>
             </Grid>
-        </ScrollViewer>
+        </Border>
+
+        <!-- ===== MAIN CONTENT (teljes szélesség, nem középre keskenyítve) ===== -->
+        <Grid Grid.Row="1" Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <!-- Sidebar fix -->
+                <ColumnDefinition Width="16"/>
+                <!-- gap -->
+                <ColumnDefinition Width="*"/>
+                <!-- Main content kitölt -->
+            </Grid.ColumnDefinitions>
+
+            <!-- SIDEBAR -->
+            <Border Grid.Column="0" Background="White" CornerRadius="14" BorderBrush="#FFE8E8E8" BorderThickness="1">
+                <StackPanel Margin="18">
+                    <Border CornerRadius="60" Width="120" Height="120" HorizontalAlignment="Center" Margin="0,8,0,10"
+                            Background="#FFF5F7FB">
+                        <Image x:Name="SideAvatar" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <TextBlock x:Name="SideNameText" Text="Név"
+                               FontSize="16" FontWeight="SemiBold" Foreground="#264653"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="SideEmailText" Text="email"
+                               Foreground="#888" Margin="0,2,0,14"
+                               HorizontalAlignment="Center"/>
+
+                    <Border Background="#FFFFEDED" CornerRadius="10" Padding="10" Margin="0,8,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="👤" Margin="0,0,8,0"/>
+                            <TextBlock Text="Profilom" Foreground="#E74C3C" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- RIGHT SIDE: SCROLLABLE CONTENT -->
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <Grid>
+                    <!-- Ha akarod, adhatsz max szélességet, de NEM középre: inkább balra igazítva -->
+                    <Grid MaxWidth="900" HorizontalAlignment="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="14"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Profil szerkesztése"
+                                   FontSize="26" FontWeight="Bold" Foreground="#264653"
+                                   Margin="0,6,0,0"/>
+
+                        <!-- Profilkép card -->
+                        <Border Grid.Row="2" Background="White" CornerRadius="14" Padding="18"
+                                BorderBrush="#FFE8E8E8" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="Profilkép" FontSize="16" FontWeight="SemiBold" Foreground="#264653"/>
+
+                                <Grid Margin="0,14,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="92" Height="92" CornerRadius="12" Background="#FFF5F7FB">
+                                        <Image x:Name="MainAvatar" Stretch="UniformToFill"/>
+                                    </Border>
+
+                                    <Button Grid.Column="1" Content="Kép feltöltése" Click="UploadPhoto_Click"
+                                            Height="34" Padding="14,0"
+                                            HorizontalAlignment="Left" Margin="12,26,0,0"
+                                            Background="White" BorderBrush="#FFE6E6E6"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Alap info card -->
+                        <Border Grid.Row="2" Background="White" CornerRadius="14" Padding="18"
+                                BorderBrush="#FFE8E8E8" BorderThickness="1"
+                                Margin="0,160,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Alapvető információk" FontSize="16" FontWeight="SemiBold" Foreground="#264653"/>
+
+                                <TextBlock Text="Név" Margin="0,14,0,6" Foreground="#777"/>
+                                <TextBox x:Name="NameBox" Height="34" Padding="10,0" VerticalContentAlignment="Center"
+                                         BorderBrush="#FFE6E6E6" BorderThickness="1"/>
+
+                                <TextBlock Text="E-mail" Margin="0,12,0,6" Foreground="#777"/>
+                                <TextBox x:Name="EmailBox" Height="34" Padding="10,0" VerticalContentAlignment="Center"
+                                         BorderBrush="#FFE6E6E6" BorderThickness="1"/>
+
+                                <TextBlock Text="Telefonszám" Margin="0,12,0,6" Foreground="#777"/>
+                                <TextBox x:Name="PhoneBox" Height="34" Padding="10,0" VerticalContentAlignment="Center"
+                                         BorderBrush="#FFE6E6E6" BorderThickness="1"/>
+
+                                <TextBlock Text="Nem" Margin="0,12,0,6" Foreground="#777"/>
+                                <ComboBox x:Name="GenderBox" Height="34" BorderBrush="#FFE6E6E6" BorderThickness="1">
+                                    <ComboBoxItem Content="Férfi"/>
+                                    <ComboBoxItem Content="Nő"/>
+                                    <ComboBoxItem Content="Egyéb"/>
+                                </ComboBox>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+                                    <Button Content="Mégse" Click="Cancel_Click"
+                                            Height="34" Padding="14,0" Margin="0,0,10,0"
+                                            Background="White" BorderBrush="#FFE6E6E6"/>
+                                    <Button Content="Változtatások mentése" Click="Save_Click"
+                                            Height="34" Padding="14,0"
+                                            Background="#FFF97979" Foreground="White" BorderBrush="#FFF97979"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
 
         <!-- FOOTER -->
-        <Border Grid.Row="2" Background="#FFEDEDED">
+        <Border Grid.Row="2" Background="Transparent">
             <TextBlock Text="© 2025 Metabalance. Minden jog fenntartva."
-                       Foreground="#777"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                       Foreground="#888" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
     </Grid>
 </Page>

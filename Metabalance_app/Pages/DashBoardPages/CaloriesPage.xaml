@@ -29,8 +29,8 @@
 
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Kezelőpult" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="-26,0,274,0"/>
-                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="445,0,-220,0"/>
-                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackDash" Margin="567,0,-352,0" />
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="MoodClick" Margin="445,0,-220,0"/>
+                <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="567,0,-352,0" />
                 <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="105,0,143,0"/>
                 <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="SleepPage" Margin="237,0,22,0"/>
                 <Button Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="348,0,-75,0"/>

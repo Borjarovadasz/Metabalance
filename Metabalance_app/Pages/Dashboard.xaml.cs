@@ -45,6 +45,37 @@ namespace Metabalance_app.Pages
                 var waterMl = await _api.GetTodayWaterTotalMlAsync();
                 var calories = await _api.GetTodayCaloriesTotalAsync();
                 var sleep = await _api.GetTodaySleepTotalHoursAsync();
+                var moodsToday = await _api.GetMeasurementsAsync("HANGULAT", DateTime.Today, limit: 500);
+
+                var lastMood = moodsToday
+                    .OrderByDescending(x => x.datum)
+                    .FirstOrDefault();
+
+                if (lastMood == null)
+                {
+                    MoodValueText.Text = "Nincs adat";
+                    MoodValueHint.Text = "Rögzíts hangulatot a mai napra!";
+                }
+                else
+                {
+                    string label = lastMood.ertek switch
+                    {
+                        5 => "Vidám",
+                        4 => "Boldog",
+                        3 => "Semleges",
+                        2 => "Szomorú",
+                        1 => "Dühös/Stresszes",
+                        _ => "Ismeretlen"
+                    };
+
+                    MoodValueText.Text = label;
+
+                    string time = lastMood.datum.ToString("HH:mm");
+                    string note = string.IsNullOrWhiteSpace(lastMood.megjegyzes) ? "" : $" — {lastMood.megjegyzes}";
+
+                    MoodValueHint.Text = $"Legutóbbi: {time}{note}";
+                }
+
 
                 // ✅ itt mindig a legutolsó súly
                 var weight = await _api.GetLatestWeightAsync();

@@ -58,6 +58,7 @@
     <Resource Include="Pages\img\house.png" />
     <Resource Include="Pages\img\landingpage-img.png" />
     <Resource Include="Pages\img\logo-removebg-preview.png" />
+    <Resource Include="Pages\img\MainPageImg.png" />
     <Resource Include="Pages\img\mood.png" />
     <Resource Include="Pages\img\moodnav-removebg-preview.png" />
     <Resource Include="Pages\img\navbar-login-icon-removebg-preview.png" />
