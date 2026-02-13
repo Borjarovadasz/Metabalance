@@ -12,15 +12,6 @@ import iconHome from "../styles/Pictures/homepage.png";
 import defaultProfile from "../styles/Pictures/profilepicture.png";
 import { apiFetch } from "../api";
 
-const links = [
-  { to: "/mainpage", label: "Kezelőpult", img: iconHome },
-  { to: "/sleep", label: "Alvás", img: iconSleep },
-  { to: "/calories", label: "Kalória", img: iconApple },
-  { to: "/water", label: "Víz", img: iconWater },
-  { to: "/mood", label: "Hangulat", img: iconHeart },
-  { to: "/weight", label: "Súly", img: iconWeight }
-];
-
 export default function TopNav({ adminOnly = false }) {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(defaultProfile);
@@ -64,12 +55,30 @@ export default function TopNav({ adminOnly = false }) {
       {!adminOnly ? (
         <div className="topnav-center">
           <div className="topnav-links">
-            {links.map((link) => (
-              <Link key={link.to} to={link.to} className="topnav-link">
-                {link.img ? <img src={link.img} alt={link.label} className="nav-img" /> : null}
-                {link.label}
-              </Link>
-            ))}
+            <Link to="/mainpage" className="topnav-link">
+              <img src={iconHome} alt="Kezelőpult" className="nav-img" />
+              Kezelőpult
+            </Link>
+            <Link to="/sleep" className="topnav-link">
+              <img src={iconSleep} alt="Alvás" className="nav-img" />
+              Alvás
+            </Link>
+            <Link to="/calories" className="topnav-link">
+              <img src={iconApple} alt="Kalória" className="nav-img" />
+              Kalória
+            </Link>
+            <Link to="/water" className="topnav-link">
+              <img src={iconWater} alt="Víz" className="nav-img" />
+              Víz
+            </Link>
+            <Link to="/mood" className="topnav-link">
+              <img src={iconHeart} alt="Hangulat" className="nav-img" />
+              Hangulat
+            </Link>
+            <Link to="/weight" className="topnav-link">
+              <img src={iconWeight} alt="Súly" className="nav-img" />
+              Súly
+            </Link>
           </div>
         </div>
       ) : (

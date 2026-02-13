@@ -61,5 +61,5 @@ CREATE TABLE errors (
 
 -- Seed admin user (password: Admin123!)
 INSERT INTO users (first_name, last_name, email, password, role, active) VALUES
-('Admin', 'User', 'admin@example.com', '$2a$10$k0bezuu9wHtkHgOWbzQ/JuXkNClg43.rC0aZf0ocqXvmnUDpOwWW2', 'admin', 1);
+('Admin', 'User', 'admin@gmail.com', '$2b$10$5sEyBDDh2nYgSDXVcHqgW.WlMbfqJRyMEU30OYQgTcR6JOW8432jO', 'admin', 1);
 

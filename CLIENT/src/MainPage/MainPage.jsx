@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TopNav from "../components/TopNav";
 import { apiFetch } from "../api";
@@ -25,7 +25,8 @@ export default function MainPage() {
     kaloriaKeret: null,
     alvas: 0,
     testsuly: null,
-    hangulat: null
+    hangulat: null,
+    testsulyCel: null
   });
 
   useEffect(() => {
@@ -45,8 +46,17 @@ export default function MainPage() {
           kaloriaKeret: daily.kaloria_keret_kcal ?? null,
           alvas: daily.alvas_ora || 0,
           testsuly: daily.testsuly_kg ?? null,
-          hangulat: daily.hangulat_atlag ?? null
+          hangulat: daily.hangulat_atlag ?? null,
+          testsulyCel: null
         };
+        try {
+          const goals = await apiFetch("/api/goals?tipus=TESTSULY&aktiv=1");
+          if (goals.length) {
+            newStats.testsulyCel = Number(goals[0].celErtek) || null;
+          }
+        } catch (err) {
+          console.error("Testsúly cél fetch error", err.message);
+        }
         try {
           const lastSleep = await apiFetch("/api/measurements?tipus=ALVAS&limit=1");
           if (lastSleep.length) {
@@ -75,9 +85,10 @@ export default function MainPage() {
     ? Math.min(100, Math.round((stats.kaloria / stats.kaloriaKeret) * 100))
     : 0;
 
-  const weightGoal = 70;
-  const weightProgress = stats.testsuly
-    ? Math.min(100, Math.round((stats.testsuly / weightGoal) * 100))
+  const weightProgress = stats.testsuly && stats.testsulyCel
+    ? (stats.testsuly <= stats.testsulyCel
+        ? 100
+        : Math.min(100, Math.round((stats.testsulyCel / stats.testsuly) * 100)))
     : 0;
 
   const moodLabel = (value) => {

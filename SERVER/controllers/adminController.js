@@ -19,7 +19,7 @@ exports.listUsers = async (_req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { email, jelszo, szerepkor, aktiv, keresztnev, vezeteknev } = req.body;
+    const { email, jelszo, szerepkor, aktiv, keresztnev, vezeteknev, gender } = req.body;
     if (!email || !jelszo || !keresztnev || !vezeteknev) {
       return res.status(400).json({ message: "Hianyzo kotelezo mezok" });
     }
@@ -29,8 +29,16 @@ exports.createUser = async (req, res) => {
     }
     const hashed = await bcrypt.hash(jelszo, 10);
     const [result] = await db.query(
-      "INSERT INTO users (first_name, last_name, email, password, role, active) VALUES (?, ?, ?, ?, ?, ?)",
-      [keresztnev, vezeteknev, email, hashed, szerepkor || "user", aktiv !== undefined ? aktiv : 1]
+      "INSERT INTO users (first_name, last_name, email, password, role, active, gender) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [
+        keresztnev,
+        vezeteknev,
+        email,
+        hashed,
+        szerepkor || "user",
+        aktiv !== undefined ? aktiv : 1,
+        gender || "unknown"
+      ]
     );
 
     return res.status(201).json({
