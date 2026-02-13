@@ -17,6 +17,7 @@ export default function AdminPage() {
   const [role, setRole] = useState("user");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [gender, setGender] = useState("unknown");
 
   useEffect(() => {
     const checkRole = async () => {
@@ -59,6 +60,7 @@ export default function AdminPage() {
     setRole("user");
     setFirstName("");
     setLastName("");
+    setGender("unknown");
   };
 
   const saveEdit = async () => {
@@ -115,7 +117,8 @@ export default function AdminPage() {
           szerepkor: role,
           aktiv: true,
           keresztnev: firstName,
-          vezeteknev: lastName
+          vezeteknev: lastName,
+          gender
         })
       });
       setCreating(false);
@@ -225,6 +228,15 @@ export default function AdminPage() {
               <select value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="user">user</option>
                 <option value="admin">admin</option>
+              </select>
+            </label>
+            <label>
+              Nem
+              <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                <option value="male">Ferfi</option>
+                <option value="female">No</option>
+                <option value="other">Egyeb</option>
+                <option value="unknown">Nem adom meg</option>
               </select>
             </label>
             <div className="admin-modal-actions">

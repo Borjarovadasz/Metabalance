@@ -1,11 +1,17 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
 import { apiFetch } from "../api";
 import { useAuthGuard } from "../hooks/useAuthGuard";
 import Footer from "../components/Footer";
 import "./CaloriesPage.css";
 import calorieIcon from "../styles/Pictures/calorie.png";
-import CalorieChart from "./CalorieChart";
+import CaloriesHeader from "./CaloriesHeader";
+import CalorieAddCard from "./CalorieAddCard";
+import CalorieSummaryCard from "./CalorieSummaryCard";
+import CalorieGoalCard from "./CalorieGoalCard";
+import CalorieRecentCard from "./CalorieRecentCard";
+import CalorieChartCard from "./CalorieChartCard";
+import CalorieTipsCard from "./CalorieTipsCard";
 
 export default function CaloriesPage() {
   useAuthGuard();
@@ -113,92 +119,31 @@ export default function CaloriesPage() {
     <div className="cal-page">
       <TopNav />
       <div className="cal-container">
-        <header className="cal-header">
-          <img src={calorieIcon} alt="Kalória" className="cal-icon" />
-          <div>
-            <h2 className="cal-title">Kalóriabevitel Naplózása</h2>
-            <p className="cal-sub">Kövesse nyomon a kalóriákat, hogy elérje célját!</p>
-          </div>
-        </header>
-
-        <section className="cal-card">
-          <h3>Étel Hozzáadása</h3>
-          <div className="cal-input-col">
-            <input
-              type="text"
-              placeholder="Étel neve"
-              value={foodName}
-              onChange={(e) => setFoodName(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Kalória (pl. 250)"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-            <button onClick={addMeasurement}>Étel hozzáadása</button>
-          </div>
-        </section>
-
-        <section className="cal-card">
-          <div className="cal-summary-row">
-            <div>
-              <h3>Mai összefoglaló</h3>
-              <div className="cal-summary">{totalToday} / {target || 0} kcal</div>
-            </div>
-            <div className="cal-summary-note">Kalóriabevitel a célhoz képest</div>
-          </div>
-          <div className="cal-bar"><div style={{ width: `${progress}%` }} /></div>
-        </section>
-
-        <section className="cal-card">
-          <h3>Napi cél beállítása</h3>
-          <div className="cal-subtext">Állítsa be a napi kalóriacélját.</div>
-          <div className="cal-subtext cal-strong">Aktuális cél:</div>
-          <div className="cal-slider-row">
-            <input
-              type="range"
-              className="cal-slider"
-              min="1200"
-              max="4000"
-              step="50"
-              value={goalInput || 0}
-              onChange={(e) => setGoalInput(e.target.value)}
-              onMouseUp={(e) => saveGoal(e.target.value)}
-              onTouchEnd={(e) => saveGoal(e.target.value)}
-            />
-            <div className="cal-slider-value">{goalInput || 0} kcal</div>
-          </div>
-          <div className="cal-subtext">Javasolt: 1800-2500 kcal (egyéni célok szerint).</div>
-        </section>
-
-        <section className="cal-card">
-          <h3>Legutóbb naplózott ételek</h3>
-          {recent.length === 0 ? (
-            <div className="cal-empty">Nincsenek bejegyzések ma.</div>
-          ) : (
-            <ul className="cal-recent-list">
-              {recent.map((item, idx) => (
-                <li key={idx}>{item.megjegyzes || "Ismeretlen étel"} • {item.ertek} kcal</li>
-              ))}
-            </ul>
-          )}
-        </section>
-
-        <section className="cal-card">
-          <h3>Napi kalóriabevitel az elmúlt 7 napban</h3>
-          <CalorieChart data={chartData} />
-        </section>
-
-        <section className="cal-card tips">
-          <h3>Tippek a Kalória Kezeléséhez</h3>
-          <ul>
-            <li>Figyeljen a rejtett cukrokra az italokban és feldolgozott élelmiszerekben.</li>
-            <li>Válasszon teljes értékű élelmiszereket, például gyümölcsöket, zöldségeket.</li>
-            <li>Fogyasszon elegendő vizet, hogy teltségérzetet biztosítson és elkerülje a feles éhséget.</li>
-            <li>Élvezzen lassan és élvezze az ételt, ez segít felismerni, mikor lakott jól.</li>
-          </ul>
-        </section>
+        <CaloriesHeader
+          icon={calorieIcon}
+          title="Kalóriabevitel Naplózása"
+          subtitle="Kövesse nyomon a kalóriákat, hogy elérje célját!"
+        />
+        <CalorieAddCard
+          foodName={foodName}
+          setFoodName={setFoodName}
+          amount={amount}
+          setAmount={setAmount}
+          addMeasurement={addMeasurement}
+        />
+        <CalorieSummaryCard
+          totalToday={totalToday}
+          target={target}
+          progress={progress}
+        />
+        <CalorieGoalCard
+          goalInput={goalInput}
+          setGoalInput={setGoalInput}
+          saveGoal={saveGoal}
+        />
+        <CalorieRecentCard recent={recent} />
+        <CalorieChartCard data={chartData} />
+        <CalorieTipsCard />
       </div>
       <Footer />
     </div>

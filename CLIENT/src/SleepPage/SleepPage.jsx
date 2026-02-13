@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
 import { apiFetch } from "../api";
 import { useAuthGuard } from "../hooks/useAuthGuard";
