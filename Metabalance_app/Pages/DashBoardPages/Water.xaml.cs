@@ -44,7 +44,10 @@ namespace Metabalance_app.Pages
             v = Math.Max(0, v - 250);
             WaterAmountText.Text = v.ToString();
         }
-
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
         private async void BtnAddIntake_Click(object sender, RoutedEventArgs e)
         {
             try

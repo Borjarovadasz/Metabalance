@@ -3,18 +3,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using LiveCharts;
+using System.Collections.ObjectModel;
 using YourAppName.Services;
 
 namespace Metabalance_app.Pages
 {
+
+    
     public partial class Sleep : Page
     {
         private readonly ApiClient _api = new ApiClient();
         private bool _initialized = false;
-
+        public ChartValues<double> SleepLast7Days { get; } = new ChartValues<double>();
+        public ObservableCollection<string> Last7DaysLabels { get; } = new ObservableCollection<string>();
         public Sleep()
         {
             InitializeComponent();
+
+            DataContext = this; // <-- EZ KELL a bindinghoz
 
             Loaded += async (_, __) =>
             {
@@ -25,14 +32,63 @@ namespace Metabalance_app.Pages
                 }
 
                 await LoadSavedSleepAsync();
+                await RefreshSleepChartAsync();   // <-- CHART
             };
 
             IsVisibleChanged += async (_, __) =>
             {
                 if (IsVisible)
+                {
                     await LoadSavedSleepAsync();
+                    await RefreshSleepChartAsync(); // <-- CHART
+                }
             };
         }
+
+
+        private async Task RefreshSleepChartAsync()
+        {
+            try
+            {
+                var days = Enumerable.Range(0, 7)
+                    .Select(i => DateTime.Today.AddDays(-6 + i))
+                    .ToList();
+
+                Last7DaysLabels.Clear();
+                SleepLast7Days.Clear();
+
+                foreach (var d in days)
+                {
+                    Last7DaysLabels.Add(d.ToString("MM.dd"));
+                    var list = await _api.GetMeasurementsAsync("ALVAS", d, limit: 500);
+
+                    var totalHours = list.Sum(x => x.ertek);
+
+     
+                    if (list.Any() && list.All(x => x.mertekegyseg == "min"))
+                        totalHours = totalHours / 60.0;
+
+                    SleepLast7Days.Add(Math.Round(totalHours, 2));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Last7DaysLabels.Clear();
+                SleepLast7Days.Clear();
+           
+            }
+        }
+
+
+
+
+
+
+
+
+
+
 
         private void FillTimeBoxes()
         {
@@ -147,11 +203,23 @@ namespace Metabalance_app.Pages
                 await _api.AddSleepAsync(start, end);
 
                 await LoadSavedSleepAsync();
+                await RefreshSleepChartAsync();
+
+
             }
+
+
+
+
             catch (Exception ex)
+
             {
                 ResultText.Text = "Mentés hiba: " + ex.Message;
             }
+        }
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
         }
         private void Exit(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
@@ -174,5 +242,10 @@ namespace Metabalance_app.Pages
         private void CaloriesClick(object sender, RoutedEventArgs e) => NavigationService.Navigate(new CaloriesPage());
         private void WaterClick(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Water());
         private void WeightClick(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Weight());
+
+        private void MoodClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Mood());
+        }
     }
 }

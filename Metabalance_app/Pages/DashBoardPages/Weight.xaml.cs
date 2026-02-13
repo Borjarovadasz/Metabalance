@@ -32,7 +32,10 @@ namespace Metabalance_app.Pages
             DataContext = this;
             Loaded += async (_, __) => await RefreshWeightAsync();
         }
-
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
 
         private readonly ApiClient _api = new ApiClient();
 

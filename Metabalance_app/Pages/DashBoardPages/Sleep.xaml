@@ -122,15 +122,28 @@
                 </Border>
 
 
-                <Border >
+                <Border Background="White" CornerRadius="14" Padding="24" Margin="0,16,0,0">
                     <StackPanel>
-
                         <TextBlock Text="Alvás az elmúlt 7 napban"
-                   />
+                   FontSize="18"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,12"/>
 
-                        <lvc:CartesianChart Height="260"
-                           />
+                        <lvc:CartesianChart Height="240">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries Title="Óra"
+                                  Values="{Binding SleepLast7Days}" />
+                            </lvc:CartesianChart.Series>
 
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Napok"
+                          Labels="{Binding Last7DaysLabels}" />
+                            </lvc:CartesianChart.AxisX>
+
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Óra" />
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
                     </StackPanel>
                 </Border>
 
@@ -171,7 +184,10 @@
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="X" Background="White" BorderThickness="0" Click="Exit"/>
                 <Button Width="180" Height="48" Content="Kijelentkezés" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackToMain"/>
-                <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
+                <Button Background="{x:Null}" BorderThickness="0" Click="ProfilePage">
+
+                    <Image  Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" />
+                </Button>
             </StackPanel>
 
 
@@ -180,7 +196,7 @@
                 <Button Content="Kalória" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="CaloriesClick" Margin="32,0,82,0"/>
                 <Button Content="Alvás" Height="48" FontSize="20" Background="White" BorderBrush="Transparent"  Margin="164,0,-42,0"/>
                 <Button Content="Víz" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WaterClick" Margin="293,0,-150,0"/>
-                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="396,0,-290,0" RenderTransformOrigin="1.458,0.458"/>
+                <Button Content="Hangulat" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Margin="419,0,-275,0" RenderTransformOrigin="1.458,0.458" Click="MoodClick"/>
                 <Button Content="Súly" Height="48" FontSize="20" Background="White" BorderBrush="Transparent" Click="WeightClick" Margin="526,0,-397,0"/>
                 <Image  Height="40" Margin="526,0,-326,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/weigthnav-removebg-preview.png"/>
                 <Image HorizontalAlignment="Left" Height="40" Margin="-121,0,0,0" VerticalAlignment="Center" Width="46" Source="/Pages/img/house.png"/>

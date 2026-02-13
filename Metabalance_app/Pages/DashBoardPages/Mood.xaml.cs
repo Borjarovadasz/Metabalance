@@ -111,7 +111,10 @@ private void RefreshBindings()
             }
         }
 
-
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
         private double GetSelectedMoodValue()
         {
             // Keresd meg a bejelölt RadioButton-t a MoodGroup-ból

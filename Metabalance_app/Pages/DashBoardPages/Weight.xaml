@@ -188,7 +188,10 @@
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="X" Background="White" BorderThickness="0" Click="Exit"/>
                 <Button Width="180" Height="48" Content="Kijelentkezés" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackToMain"/>
-                <Image Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" Margin="10,0,0,0"/>
+                <Button Background="{x:Null}" BorderThickness="0" Click="ProfilePage">
+
+                    <Image  Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" />
+                </Button>
             </StackPanel>
 
 

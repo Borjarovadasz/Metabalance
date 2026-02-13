@@ -65,7 +65,10 @@ namespace Metabalance_app.Pages
             await RefreshCaloriesAsync();
         }
 
- 
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
 
         private readonly ApiClient _api = new ApiClient();
 
