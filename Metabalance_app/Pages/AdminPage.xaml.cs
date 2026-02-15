@@ -43,7 +43,7 @@ namespace Metabalance_app.Pages
 
         private async void AddUser_Click(object sender, RoutedEventArgs e)
         {
-            // legegyszerűbb: promptok (ha akarsz szép dialogot, mondod és megírom)
+           
             var email = Microsoft.VisualBasic.Interaction.InputBox("Email:", "Új felhasználó", "");
             if (string.IsNullOrWhiteSpace(email)) return;
 
@@ -81,10 +81,10 @@ namespace Metabalance_app.Pages
 
             try
             {
-                // 1) email/jelszó/aktív ugyanazon endpointon
+              
                 await _api.AdminUpdateUserAsync(u.azonosito, dlg.EmailValue, dlg.NewPasswordValue, dlg.ActiveValue);
 
-                // 2) szerepkör külön endpointon
+                
                 if (!string.Equals(u.szerepkor, dlg.RoleValue, StringComparison.OrdinalIgnoreCase))
                 {
                     await _api.AdminUpdateRoleAsync(u.azonosito, dlg.RoleValue);
@@ -140,7 +140,7 @@ namespace Metabalance_app.Pages
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            // token törlés + vissza login
+            
             Metabalance_app.Services.AuthState.token = "";
             NavigationService.Navigate(new LoginPage());
         }

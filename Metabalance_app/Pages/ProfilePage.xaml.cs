@@ -13,10 +13,10 @@ namespace Metabalance_app.Pages
     {
         private readonly ApiClient _api = new ApiClient();
 
-        // ha a user új képet választ, ide kerül (DataURI)
+  
         private string? _selectedImageDataUri = null;
 
-        // a backendből betöltött profil
+      
         private ApiClient.UserProfileDto? _loadedProfile = null;
 
         public ProfilePage()
@@ -31,7 +31,7 @@ namespace Metabalance_app.Pages
             {
                 _loadedProfile = await _api.GetOwnProfileAsync();
 
-                // mezők
+                
                 NameBox.Text = _loadedProfile.nev ?? "";
                 EmailBox.Text = _loadedProfile.email ?? "";
                 PhoneBox.Text = _loadedProfile.phone ?? "";
@@ -41,7 +41,7 @@ namespace Metabalance_app.Pages
                 SideNameText.Text = _loadedProfile.nev ?? "";
                 SideEmailText.Text = _loadedProfile.email ?? "";
 
-                // profilkép (ha van)
+                
                 if (!string.IsNullOrWhiteSpace(_loadedProfile.profile_image))
                 {
                     var bmp = BitmapFromDataUri(_loadedProfile.profile_image);
@@ -84,10 +84,10 @@ namespace Metabalance_app.Pages
 
             if (dlg.ShowDialog() != true) return;
 
-            // file -> dataURI base64
+         
             _selectedImageDataUri = FileToDataUri(dlg.FileName);
 
-            // UI preview
+        
             var bmp = BitmapFromDataUri(_selectedImageDataUri);
             if (bmp != null)
             {
@@ -101,7 +101,7 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                // Név szétbontás (backend: last_name + first_name)
+                
                 var fullName = (NameBox.Text ?? "").Trim();
                 string? vezeteknev = null;
                 string? keresztnev = null;
@@ -125,7 +125,7 @@ namespace Metabalance_app.Pages
                 var phone = (PhoneBox.Text ?? "").Trim();
                 var gender = (GenderBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
-                // ha nem választott új képet, marad a régi (backendből)
+              
                 var profileImageToSend = _selectedImageDataUri
                                          ?? _loadedProfile?.profile_image;
 
@@ -138,11 +138,11 @@ namespace Metabalance_app.Pages
                     profileImage: string.IsNullOrWhiteSpace(profileImageToSend) ? null : profileImageToSend
                 );
 
-                // UI frissítés
+                
                 SideNameText.Text = fullName;
                 SideEmailText.Text = email;
 
-                // új “betöltött profil” állapot (nem kötelező, de logikus)
+              
                 if (_loadedProfile != null)
                 {
                     _loadedProfile.nev = fullName;
@@ -171,7 +171,6 @@ namespace Metabalance_app.Pages
             NavigationService?.Navigate(new MainPage());
         }
 
-        // ===== Helpers: Base64 kép kezelés =====
 
         private static string FileToDataUri(string filePath)
         {
@@ -215,7 +214,7 @@ namespace Metabalance_app.Pages
             return bmp;
         }
 
-        // ==== ablak gombok (Page -> Window) ====
+
 
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {

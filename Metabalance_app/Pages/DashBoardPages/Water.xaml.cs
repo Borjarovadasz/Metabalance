@@ -52,13 +52,13 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                // 1) input kiolvasás (ml)
+               
                 if (!double.TryParse(WaterAmountText.Text.Trim(),
                         NumberStyles.Any,
                         CultureInfo.InvariantCulture,
                         out var ml))
                 {
-                    // ha hu-HU miatt vesszőt ír be valaki:
+                  
                     if (!double.TryParse(WaterAmountText.Text.Trim(),
                             NumberStyles.Any,
                             new CultureInfo("hu-HU"),
@@ -98,13 +98,13 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                var goal = (double)(int)SlGoal.Value; // ml
+                var goal = (double)(int)SlGoal.Value; 
                 var list = await _api.GetTodayMeasurementsAsync("VIZ");
 
-                // összes mai ml
+             
                 var totalMl = list.Sum(x => x.ertek);
 
-                // UI
+      
                 GoalText.Text = $"Cél: {goal:0} ml";
                 DailyProgressBar.Maximum = goal;
                 DailyProgressBar.Value = Math.Min(totalMl, goal);

@@ -80,7 +80,7 @@ namespace Metabalance_app.Pages
 
                 MessageBox.Show("Sikeres regisztráció ✅ Most be tudsz jelentkezni.");
 
-                // vissza a loginra (ha frame navigation van)
+            
                 NavigationService?.Navigate(new LoginPage());
             }
             catch (Exception ex)

@@ -16,7 +16,6 @@ namespace Metabalance_app.Pages
             TbName.Text = name;
             TbEmail.Text = email;
 
-            // role
             if (role == "admin") CbRole.SelectedIndex = 1;
             else CbRole.SelectedIndex = 0;
 

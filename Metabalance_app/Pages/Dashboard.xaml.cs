@@ -77,7 +77,7 @@ namespace Metabalance_app.Pages
                 }
 
 
-                // ✅ itt mindig a legutolsó súly
+             
                 var weight = await _api.GetLatestWeightAsync();
 
                 // calories

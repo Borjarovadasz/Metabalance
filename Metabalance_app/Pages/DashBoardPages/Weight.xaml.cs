@@ -16,6 +16,7 @@ using YourAppName.Services;
 using LiveCharts;
 
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace Metabalance_app.Pages
 {
@@ -48,7 +49,7 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                // 1) Jelenlegi súly beolvasás
+               
                 if (!double.TryParse(CurrentWeight.Text.Trim().Replace(',', '.'),
                     out double kg) || kg <= 0)
                 {
@@ -56,7 +57,6 @@ namespace Metabalance_app.Pages
                     return;
                 }
 
-                // 2) Cél súly beolvasás  ✅ ITT jön a goalKg deklaráció
                 if (!double.TryParse(GoalWeight.Text.Trim().Replace(',', '.'),
                     out double goalKg) || goalKg <= 0)
                 {
@@ -64,10 +64,10 @@ namespace Metabalance_app.Pages
                     return;
                 }
 
-                // 3) Súly mentés (measurements)
+             
                 await _api.CreateMeasurementAsync("TESTSULY", kg, "kg");
 
-                // 4) Cél mentés (goals)  ✅ goalKg MOST már létezik
+               
                 var goals = await _api.GetGoalsAsync("TESTSULY");
                 var existing = goals.FirstOrDefault();
 
@@ -76,11 +76,11 @@ namespace Metabalance_app.Pages
                 else
                     await _api.UpdateGoalAsync(existing.id, goalKg, "kg");
 
-                // 5) UI frissítés
+            
                 CurrentWeightDisplay.Text = $"{kg:0.#} kg";
                 GoalWeightDisplay.Text = $"{goalKg:0.#} kg";
 
-                // 6) Input ürítés
+                
                 CurrentWeight.Text = "";
                 GoalWeight.Text = "";
 
@@ -121,7 +121,7 @@ namespace Metabalance_app.Pages
                     AddWeightButton.Content = "+ Súly naplózása";
                 }
 
-                // ===== 2) Cél súly =====
+                
                 var goals = await _api.GetGoalsAsync("TESTSULY");
                 var g = goals.FirstOrDefault();
 
@@ -129,7 +129,7 @@ namespace Metabalance_app.Pages
                     ? "Nincs adat!"
                     : $"{g.celErtek:0.#} kg";
 
-                // ===== 3) Chart: utolsó 7 nap (napi utolsó mérés) =====
+  
                 var days = Enumerable.Range(0, 7)
                     .Select(i => DateTime.Today.AddDays(-6 + i))
                     .ToList();
@@ -143,19 +143,17 @@ namespace Metabalance_app.Pages
 
                     var dayList = await _api.GetMeasurementsAsync("TESTSULY", d, limit: 200);
 
-                    // ha több mérés van egy nap: az utolsót rajzoljuk
+                   
                     var last = dayList
                         .OrderBy(x => x.datum)
                         .LastOrDefault();
 
-                    // ha nincs adat: 0 kerül be (ha nem tetszik, lejjebb adok szebb verziót)
                     WeightLast7Days.Add(last?.ertek ?? 0);
                 }
                 GoalWeightLine.Clear();
 
                 double goal = g?.celErtek ?? 0;
 
-                // ugyanannyi pont legyen, mint a kék vonalnál
                 for (int i = 0; i < WeightLast7Days.Count; i++)
                     GoalWeightLine.Add(goal);
             }

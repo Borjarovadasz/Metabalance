@@ -21,7 +21,7 @@ namespace Metabalance_app.Pages
         {
             InitializeComponent();
 
-            DataContext = this; // <-- EZ KELL a bindinghoz
+            DataContext = this; 
 
             Loaded += async (_, __) =>
             {
@@ -32,7 +32,7 @@ namespace Metabalance_app.Pages
                 }
 
                 await LoadSavedSleepAsync();
-                await RefreshSleepChartAsync();   // <-- CHART
+                await RefreshSleepChartAsync();   
             };
 
             IsVisibleChanged += async (_, __) =>
@@ -40,7 +40,7 @@ namespace Metabalance_app.Pages
                 if (IsVisible)
                 {
                     await LoadSavedSleepAsync();
-                    await RefreshSleepChartAsync(); // <-- CHART
+                    await RefreshSleepChartAsync();
                 }
             };
         }
@@ -179,8 +179,8 @@ namespace Metabalance_app.Pages
                 var today = DateTime.Today;
                 var yesterday = today.AddDays(-1);
 
-                var start = yesterday.AddHours(bh).AddMinutes(bm); // lefekvés TEGNAP
-                var end = today.AddHours(wh).AddMinutes(wm);       // kelés MA
+                var start = yesterday.AddHours(bh).AddMinutes(bm); 
+                var end = today.AddHours(wh).AddMinutes(wm);      
 
                 if (end <= start)
                 {
@@ -190,7 +190,7 @@ namespace Metabalance_app.Pages
 
                 var diff = end - start;
 
-                // ✅ biztonsági limit, nehogy 50 óra legyen
+                
                 if (diff.TotalHours > 16 || diff.TotalHours <= 0)
                 {
                     ResultText.Text = "Érvénytelen alvásidő (0-16 óra engedélyezett).";
@@ -199,7 +199,7 @@ namespace Metabalance_app.Pages
 
                 ResultText.Text = $"Alvás: {(int)diff.TotalHours} óra {diff.Minutes:00} perc";
 
-                // ⚠️ fontos: a backend kapja meg a dátumot (yesterday), hogy arra a napra mentse
+    
                 await _api.AddSleepAsync(start, end);
 
                 await LoadSavedSleepAsync();

@@ -24,15 +24,14 @@ namespace Metabalance_app.Pages
         public ChartValues<double> CaloriesLast7Days { get; } = new ChartValues<double>();
         public ObservableCollection<string> Last7DaysLabels { get; } = new ObservableCollection<string>();
 
-        private double _dailyGoalKcal = 2000; // default
-        private int? _goalId = null;          // goals táblából
+        private double _dailyGoalKcal = 2000; 
+        private int? _goalId = null;          
 
         public CaloriesPage()
         {
             InitializeComponent();
 
-            DataContext = this; // <-- EZ HIÁNYZOTT, emiatt a Binding semmire nem mutatott
-
+            DataContext = this; 
             Loaded += CaloriesPage_Loaded;
         }
 
@@ -125,7 +124,7 @@ namespace Metabalance_app.Pages
             }
             catch
             {
-                // nem dobunk hibát slider húzás közben
+                
             }
         }
 
@@ -133,19 +132,19 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                // kcal beolvasás
+               
                 if (!int.TryParse(CaloriesBox.Text.Trim(), out int cal) || cal <= 0)
                 {
                     MessageBox.Show("Írj be egy pozitív számot a kalóriához!");
                     return;
                 }
 
-                // ételnév
+              
                 string foodName = FoodNameBox.Text.Trim();
                 if (string.IsNullOrWhiteSpace(foodName))
                     foodName = "Ismeretlen étel";
 
-                // ✅ mentés backendbe
+                
                 await _api.CreateMeasurementAsync(
                     tipus: "KALORIA",
                     ertek: cal,
@@ -153,11 +152,11 @@ namespace Metabalance_app.Pages
                     megjegyzes: foodName
                 );
 
-                // input ürítés
+                
                 FoodNameBox.Text = "";
                 CaloriesBox.Text = "";
 
-                // ✅ frissítés DB-ből
+             
                 await RefreshCaloriesAsync();
 
                 MessageBox.Show("Étel rögzítve ✅");
@@ -172,18 +171,18 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                // mai KALORIA mérések
+               
                 var list = await _api.GetMeasurementsAsync(tipus: "KALORIA", datum: DateTime.Today, limit: 100);
 
                 var total = list.Sum(x => x.ertek);
 
-                // UI: összeg + progress
+              
                 TotalCalories.Text = $"{total:0}";
                 GoalCaloriesText.Text = $"/ {_dailyGoalKcal:0} Kalória";
                 CaloriesProgress.Maximum = _dailyGoalKcal;
                 CaloriesProgress.Value = Math.Min(total, _dailyGoalKcal);
 
-                // UI: lista (legfrissebb felül)
+                
                 FoodsList.ItemsSource = list
                     .OrderByDescending(x => x.datum)
                     .Select(x =>

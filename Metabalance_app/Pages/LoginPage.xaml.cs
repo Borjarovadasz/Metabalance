@@ -37,7 +37,7 @@ namespace Metabalance_app.Pages
 
                 if (ok)
                 {
-                    var me = await _api.GetMeAsync(); // ez már cookie-val működik
+                    var me = await _api.GetMeAsync(); 
                     if (me.szerepkor == "admin")
                         NavigationService.Navigate(new AdminPage());
                     else

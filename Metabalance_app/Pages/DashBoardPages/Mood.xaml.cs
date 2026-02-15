@@ -49,21 +49,21 @@ private void RefreshBindings()
         {
             InitializeComponent();
 
-            DataContext = this;          // <-- EZ HIÁNYZOTT
-            BuildCalendar(_shownMonth);  // most már a binding látni fogja
+            DataContext = this;         
+            BuildCalendar(_shownMonth);  
 
             Loaded += async (_, __) =>
             {
                 BuildCalendar(_shownMonth);
                 await RefreshMoodChartAsync();
-                RefreshBindings(); // ha kell nálad
+                RefreshBindings(); 
             };
         }
 
         public class CalendarCell
         {
-            public bool IsDay { get; set; }          // true = valódi nap, false = üres hely
-            public int Day { get; set; }             // 1..31
+            public bool IsDay { get; set; }          
+            public int Day { get; set; }             
             public string DayText => IsDay ? Day.ToString() : "";
             public double Opacity => IsDay ? 1.0 : 0.0;
             public DateTime Date { get; set; }
@@ -117,7 +117,7 @@ private void RefreshBindings()
         }
         private double GetSelectedMoodValue()
         {
-            // Keresd meg a bejelölt RadioButton-t a MoodGroup-ból
+            
             var selected = FindVisualChildren<RadioButton>(this)
                 .FirstOrDefault(rb => rb.GroupName == "MoodGroup" && rb.IsChecked == true);
 
@@ -190,8 +190,8 @@ private void RefreshBindings()
         {
             try
             {
-                // kiválasztott hangulat érték (5..1)
-                double moodValue = GetSelectedMoodValue(); // lentebb adom
+                
+                double moodValue = GetSelectedMoodValue(); 
                 string note = MoodNoteBox.Text?.Trim() ?? "";
                 if (note == "Rövid jegyzet írása a hangulatodhoz...") note = "";
 
@@ -200,11 +200,11 @@ private void RefreshBindings()
                     ertek: moodValue,
                     mertekegyseg: "skala",
                     megjegyzes: note,
-                    datum: DateTime.Now   // <-- EZ A LÉNYEG (időponttal ment)
+                    datum: DateTime.Now 
                 );
 
                 MessageBox.Show("Hangulat rögzítve ✅");
-                // opcionális: frissítsd a chartot is
+              
 
                 await RefreshMoodChartAsync();
                 RefreshBindings();
@@ -232,7 +232,7 @@ private void RefreshBindings()
 
                 if (list.Count == 0)
                 {
-                    MoodLast7Days.Add(0); // vagy pl. MoodLast7Days.Add(MoodLast7Days.LastOrDefault());
+                    MoodLast7Days.Add(0);
                 }
                 else
                 {
@@ -255,14 +255,14 @@ private void RefreshBindings()
 
             int daysInMonth = DateTime.DaysInMonth(first.Year, first.Month);
 
-            // Hétfő = 0, Kedd = 1 ... Vasárnap = 6
+         
             int startOffset = ((int)first.DayOfWeek + 6) % 7;
 
-            // üres cellák az elejére
+           
             for (int i = 0; i < startOffset; i++)
                 CalendarCells.Add(new CalendarCell { IsDay = false });
 
-            // napok
+            
             for (int d = 1; d <= daysInMonth; d++)
             {
                 CalendarCells.Add(new CalendarCell
@@ -273,11 +273,11 @@ private void RefreshBindings()
                 });
             }
 
-            // ha kell, feltölthetjük a végén üressel, hogy teljes sor legyen (opcionális)
+           
             while (CalendarCells.Count % 7 != 0)
                 CalendarCells.Add(new CalendarCell { IsDay = false });
 
-            // ha ez VM-ben van: PropertyChanged MonthTitle-ra
+           
         }
 
         private void Exit(object sender, RoutedEventArgs e)
