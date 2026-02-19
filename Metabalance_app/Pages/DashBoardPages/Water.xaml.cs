@@ -21,6 +21,9 @@ namespace Metabalance_app.Pages
     public partial class Water : Page
     {
         private readonly ApiClient _api = new ApiClient();
+        private double _dailyGoalMl = 2000;
+        private int? _goalId = null;
+
 
         public Water()
         {
@@ -28,8 +31,57 @@ namespace Metabalance_app.Pages
             Loaded += Water_Loaded;
         }
 
+        private async Task LoadWaterGoalAsync()
+        {
+            var goals = await _api.GetGoalsAsync("VIZ");
+            var g = goals.FirstOrDefault();
+
+            if (g != null)
+            {
+                _goalId = g.id;
+                _dailyGoalMl = g.celErtek;
+            }
+            else
+            {
+                _goalId = null;
+                _dailyGoalMl = 2000; 
+            }
+
+            SlGoal.Value = _dailyGoalMl;
+            TbGoalValue.Text = $"{_dailyGoalMl:0} ml";
+        }
+        private async void SaveGoal_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_dailyGoalMl <= 0)
+                {
+                    MessageBox.Show("A cél értéke legyen 0-nál nagyobb!");
+                    return;
+                }
+
+                if (_goalId == null)
+                {
+                    await _api.CreateGoalAsync("VIZ", _dailyGoalMl, "ml");
+                    var goals = await _api.GetGoalsAsync("VIZ");
+                    _goalId = goals.FirstOrDefault()?.id;
+                }
+                else
+                {
+                    await _api.UpdateGoalAsync(_goalId.Value, _dailyGoalMl, "ml");
+                }
+
+                await RefreshWaterProgressAsync();
+                MessageBox.Show("Víz cél elmentve ✅");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba mentéskor: " + ex.Message);
+            }
+        }
         private async void Water_Loaded(object sender, RoutedEventArgs e)
         {
+            await LoadWaterGoalAsync();
             await RefreshWaterProgressAsync();
         }
         private void SaveWater_Click(object sender, RoutedEventArgs e)
@@ -87,13 +139,11 @@ namespace Metabalance_app.Pages
             }
         }
 
-        private async void SlGoal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SlGoal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            TbGoalValue.Text = $"{(int)SlGoal.Value} ml";
-            await RefreshWaterProgressAsync();
+            _dailyGoalMl = SlGoal.Value;
+            TbGoalValue.Text = $"{_dailyGoalMl:0} ml";
         }
-
-   
         private async Task RefreshWaterProgressAsync()
         {
             try

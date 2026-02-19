@@ -89,8 +89,9 @@ namespace Metabalance_app.Pages
                 else
                 {
                     CalorieValueText.Text = $"{calories:0} kcal";
-                    var goal = 2000.0;
-                    var remaining = Math.Max(0, goal - calories);
+                    var goals = await _api.GetGoalsAsync("KALORIA");
+                    var goal = goals.FirstOrDefault()?.celErtek ?? 2000.0;
+                    var remaining = Math.Max(0, goal -  calories);
                     CalorieHintText.Text = $"{remaining:0} kcal maradt a mai keretből.";
                 }
 

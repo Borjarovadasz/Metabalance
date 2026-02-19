@@ -64,41 +64,10 @@ namespace Metabalance_app.Pages
             await RefreshCaloriesAsync();
         }
 
-        private void ProfilePage(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new ProfilePage());
-        }
 
         private readonly ApiClient _api = new ApiClient();
 
-        private async void BtnSaveKcalGoal_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var newGoal = SlKcalGoal.Value;
-
-                if (_goalId == null)
-                {
-                    await _api.CreateGoalAsync("KALORIA", newGoal, "kcal");
-                    var goals = await _api.GetGoalsAsync("KALORIA");
-                    _goalId = goals.FirstOrDefault()?.id;
-                }
-                else
-                {
-                    await _api.UpdateGoalAsync(_goalId.Value, newGoal, "kcal");
-                }
-
-                _dailyGoalKcal = newGoal;
-
-                await RefreshCaloriesAsync();
-                MessageBox.Show("Kalória cél elmentve ✅");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hiba: " + ex.Message);
-            }
-        }
-        private async void SlKcalGoal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SlKcalGoal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (TbKcalGoalValue == null) return;
 
@@ -108,26 +77,7 @@ namespace Metabalance_app.Pages
             GoalCaloriesText.Text = $"/ {_dailyGoalKcal:0} Kalória";
 
             CaloriesProgress.Maximum = _dailyGoalKcal;
-
-            try
-            {
-                if (_goalId == null)
-                {
-                    await _api.CreateGoalAsync("KALORIA", _dailyGoalKcal, "kcal");
-                    var goals = await _api.GetGoalsAsync("KALORIA");
-                    _goalId = goals.FirstOrDefault()?.id;
-                }
-                else
-                {
-                    await _api.UpdateGoalAsync(_goalId.Value, _dailyGoalKcal, "kcal");
-                }
-            }
-            catch
-            {
-                
-            }
         }
-
         private async void AddFood_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -166,7 +116,29 @@ namespace Metabalance_app.Pages
                 MessageBox.Show("Hiba: " + ex.Message);
             }
         }
+        private async void SaveGoal_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_goalId == null)
+                {
+                    await _api.CreateGoalAsync("KALORIA", _dailyGoalKcal, "kcal");
 
+                    var goals = await _api.GetGoalsAsync("KALORIA");
+                    _goalId = goals.FirstOrDefault()?.id;
+                }
+                else
+                {
+                    await _api.UpdateGoalAsync(_goalId.Value, _dailyGoalKcal, "kcal");
+                }
+
+                MessageBox.Show("Cél elmentve ✅");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba mentéskor: " + ex.Message);
+            }
+        }
         private async System.Threading.Tasks.Task RefreshCaloriesAsync()
         {
             try
@@ -220,6 +192,10 @@ namespace Metabalance_app.Pages
                 FoodsList.ItemsSource = null;
             }
         }
+        private void ProfilePage(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProfilePage());
+        }
 
         private void Exit(object sender, RoutedEventArgs e)
         {
@@ -245,7 +221,7 @@ namespace Metabalance_app.Pages
 
         private void MoodClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Mood());
+                NavigationService.Navigate(new Mood());
         }
 
         private void SleepPage(object sender, RoutedEventArgs e)
@@ -273,10 +249,7 @@ namespace Metabalance_app.Pages
              NavigationService.Navigate(new Weight());
         }
 
-        private void CaloriesBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+     
     }
 
 

@@ -98,6 +98,8 @@
                         <Slider x:Name="SlGoal" Minimum="1000" Maximum="4000" Value="2500" 
             TickFrequency="250" IsSnapToTickEnabled="True" Margin="0,0,0,10"
             ValueChanged="SlGoal_ValueChanged"/>
+                        <Button Content="Cél mentése" Click="SaveGoal_Click" Height="29"/>
+
                         <TextBlock Text="Javasolt: 8–10 pohár (2000–2500 ml)." Foreground="#FF888888"/>
                     </StackPanel>
                 </Border>

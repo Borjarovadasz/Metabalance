@@ -97,7 +97,7 @@ namespace YourAppName.Services
 
         public async Task<UserProfileDto> GetOwnProfileAsync()
         {
-            var req = Authed(HttpMethod.Get, "api/users/me"); // <-- NEM api/me
+            var req = Authed(HttpMethod.Get, "api/users/me");
             var resp = await _http.SendAsync(req);
             await EnsureSuccess(resp);
 
@@ -107,12 +107,12 @@ namespace YourAppName.Services
 
 
         public async Task UpdateMyProfileAsync(
-    string? keresztnev,
-    string? vezeteknev,
-    string? email,
-    string? phone,
-    string? gender,
-    string? profileImage)
+                string? keresztnev,
+                string? vezeteknev,
+                string? email,
+                string? phone,
+                string? gender,
+                string? profileImage)
         {
             var body = new
             {
@@ -124,7 +124,7 @@ namespace YourAppName.Services
                 profileImage
             };
 
-            var req = Authed(HttpMethod.Put, "api/users/me"); // <-- EZ A JÓ
+            var req = Authed(HttpMethod.Put, "api/users/me"); 
             req.Content = JsonContent.Create(body);
 
             var resp = await _http.SendAsync(req);
@@ -133,15 +133,15 @@ namespace YourAppName.Services
 
         public async Task DeleteAccountAsync(string jelszo)
         {
-            var req = Authed(HttpMethod.Delete, "api/delete"); // ✅ DELETE /delete
+            var req = Authed(HttpMethod.Delete, "api/users/delete");
+
             req.Content = JsonContent.Create(new { jelszo });
 
             var resp = await _http.SendAsync(req);
             await EnsureSuccess(resp);
         }
 
-        // Backended login-ja: { lejarat, felhasznalo } + cookie-ban token
-        // Ha valaha küld token mezőt is, ezt is kezeljük.
+        
         private class LoginResponse
         {
             public string? token { get; set; }
@@ -205,15 +205,17 @@ namespace YourAppName.Services
 
         public async Task<bool> LoginAsync(string email, string password)
         {
+            // Avoid sending a stale Bearer token from a previous session.
+            AuthState.token = null;
+
             var resp = await _http.PostAsJsonAsync("api/auth/login", new { email, password });
             if (!resp.IsSuccessStatusCode) return false;
 
-            // ✅ nem várunk kötelező token mezőt, mert a backend cookie-ba teszi
             var data = await resp.Content.ReadFromJsonAsync<LoginResponse>();
 
-            // ha a backend egyszer mégis küld token-t is, eltesszük
-            if (data != null && !string.IsNullOrWhiteSpace(data.token))
-                AuthState.token = data.token;
+            AuthState.token = data != null && !string.IsNullOrWhiteSpace(data.token)
+                ? data.token
+                : null;
 
             return true;
         }

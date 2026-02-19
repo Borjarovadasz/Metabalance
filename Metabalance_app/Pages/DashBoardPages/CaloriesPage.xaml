@@ -56,7 +56,7 @@
                     <StackPanel>
                         <TextBlock Text="Étel Hozzáadása" FontSize="18" FontWeight="SemiBold" Margin="0 0 0 12" />
                         <TextBox Height="36" Margin="0 0 0 10" Text="Étel neve (Banán, Alma)"  x:Name="FoodNameBox"  />
-                        <TextBox Height="36" Margin="0 0 0 16" Text="Kalória (pl. 250kcal)" x:Name="CaloriesBox" TextChanged="CaloriesBox_TextChanged"/>
+                        <TextBox Height="36" Margin="0 0 0 16" Text="Kalória (pl. 250kcal)" x:Name="CaloriesBox"/>
                         <Button  Click="AddFood_Click" Content="Étel hozzáadása" Height="40" Background="#FF6B6B" Foreground="White" BorderThickness="0" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Border>
@@ -144,7 +144,9 @@
                 IsSnapToTickEnabled="True"
                 Margin="0 0 0 10"
                 ValueChanged="SlKcalGoal_ValueChanged"/>
+                            <Button Content="Cél mentése" Click="SaveGoal_Click" Height="29"/>
                         </StackPanel>
+
                     </Border>
 
                 </WrapPanel>

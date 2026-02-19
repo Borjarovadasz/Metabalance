@@ -21,9 +21,10 @@ namespace Metabalance_app.Pages
         {
             InitializeComponent();
 
-            DataContext = this; 
+            DataContext = this;
 
-            Loaded += async (_, __) =>
+            Loaded += async (object sender, RoutedEventArgs e) => 
+
             {
                 if (!_initialized)
                 {
@@ -35,12 +36,22 @@ namespace Metabalance_app.Pages
                 await RefreshSleepChartAsync();   
             };
 
-            IsVisibleChanged += async (_, __) =>
+            Loaded += async (object sender, RoutedEventArgs e) =>
+            {
+                if (!_initialized)
+                {
+                    FillTimeBoxes();
+                    _initialized = true;
+                }
+
+                await LoadSavedSleepAsync();
+            };
+
+            IsVisibleChanged += async (object sender, DependencyPropertyChangedEventArgs e) =>
             {
                 if (IsVisible)
                 {
                     await LoadSavedSleepAsync();
-                    await RefreshSleepChartAsync();
                 }
             };
         }
@@ -79,13 +90,6 @@ namespace Metabalance_app.Pages
            
             }
         }
-
-
-
-
-
-
-
 
 
 
