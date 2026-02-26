@@ -2,7 +2,13 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using YourAppName.Services;
+using System.Windows.Media;
+using Metabalance_app.Helpers;
+using System.Net.NetworkInformation;
+using System.Net.Http;
+using System.Net;
 
 namespace Metabalance_app.Pages
 {
@@ -14,112 +20,125 @@ namespace Metabalance_app.Pages
         {
             InitializeComponent();
         }
-        
+
         private void BackToMain_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new MainPage());
         }
+
+        private static bool IsValidEmail(string email)
+        {
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        }
+
+        private static bool IsValidPhone(string phone)
+        {
+            return Regex.IsMatch(phone, @"^(?:\+36|06)\d{9}$");
+        }
+
         private async void Register_Click(object sender, RoutedEventArgs e)
         {
+            UIValidation.ClearError(FirstNameTextBox, FirstNameError);
+            UIValidation.ClearError(LastNameTextBox, LastNameError);
+            UIValidation.ClearError(EmailTextBox, EmailError);
+            UIValidation.ClearError(PhoneTextBox, PhoneError);
+            UIValidation.ClearError(GenderTextBox, GenderError);
+            UIValidation.ClearError(PasswordBox, PasswordError);
+            UIValidation.ClearError(ConfirmPasswordBox, ConfirmPasswordError);
+            UIValidation.HideMessage(GlobalMessage);
+
             var first = FirstNameTextBox.Text.Trim();
             var last = LastNameTextBox.Text.Trim();
             var email = EmailTextBox.Text.Trim();
+            var phone = PhoneTextBox.Text?.Trim() ?? "";
+            var gender = GenderTextBox.Text?.Trim() ?? "";
+            var password = PasswordBox.Password;
+            var confirm = ConfirmPasswordBox.Password;
 
-            var phone = string.IsNullOrWhiteSpace(PhoneTextBox.Text) ? null : PhoneTextBox.Text.Trim();
-            var gender = string.IsNullOrWhiteSpace(GenderTextBox.Text) ? null : GenderTextBox.Text.Trim();
+            bool ok = true;
 
-            if (string.IsNullOrWhiteSpace(first) || string.IsNullOrWhiteSpace(last))
+            if (string.IsNullOrWhiteSpace(first))
             {
-                MessageBox.Show("Keresztnév és vezetéknév kötelező! ❌");
-                return;
+                UIValidation.SetError(FirstNameTextBox, FirstNameError, "A keresztnév kötelező!");
+                ok = false;
             }
 
-            if (!IsValidEmail(email))
+            if (string.IsNullOrWhiteSpace(last))
             {
-                MessageBox.Show("Hibás e-mail formátum! (pl. valami@domain.com) ❌");
-                return;
+                UIValidation.SetError(LastNameTextBox, LastNameError, "A vezetéknév kötelező!");
+                ok = false;
             }
 
-            if (string.IsNullOrWhiteSpace(PasswordBox.Password) || PasswordBox.Password.Length < 6)
+            if (string.IsNullOrWhiteSpace(email))
             {
-                MessageBox.Show("A jelszó legyen legalább 6 karakter! ❌");
-                return;
+                UIValidation.SetError(EmailTextBox, EmailError, "Az e-mail kötelező!");
+                ok = false;
+            }
+            else if (!IsValidEmail(email))
+            {
+                UIValidation.SetError(EmailTextBox, EmailError, "Hibás e-mail formátum! (pl. valami@domain.com)");
+                ok = false;
             }
 
-            if (PasswordBox.Password != ConfirmPasswordBox.Password)
+            if (string.IsNullOrWhiteSpace(phone))
             {
-                MessageBox.Show("A két jelszó nem egyezik! ❌");
-                return;
+                UIValidation.SetError(PhoneTextBox, PhoneError, "A telefonszám kötelező!");
+                ok = false;
             }
-
-            if (phone == null)
+            else
             {
-                MessageBox.Show("A telefonszám nem lehet üres! ❌");
-                return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(phone) && !phone.All(char.IsDigit))
-            {
-                MessageBox.Show("A telefonszám csak számokat tartalmazhat! ❌");
-                return;
+                var cleaned = phone.Replace(" ", "").Replace("-", "");
+                if (!IsValidPhone(cleaned))
+                {
+                    UIValidation.SetError(PhoneTextBox, PhoneError, "Hibás telefonszám! (pl. +36201234567 vagy 06201234567)");
+                    ok = false;
+                }
+                phone = cleaned;
             }
 
             if (string.IsNullOrWhiteSpace(gender))
             {
-                MessageBox.Show("Válassz nemet! ❌");
-                return;
+                UIValidation.SetError(GenderTextBox, GenderError, "Válassz nemet!");
+                ok = false;
             }
+
+            if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
+            {
+                UIValidation.SetError(PasswordBox, PasswordError, "A jelszó minimum 6 karakter!");
+                ok = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(confirm))
+            {
+                UIValidation.SetError(ConfirmPasswordBox, ConfirmPasswordError, "Erősítsd meg a jelszót!");
+                ok = false;
+            }
+            else if (password != confirm)
+            {
+                UIValidation.SetError(ConfirmPasswordBox, ConfirmPasswordError, "A két jelszó nem egyezik!");
+                ok = false;
+            }
+
+            if (!ok) return;
+
             try
             {
-                var firstName = FirstNameTextBox.Text.Trim();
-                var lastName = LastNameTextBox.Text.Trim();
-                var password = PasswordBox.Password;
+                await _api.RegisterAsync(first, last, email, password, phone, gender);
 
+                UIValidation.ShowMessage(GlobalMessage, "Sikeres regisztráció ✅ Most be tudsz jelentkezni.", success: true);
 
-                await _api.RegisterAsync(firstName, lastName, email, password, phone, gender);
-
-                MessageBox.Show("Sikeres regisztráció ✅ Most be tudsz jelentkezni.");
-
-            
+                await System.Threading.Tasks.Task.Delay(1200);
                 NavigationService?.Navigate(new LoginPage());
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                if (ex.Message.Contains("Email mar letezik"))
+                    UIValidation.SetError(EmailTextBox, EmailError, "Ez az e-mail már regisztrálva van!");
+                else
+                    UIValidation.ShowMessage(GlobalMessage, "Hiba: " + ex.Message, success: false);
             }
         }
 
-        private static readonly Regex _onlyDigits = new Regex(@"^[0-9]+$");
-
-        private static bool IsValidEmail(string email)
-        {
-            try
-            {
-                var _ = new MailAddress(email);
-                return email.Contains("@");
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private void PhoneTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-            e.Handled = !_onlyDigits.IsMatch(e.Text);
-        }
-
-        private void PhoneTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
-        {
-            if (!e.DataObject.GetDataPresent(typeof(string)))
-            {
-                e.CancelCommand();
-                return;
-            }
-
-            var text = (string)e.DataObject.GetData(typeof(string))!;
-            if (!_onlyDigits.IsMatch(text))
-                e.CancelCommand();
-        }
     }
 }
+

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using Metabalance_app.Helpers;
 using YourAppName.Services;
 
 namespace Metabalance_app.Pages
@@ -25,32 +27,53 @@ namespace Metabalance_app.Pages
         {
             NavigationService.Navigate(new Dashboard());
         }
+     
+
 
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
+    
+            UIValidation.ClearError(EmailTextBox, EmailError);
+            UIValidation.ClearError(PasswordBox, PasswordError);
+            UIValidation.HideMessage(GlobalMessage);
+
+            var email = EmailTextBox.Text.Trim();
+            var password = PasswordBox.Password;
+
+            bool ok = true;
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                UIValidation.SetError(EmailTextBox, EmailError, "Az e-mail kötelező!");
+                ok = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                UIValidation.SetError(PasswordBox, PasswordError, "A jelszó kötelező!");
+                ok = false;
+            }
+
+            if (!ok) return;
+
             try
             {
-                string email = EmailTextBox.Text.Trim();
-                string password = PasswordBox.Password;
+                var loggedIn = await _api.LoginAsync(email, password);
 
-                bool ok = await _api.LoginAsync(EmailTextBox.Text.Trim(), PasswordBox.Password);
+                if (!loggedIn)
+                {
+                    UIValidation.ShowMessage(GlobalMessage, "Hibás e-mail vagy jelszó ❌", success: false);
+                    return;
+                }
 
-                if (ok)
-                {
-                    var me = await _api.GetMeAsync(); 
-                    if (me.szerepkor == "admin")
-                        NavigationService.Navigate(new AdminPage());
-                    else
-                        NavigationService.Navigate(new Dashboard());
-                }
-                else
-                {
-                    MessageBox.Show("Hibás email vagy jelszó ❌");
-                }
+                UIValidation.ShowMessage(GlobalMessage, "Sikeres bejelentkezés ✅", success: true);
+
+                var me = await _api.GetMeAsync();
+                NavigationService.Navigate(me.szerepkor == "admin" ? new AdminPage() : new Dashboard());
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                UIValidation.ShowMessage(GlobalMessage, "Hiba: " + ex.Message, success: false);
             }
         }
     }

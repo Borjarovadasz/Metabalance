@@ -1,7 +1,9 @@
 ﻿<Page x:Class="Metabalance_app.Pages.RegistrationPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    
       Background="#F9F9F9">
+    
 
     <Grid>
         <Grid.RowDefinitions>
@@ -9,7 +11,19 @@
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
+        <Border x:Name="Toast"
+        Background="#333"
+        CornerRadius="10"
+        Padding="10"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Center"
+        Margin="0,20,0,0"
+        Visibility="Collapsed">
 
+            <TextBlock x:Name="ToastText"
+               Foreground="White"
+               FontSize="14"/>
+        </Border>
         <Border Width="480"
                 Padding="40"
                 Background="White"
@@ -57,6 +71,8 @@
                                  BorderBrush="#DDDDDD"
                                  BorderThickness="1"
                                  x:Name="FirstNameTextBox"/>
+                        <TextBlock x:Name="FirstNameError" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
@@ -67,6 +83,7 @@
                                  BorderBrush="#DDDDDD"
                                  BorderThickness="1"
                                  x:Name="LastNameTextBox"/>
+                        <TextBlock x:Name="LastNameError" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
                     </StackPanel>
                 </Grid>
 
@@ -81,6 +98,10 @@
                              BorderBrush="#DDDDDD"
                              BorderThickness="1"
                              x:Name="EmailTextBox"/>
+                    <TextBlock x:Name="EmailError"
+               Foreground="Red"
+               FontSize="12"
+               Visibility="Collapsed"/>
                 </StackPanel>
 
 
@@ -94,6 +115,11 @@
                                  BorderBrush="#DDDDDD"
                                  BorderThickness="1"
                                  x:Name="PasswordBox"/>
+                    <TextBlock x:Name="PasswordError"
+               Foreground="Red"
+               FontSize="12"
+               Visibility="Collapsed"/>
+
                 </StackPanel>
 
 
@@ -107,6 +133,8 @@
                                  BorderBrush="#DDDDDD"
                                  BorderThickness="1"
                                  x:Name="ConfirmPasswordBox"/>
+                    <TextBlock x:Name="ConfirmPasswordError" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+                    
                 </StackPanel>
 
 
@@ -120,8 +148,11 @@
          BorderBrush="#DDDDDD"
          BorderThickness="1"
          x:Name="PhoneTextBox"
-         PreviewTextInput="PhoneTextBox_PreviewTextInput"
-         DataObject.Pasting="PhoneTextBox_Pasting"/>
+       />
+                    <TextBlock x:Name="PhoneError"
+               Foreground="Red"
+               FontSize="12"
+               Visibility="Collapsed"/>
                 </StackPanel>
                 
 
@@ -134,12 +165,19 @@
                               BorderBrush="#DDDDDD"
                               BorderThickness="1"
                               x:Name="GenderTextBox">
+                       
                         <ComboBoxItem Content="Férfi" />
                         <ComboBoxItem Content="Nő" />
-                       
+                      
+
                     </ComboBox>
+                    <TextBlock x:Name="GenderError" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
                 </StackPanel>
-                
+                <TextBlock x:Name="GlobalMessage"
+           Visibility="Collapsed"
+           FontSize="13"
+           FontWeight="Bold"
+           Margin="0,10,0,0"/>
 
                 <Button Content="Regisztráció"
                         Height="44"

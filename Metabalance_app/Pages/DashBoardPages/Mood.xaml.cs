@@ -20,10 +20,6 @@ using YourAppName.Services;
 
 namespace Metabalance_app.Pages
 {
-    /// <summary>
-    /// Interaction logic for Mood.xaml
-    /// </summary>
-    /// 
 
   
 

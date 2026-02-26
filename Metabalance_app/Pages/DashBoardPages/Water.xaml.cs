@@ -207,6 +207,18 @@ namespace Metabalance_app.Pages
                 window.WindowState = WindowState.Normal;
 
 
+
+
+        }
+
+        private async Task ShowToast(string text)
+        {
+            ToastText.Text = text;
+            Toast.Visibility = Visibility.Visible;
+
+            await Task.Delay(2000);
+
+            Toast.Visibility = Visibility.Collapsed;
         }
         private void BackDash(object sender, RoutedEventArgs e)
         {

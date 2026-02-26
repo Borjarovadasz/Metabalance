@@ -9,7 +9,7 @@
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
-   
+
         <Border Width="420"
                 Padding="40"
                 Background="White"
@@ -54,6 +54,8 @@
                              BorderThickness="1"
                              x:Name="EmailTextBox"
                              />
+                    <TextBlock x:Name="EmailError" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+
                 </StackPanel>
 
 
@@ -67,19 +69,16 @@
                                  BorderBrush="#DDDDDD"
                                  BorderThickness="1"
                                  x:Name="PasswordBox" />
+                    <TextBlock x:Name="PasswordError" Foreground="Red" FontSize="12" Visibility="Collapsed"/>
+
                 </StackPanel>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox Content="Emlékezz rám"
-                              VerticalAlignment="Center"/>
-                </Grid>
-
- 
+                <TextBlock x:Name="LoginError" Foreground="Red" FontSize="13" FontWeight="Bold" Visibility="Collapsed" Margin="0,8,0,0"/>
+                <TextBlock x:Name="GlobalMessage"
+           Visibility="Collapsed"
+           FontSize="13"
+           FontWeight="Bold"
+           Margin="0,10,0,0"/>
                 <Button Content="Bejelentkezés"
                         Height="42"
                         Background="#D14B4B"
@@ -89,6 +88,7 @@
                         Cursor="Hand"
                         Margin="0,10,0,0"
                         Click="Login_Click"/>
+                <TextBlock x:Name="LoginInfo" Foreground="Green" FontSize="13" FontWeight="Bold" Visibility="Collapsed" Margin="0,8,0,0"/>
 
   
                 <StackPanel Orientation="Horizontal"
