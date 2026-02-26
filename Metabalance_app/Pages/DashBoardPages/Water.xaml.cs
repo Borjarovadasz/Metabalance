@@ -216,16 +216,6 @@ namespace Metabalance_app.Pages
 
 
         }
-
-        private async Task ShowToast(string text)
-        {
-            ToastText.Text = text;
-            Toast.Visibility = Visibility.Visible;
-
-            await Task.Delay(2000);
-
-            Toast.Visibility = Visibility.Collapsed;
-        }
         private void BackDash(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Dashboard());

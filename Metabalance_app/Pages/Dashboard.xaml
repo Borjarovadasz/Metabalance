@@ -34,12 +34,14 @@
 
 
 
-
-                <Image x:Name="HeaderProfileImage"
-               Source="img/profileicon-removebg-preview.png"
-               Height="38"
-               Width="38"
-               Stretch="UniformToFill"/>
+                <Button Click="ProfilePage" Background="White" BorderThickness="0">
+                    <Image x:Name="HeaderProfileImage"
+Source="img/profileicon-removebg-preview.png"
+Height="38"
+Width="38"
+Stretch="UniformToFill"/>
+                </Button>
+               
 
             </StackPanel>
             <Button x:Name="AdminButton"

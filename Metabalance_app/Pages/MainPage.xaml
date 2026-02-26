@@ -68,7 +68,7 @@
                                    FontSize="24" Foreground="#52796F" TextWrapping="Wrap" Margin="0,20,0,0"/>
                     </StackPanel>
 
-                    <Image Grid.Column="1" Source="/Pages/img/MainPageImg.png" Width="1038" Height="400" HorizontalAlignment="Left" Margin="187,0,0,0">
+                    <Image Grid.Column="1" Source="/Pages/img/MainPageImg.png" Width="426" Height="400" HorizontalAlignment="Left" Margin="559,0,0,0">
                         <Image.Effect>
                             <DropShadowEffect ShadowDepth="6" Opacity="0.25" Color="Black" BlurRadius="20"/>
                         </Image.Effect>
@@ -76,39 +76,109 @@
                     
                 </Grid>
 
-                
-                <TextBlock Text="Fő funkcióink" FontSize="48" FontWeight="Bold" Foreground="#264653" Margin="0,40,0,20" HorizontalAlignment="Center"/>
 
-                <UniformGrid Columns="3" HorizontalAlignment="Center" Margin="0,0,0,40">
-                    
-                    <Border Width="386" Height="300" Background="White" CornerRadius="18">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Source="img/background-apple.png" Width="70" Margin="0,20,0,10"/>
-                            <TextBlock Text="Személyre szabott étrend" FontSize="20" FontWeight="Bold" Foreground="#264653" TextAlignment="Center" Margin="0,0,0,5"/>
-                            <TextBlock Text="Kapj egyedi étrendet céljaidhoz és preferenciáidhoz igazítva, könnyedén követhető receptekkel." FontSize="16" Foreground="#52796F" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0"/>
-                        </StackPanel>
-                    </Border>
+                <TextBlock Text="Fő funkcióink"
+           FontSize="48"
+           FontWeight="Bold"
+           Foreground="#264653"
+           Margin="0,40,0,20"
+           HorizontalAlignment="Center"/>
 
-                    
-                    <Border Width="432" Height="300" Background="White" CornerRadius="18">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Source="img/background-heart.png" Width="70" Margin="0,20,0,10"/>
-                            <TextBlock Text="Egészségügyi adatok nyomon követése" FontSize="20" FontWeight="Bold" Foreground="#264653" TextAlignment="Center" Margin="0,0,0,5"/>
-                            <TextBlock Text="Figyeld a súlyodat, lépéseidet, alvásodat és egyéb fontos mutatókat egy helyen." FontSize="16" Foreground="#52796F" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0"/>
-                        </StackPanel>
-                    </Border>
+                <Border Background="White"
+        CornerRadius="18"
+        Padding="26"
+        Margin="0,0,0,40"
+        HorizontalAlignment="Center"
+        MaxWidth="1500">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="2" Opacity="0.08" Color="Black" BlurRadius="16"/>
+                    </Border.Effect>
 
-                   
-                    <Border Width="381" Height="300" Background="White" CornerRadius="18">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Source="img/background-weight.png" Width="70" Margin="0,20,0,10"/>
-                            <TextBlock Text="Edzésterv és tevékenységkövetés" FontSize="20" FontWeight="Bold" Foreground="#264653" TextAlignment="Center" Margin="0,0,0,5"/>
-                            <TextBlock Text="Hozd ki a legtöbbet edzéseidből a személyre szabott tervekkel és részletes elemzésekkel." FontSize="16" Foreground="#52796F" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0"/>
-                        </StackPanel>
-                    </Border>
-                </UniformGrid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-               
+                        <Border Grid.Column="0"
+                Margin="10"
+                Background="#F9FAFB"
+                CornerRadius="18"
+                Padding="20"
+                Height="220">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="3" Opacity="0.10" Color="Black" BlurRadius="14"/>
+                            </Border.Effect>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="img/background-apple.png" Width="60" Margin="0,10,0,10"/>
+                                <TextBlock Text="Személyre szabott étrend"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="#264653"
+                           TextAlignment="Center"
+                           Margin="0,0,0,5"/>
+                                <TextBlock Text="Kapj egyedi étrendet céljaidhoz és preferenciáidhoz igazítva, könnyedén követhető receptekkel."
+                           FontSize="14"
+                           Foreground="#52796F"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                Margin="10"
+                Background="#F9FAFB"
+                CornerRadius="18"
+                Padding="20"
+                Height="220">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="3" Opacity="0.10" Color="Black" BlurRadius="14"/>
+                            </Border.Effect>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="img/background-heart.png" Width="60" Margin="0,10,0,10"/>
+                                <TextBlock Text="Egészségügyi adatok nyomon követése"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="#264653"
+                           TextAlignment="Center"
+                           Margin="0,0,0,5"/>
+                                <TextBlock Text="Figyeld a súlyodat, lépéseidet, alvásodat és egyéb fontos mutatókat egy helyen."
+                           FontSize="14"
+                           Foreground="#52796F"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2"
+                Margin="10"
+                Background="#F9FAFB"
+                CornerRadius="18"
+                Padding="20"
+                Height="220">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="3" Opacity="0.10" Color="Black" BlurRadius="14"/>
+                            </Border.Effect>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="img/background-weight.png" Width="60" Margin="0,10,0,10"/>
+                                <TextBlock Text="Edzésterv és tevékenységkövetés"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="#264653"
+                           TextAlignment="Center"
+                           Margin="0,0,0,5"/>
+                                <TextBlock Text="Hozd ki a legtöbbet edzéseidből a személyre szabott tervekkel és részletes elemzésekkel."
+                           FontSize="14"
+                           Foreground="#52796F"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+
                 <StackPanel HorizontalAlignment="Center" Margin="0,40,0,40">
                     <TextBlock Text="Miért válaszd a Metabalance-t?" FontSize="52" FontWeight="Bold" Foreground="#264653" TextAlignment="Center"/>
                     <TextBlock Text="Egyszerű, intuitív felületünk segít, hogy minden nap a legjobb formádat hozd. Személyre szabott tervek, közösségi támogatás és szakértői tanácsok egy helyen, így könnyedén elérheted és fenntarthatod egészségügyi céljaidat." 
