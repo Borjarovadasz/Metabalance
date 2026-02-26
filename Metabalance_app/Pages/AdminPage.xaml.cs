@@ -67,6 +67,10 @@ namespace Metabalance_app.Pages
             }
         }
 
+        private void GoUser_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Dashboard());
+        }
         private async void EditUser_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not Button btn) return;

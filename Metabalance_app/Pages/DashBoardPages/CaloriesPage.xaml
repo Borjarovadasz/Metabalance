@@ -25,7 +25,11 @@
                 <Button Width="180" Height="48" Content="Kijelentkezés" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackToMain"/>
                 <Button Background="{x:Null}" BorderThickness="0" Click="ProfilePage">
 
-                    <Image  Source="/Pages/img/profileicon-removebg-preview.png" Height="38" Width="38" />
+                    <Image x:Name="HeaderProfileImage"
+Source="img/profileicon-removebg-preview.png"
+Height="38"
+Width="38"
+Stretch="UniformToFill"/>
                 </Button>
             </StackPanel>
 

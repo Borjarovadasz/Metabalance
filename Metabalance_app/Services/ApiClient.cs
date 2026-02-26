@@ -396,6 +396,9 @@ namespace YourAppName.Services
 
         public async Task AddSleepAsync(DateTime start, DateTime end)
         {
+            var existing = await GetTodaySleepEntryAsync();
+            if (existing != null) throw new Exception("SLEEP_EXISTS_TODAY");
+
             if (end <= start) end = end.AddDays(1);
             var diff = end - start;
 

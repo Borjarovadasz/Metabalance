@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YourAppName.Services;
-
+using Metabalance_app.Helpers;
 
 namespace Metabalance_app.Pages
 {
@@ -52,7 +52,9 @@ private void RefreshBindings()
             {
                 BuildCalendar(_shownMonth);
                 await RefreshMoodChartAsync();
-                RefreshBindings(); 
+                RefreshBindings();
+                  await ProfileImageHelper.SetAsync(HeaderProfileImage);
+                
             };
         }
 
@@ -85,7 +87,7 @@ private void RefreshBindings()
 
                 if (moods.Count == 0)
                 {
-                    MessageBox.Show($"{cell.Date:yyyy-MM-dd}\nNincs hangulat bejegyzés.");
+                    await ToastFunction.ShowInfo($"{cell.Date:yyyy-MM-dd} - Nincs hangulat bejegyzés.");
                     return;
                 }
 
@@ -99,11 +101,14 @@ private void RefreshBindings()
                         return $"{time} – {label}{note}";
                     });
 
-                MessageBox.Show($"{cell.Date:yyyy-MM-dd}\n\n" + string.Join("\n", lines));
+                await ToastFunction.ShowInfo($"{cell.Date:yyyy-MM-dd} - {moods.Count} bejegyzés");
+                SelectedDayTitle = $"{cell.Date:yyyy.MM.dd}";
+                SelectedDayDetails = string.Join(Environment.NewLine, lines);
+                RefreshBindings();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                await ToastFunction.ShowError("Hiba: " + ex.Message);
             }
         }
 
@@ -186,8 +191,7 @@ private void RefreshBindings()
         {
             try
             {
-                
-                double moodValue = GetSelectedMoodValue(); 
+                double moodValue = GetSelectedMoodValue();
                 string note = MoodNoteBox.Text?.Trim() ?? "";
                 if (note == "Rövid jegyzet írása a hangulatodhoz...") note = "";
 
@@ -196,18 +200,17 @@ private void RefreshBindings()
                     ertek: moodValue,
                     mertekegyseg: "skala",
                     megjegyzes: note,
-                    datum: DateTime.Now 
+                    datum: DateTime.Now
                 );
 
-                MessageBox.Show("Hangulat rögzítve ✅");
-              
+                await ToastFunction.ShowSuccess("Hangulat rögzítve ✅");
 
                 await RefreshMoodChartAsync();
                 RefreshBindings();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                await ToastFunction.ShowError("Hiba: " + ex.Message);
             }
         }
 

@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LiveCharts;
+using Metabalance_app.Helpers;
 using YourAppName.Services;
+using Metabalance_app.Helpers;
 
 namespace Metabalance_app.Pages
 {
@@ -33,6 +35,10 @@ namespace Metabalance_app.Pages
 
             DataContext = this; 
             Loaded += CaloriesPage_Loaded;
+            Loaded += async (_, __) =>
+            {
+                await ProfileImageHelper.SetAsync(HeaderProfileImage);
+            };
         }
 
         private async Task LoadCalorieGoalAsync()
@@ -82,19 +88,16 @@ namespace Metabalance_app.Pages
         {
             try
             {
-               
                 if (!int.TryParse(CaloriesBox.Text.Trim(), out int cal) || cal <= 0)
                 {
-                    MessageBox.Show("Írj be egy pozitív számot a kalóriához!");
+                    await ToastFunction.ShowError("Írj be egy pozitív számot a kalóriához!");
                     return;
                 }
 
-              
                 string foodName = FoodNameBox.Text.Trim();
                 if (string.IsNullOrWhiteSpace(foodName))
                     foodName = "Ismeretlen étel";
 
-                
                 await _api.CreateMeasurementAsync(
                     tipus: "KALORIA",
                     ertek: cal,
@@ -102,28 +105,32 @@ namespace Metabalance_app.Pages
                     megjegyzes: foodName
                 );
 
-                
                 FoodNameBox.Text = "";
                 CaloriesBox.Text = "";
 
-             
                 await RefreshCaloriesAsync();
 
-                MessageBox.Show("Étel rögzítve ✅");
+                await ToastFunction.ShowSuccess("Étel rögzítve ✅");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                await ToastFunction.ShowError("Hiba: " + ex.Message);
             }
         }
+
         private async void SaveGoal_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if (_dailyGoalKcal <= 0)
+                {
+                    await ToastFunction.ShowError("A cél értéke legyen 0-nál nagyobb!");
+                    return;
+                }
+
                 if (_goalId == null)
                 {
                     await _api.CreateGoalAsync("KALORIA", _dailyGoalKcal, "kcal");
-
                     var goals = await _api.GetGoalsAsync("KALORIA");
                     _goalId = goals.FirstOrDefault()?.id;
                 }
@@ -132,11 +139,11 @@ namespace Metabalance_app.Pages
                     await _api.UpdateGoalAsync(_goalId.Value, _dailyGoalKcal, "kcal");
                 }
 
-                MessageBox.Show("Cél elmentve ✅");
+                await ToastFunction.ShowSuccess("Cél elmentve ✅");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba mentéskor: " + ex.Message);
+                await ToastFunction.ShowError("Hiba mentéskor: " + ex.Message);
             }
         }
         private async System.Threading.Tasks.Task RefreshCaloriesAsync()

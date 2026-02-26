@@ -12,8 +12,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Metabalance_app.Helpers;
 using System.Windows.Shapes;
 using YourAppName.Services;
+using Metabalance_app.Controls;
 
 namespace Metabalance_app.Pages
 {
@@ -29,6 +31,10 @@ namespace Metabalance_app.Pages
         {
             InitializeComponent();
             Loaded += Water_Loaded;
+            Loaded += async (_, __) =>
+            {
+                await ProfileImageHelper.SetAsync(HeaderProfileImage);
+            };
         }
 
         private async Task LoadWaterGoalAsync()
@@ -56,7 +62,7 @@ namespace Metabalance_app.Pages
             {
                 if (_dailyGoalMl <= 0)
                 {
-                    MessageBox.Show("A cél értéke legyen 0-nál nagyobb!");
+                    await ToastFunction.ShowError("A cél értéke legyen 0-nál nagyobb!");
                     return;
                 }
 
@@ -72,11 +78,11 @@ namespace Metabalance_app.Pages
                 }
 
                 await RefreshWaterProgressAsync();
-                MessageBox.Show("Víz cél elmentve ✅");
+                await ToastFunction.ShowSuccess("Víz cél elmentve ✅");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba mentéskor: " + ex.Message);
+                await ToastFunction.ShowError("Hiba mentéskor: " + ex.Message);
             }
         }
         private async void Water_Loaded(object sender, RoutedEventArgs e)
@@ -116,14 +122,14 @@ namespace Metabalance_app.Pages
                             new CultureInfo("hu-HU"),
                             out ml))
                     {
-                        MessageBox.Show("Írj be egy számot (ml)!");
+                        await ToastFunction.ShowError("Írj be egy számot (ml)!");
                         return;
                     }
                 }
 
                 if (ml <= 0)
                 {
-                    MessageBox.Show("Adj meg 0-nál nagyobb értéket!");
+                    await ToastFunction.ShowError("Adj meg 0-nál nagyobb értéket!");
                     return;
                 }
 
@@ -131,11 +137,11 @@ namespace Metabalance_app.Pages
                 WaterAmountText.Text = "250";
                 await RefreshWaterProgressAsync();
 
-                MessageBox.Show("Vízbevitel rögzítve ✅");
+                await ToastFunction.ShowSuccess("Vízbevitel rögzítve ✅");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                await ToastFunction.ShowError("Hiba: " + ex.Message);
             }
         }
 

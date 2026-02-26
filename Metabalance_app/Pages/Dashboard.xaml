@@ -22,24 +22,42 @@
                 <TextBlock Text="Metabalance" FontSize="32" FontWeight="Bold" Foreground="#264653" Margin="10,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
 
-           
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,20,0">
+
                 <Button Width="45" Height="48" Content="–" Background="White" BorderThickness="0" Click="Minimize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="▢" Background="White" BorderThickness="0" Click="Maximize" Margin="5,0"/>
                 <Button Width="45" Height="48" Content="X" Background="White" BorderThickness="0" Click="Exit" Margin="5,0"/>
                 <Button Width="180" Height="48" Content="Kijelentkezés" FontSize="20" Background="White" BorderBrush="Transparent" Click="BackToMain" Margin="10,0"/>
-                <Button Background="{x:Null}" BorderThickness="0" Click="ProfilePage">
+                <Button Background="{x:Null}" BorderThickness="0" Click="ProfilePage"/>
 
-                    <Image  Source="img/profileicon-removebg-preview.png" Height="38" Width="38" />
-                </Button>
+
+
+
+
+                <Image x:Name="HeaderProfileImage"
+               Source="img/profileicon-removebg-preview.png"
+               Height="38"
+               Width="38"
+               Stretch="UniformToFill"/>
+
             </StackPanel>
+            <Button x:Name="AdminButton"
+Content="Admin felület"
+Padding="14,0"
+Background="White"
+BorderBrush="#FFE6E6E6"
+BorderThickness="1"
+Click="GoAdmin_Click"
+                  Visibility="Collapsed"    
+Margin="1364,8,19,8"/>
         </Grid>
 
-   
+
         <ScrollViewer Grid.Row="1" Margin="0,52,0,0" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="20" Width="Auto" Height="1161">
 
-               
+
                 <Grid Margin="0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -68,7 +86,7 @@
                     </Image>
                 </Grid>
 
-                
+
                 <WrapPanel ItemHeight="277" ItemWidth="442" Margin="0,40,0,40" HorizontalAlignment="Center">
 
 
@@ -285,7 +303,7 @@ TextWrapping="Wrap"/>
 
                 </WrapPanel>
 
-               
+
 
             </StackPanel>
         </ScrollViewer>

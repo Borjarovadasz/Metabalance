@@ -1,5 +1,6 @@
 ﻿<Window x:Class="Metabalance_app.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:controls="clr-namespace:Metabalance_app.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Metabalance"
         WindowState="Maximized"
@@ -7,6 +8,14 @@
         WindowStyle="None"
         ResizeMode="CanResize">
 
-    <Frame x:Name="MainFrame"
-           NavigationUIVisibility="Hidden"/>
+    <Grid>
+
+        <!-- Ez a tartalom -->
+        <Frame x:Name="MainFrame"
+               NavigationUIVisibility="Hidden"/>
+
+        <!-- Ez a toast overlay -->
+        <controls:ToastHost x:Name="ToastHost" IsHitTestVisible="False"/>
+
+    </Grid>
 </Window>

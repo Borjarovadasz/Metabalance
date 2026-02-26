@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using LiveCharts;
 using System.Collections.ObjectModel;
 using YourAppName.Services;
+using Metabalance_app.Helpers;
 
 namespace Metabalance_app.Pages
 {
@@ -45,6 +46,9 @@ namespace Metabalance_app.Pages
                 }
 
                 await LoadSavedSleepAsync();
+ 
+                    await ProfileImageHelper.SetAsync(HeaderProfileImage);
+
             };
 
             IsVisibleChanged += async (object sender, DependencyPropertyChangedEventArgs e) =>
@@ -171,7 +175,7 @@ namespace Metabalance_app.Pages
                 if (BedHourBox.SelectedItem == null || BedMinuteBox.SelectedItem == null ||
                     WakeHourBox.SelectedItem == null || WakeMinuteBox.SelectedItem == null)
                 {
-                    ResultText.Text = "Válassz ki minden időt!";
+                    await ToastFunction.ShowError("Válassz ki minden időt!");
                     return;
                 }
 
@@ -183,44 +187,46 @@ namespace Metabalance_app.Pages
                 var today = DateTime.Today;
                 var yesterday = today.AddDays(-1);
 
-                var start = yesterday.AddHours(bh).AddMinutes(bm); 
-                var end = today.AddHours(wh).AddMinutes(wm);      
+                var start = yesterday.AddHours(bh).AddMinutes(bm);
+                var end = today.AddHours(wh).AddMinutes(wm);
 
                 if (end <= start)
                 {
-                    ResultText.Text = "Érvénytelen idő: a felkelés nem lehet korábban, mint a lefekvés.";
+                    await ToastFunction.ShowError("Érvénytelen idő: a felkelés nem lehet korábban, mint a lefekvés.");
                     return;
                 }
 
                 var diff = end - start;
 
-                
                 if (diff.TotalHours > 16 || diff.TotalHours <= 0)
                 {
-                    ResultText.Text = "Érvénytelen alvásidő (0-16 óra engedélyezett).";
+                    await ToastFunction.ShowError("Érvénytelen alvásidő (0-16 óra engedélyezett).");
                     return;
                 }
 
                 ResultText.Text = $"Alvás: {(int)diff.TotalHours} óra {diff.Minutes:00} perc";
 
-    
                 await _api.AddSleepAsync(start, end);
 
                 await LoadSavedSleepAsync();
                 await RefreshSleepChartAsync();
 
-
+                await ToastFunction.ShowSuccess("Alvás elmentve ✅");
             }
-
-
-
-
             catch (Exception ex)
-
             {
-                ResultText.Text = "Mentés hiba: " + ex.Message;
+                if (ex.Message.Contains("SLEEP_EXISTS_TODAY"))
+                {
+                    await ToastFunction.ShowError("Ma már rögzítettél alvást.");
+                    return;
+                }
+
+                await ToastFunction.ShowError("Mentés hiba.");
             }
         }
+
+
+
         private void ProfilePage(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new ProfilePage());

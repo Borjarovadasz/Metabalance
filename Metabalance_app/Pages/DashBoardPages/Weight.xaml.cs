@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using Metabalance_app.Helpers;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -32,6 +33,10 @@ namespace Metabalance_app.Pages
             InitializeComponent();
             DataContext = this;
             Loaded += async (_, __) => await RefreshWeightAsync();
+            Loaded += async (_, __) =>
+            {
+                await ProfileImageHelper.SetAsync(HeaderProfileImage);
+            };
         }
         private void ProfilePage(object sender, RoutedEventArgs e)
         {
@@ -49,25 +54,20 @@ namespace Metabalance_app.Pages
         {
             try
             {
-               
-                if (!double.TryParse(CurrentWeight.Text.Trim().Replace(',', '.'),
-                    out double kg) || kg <= 0)
+                if (!double.TryParse(CurrentWeight.Text.Trim().Replace(',', '.'), out double kg) || kg <= 0)
                 {
-                    MessageBox.Show("Írj be egy számot a jelenlegi súlyhoz!");
+                    await ToastFunction.ShowError("Írj be egy számot a jelenlegi súlyhoz!");
                     return;
                 }
 
-                if (!double.TryParse(GoalWeight.Text.Trim().Replace(',', '.'),
-                    out double goalKg) || goalKg <= 0)
+                if (!double.TryParse(GoalWeight.Text.Trim().Replace(',', '.'), out double goalKg) || goalKg <= 0)
                 {
-                    MessageBox.Show("Írj be egy számot a cél súlyhoz!");
+                    await ToastFunction.ShowError("Írj be egy számot a cél súlyhoz!");
                     return;
                 }
 
-             
                 await _api.CreateMeasurementAsync("TESTSULY", kg, "kg");
 
-               
                 var goals = await _api.GetGoalsAsync("TESTSULY");
                 var existing = goals.FirstOrDefault();
 
@@ -76,21 +76,19 @@ namespace Metabalance_app.Pages
                 else
                     await _api.UpdateGoalAsync(existing.id, goalKg, "kg");
 
-            
                 CurrentWeightDisplay.Text = $"{kg:0.#} kg";
                 GoalWeightDisplay.Text = $"{goalKg:0.#} kg";
 
-                
                 CurrentWeight.Text = "";
                 GoalWeight.Text = "";
 
                 await RefreshWeightAsync();
 
-                MessageBox.Show("Súly + cél rögzítve ✅");
+                await ToastFunction.ShowSuccess("Súly + cél rögzítve ✅");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                await ToastFunction.ShowError("Hiba: " + ex.Message);
             }
         }
 
@@ -159,7 +157,7 @@ namespace Metabalance_app.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                await ToastFunction.ShowError("Hiba: " + ex.Message);
             }
         }
 
