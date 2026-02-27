@@ -17,6 +17,7 @@ using LiveCharts;
 using Metabalance_app.Helpers;
 using YourAppName.Services;
 using Metabalance_app.Helpers;
+using Metabalance_app.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -27,18 +28,14 @@ namespace Metabalance_app.Pages
         public ObservableCollection<string> Last7DaysLabels { get; } = new ObservableCollection<string>();
 
         private double _dailyGoalKcal = 2000; 
-        private int? _goalId = null;          
+        private int? _goalId = null;
 
         public CaloriesPage()
         {
             InitializeComponent();
-
-            DataContext = this; 
+            DataContext = this;
+            ProfileImageAttach.Attach(HeaderProfileImage);
             Loaded += CaloriesPage_Loaded;
-            Loaded += async (_, __) =>
-            {
-                await ProfileImageHelper.SetAsync(HeaderProfileImage);
-            };
         }
 
         private async Task LoadCalorieGoalAsync()

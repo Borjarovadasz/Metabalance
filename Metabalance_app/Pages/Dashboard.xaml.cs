@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Metabalance_app.Helpers;
+using Metabalance_app.Services;
 using YourAppName.Services;
 
 namespace Metabalance_app.Pages
@@ -31,7 +32,8 @@ namespace Metabalance_app.Pages
             {
                 if (IsVisible)
                     await RefreshDashboardAsync();
-                await ProfileImageHelper.SetAsync(HeaderProfileImage);
+                ProfileImageAttach.Attach(HeaderProfileImage);
+
                 var me = await _api.GetMeAsync();
                 AdminButton.Visibility = me.szerepkor == "admin" ? Visibility.Visible : Visibility.Collapsed;
 

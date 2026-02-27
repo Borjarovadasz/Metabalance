@@ -35,11 +35,10 @@
 
 
                 <Button Click="ProfilePage" Background="White" BorderThickness="0">
-                    <Image x:Name="HeaderProfileImage"
-Source="img/profileicon-removebg-preview.png"
-Height="38"
-Width="38"
-Stretch="UniformToFill"/>
+                    <Border Width="38" Height="38" CornerRadius="19" ClipToBounds="True" Cursor="Hand">
+                        <Image x:Name="HeaderProfileImage"
+           Stretch="UniformToFill"/>
+                    </Border>
                 </Button>
                
 

@@ -7,6 +7,7 @@ using LiveCharts;
 using System.Collections.ObjectModel;
 using YourAppName.Services;
 using Metabalance_app.Helpers;
+using Metabalance_app.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -24,8 +25,9 @@ namespace Metabalance_app.Pages
 
             DataContext = this;
 
-            Loaded += async (object sender, RoutedEventArgs e) => 
+            ProfileImageAttach.Attach(HeaderProfileImage);
 
+            Loaded += async (_, __) =>
             {
                 if (!_initialized)
                 {
@@ -34,21 +36,15 @@ namespace Metabalance_app.Pages
                 }
 
                 await LoadSavedSleepAsync();
-                await RefreshSleepChartAsync();   
+                await RefreshSleepChartAsync();
             };
 
-            Loaded += async (object sender, RoutedEventArgs e) =>
+            IsVisibleChanged += async (_, __) =>
             {
-                if (!_initialized)
+                if (IsVisible)
                 {
-                    FillTimeBoxes();
-                    _initialized = true;
+                    await LoadSavedSleepAsync();
                 }
-
-                await LoadSavedSleepAsync();
- 
-                    await ProfileImageHelper.SetAsync(HeaderProfileImage);
-
             };
 
             IsVisibleChanged += async (object sender, DependencyPropertyChangedEventArgs e) =>

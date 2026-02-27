@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using YourAppName.Services;
+using Metabalance_app.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -13,10 +14,7 @@ namespace Metabalance_app.Pages
     {
         private readonly ApiClient _api = new ApiClient();
 
-  
         private string? _selectedImageDataUri = null;
-
-      
         private ApiClient.UserProfileDto? _loadedProfile = null;
 
         public ProfilePage()
@@ -31,7 +29,6 @@ namespace Metabalance_app.Pages
             {
                 _loadedProfile = await _api.GetOwnProfileAsync();
 
-                
                 NameBox.Text = _loadedProfile.nev ?? "";
                 EmailBox.Text = _loadedProfile.email ?? "";
                 PhoneBox.Text = _loadedProfile.phone ?? "";
@@ -41,16 +38,20 @@ namespace Metabalance_app.Pages
                 SideNameText.Text = _loadedProfile.nev ?? "";
                 SideEmailText.Text = _loadedProfile.email ?? "";
 
-                
-                if (!string.IsNullOrWhiteSpace(_loadedProfile.profile_image))
+                ProfileImageService.SetFromDb(_loadedProfile.profile_image);
+
+                var current = ProfileImageService.Current as BitmapImage;
+                if (current != null)
                 {
-                    var bmp = BitmapFromDataUri(_loadedProfile.profile_image);
-                    if (bmp != null)
-                    {
-                        MainAvatar.Source = bmp;
-                        SideAvatar.Source = bmp;
-                        TopAvatar.Source = bmp;
-                    }
+                    MainAvatar.Source = current;
+                    SideAvatar.Source = current;
+                    TopAvatar.Source = current;
+                }
+                else
+                {
+                    MainAvatar.Source = ProfileImageService.Default;
+                    SideAvatar.Source = ProfileImageService.Default;
+                    TopAvatar.Source = ProfileImageService.Default;
                 }
             }
             catch (Exception ex)
@@ -84,10 +85,8 @@ namespace Metabalance_app.Pages
 
             if (dlg.ShowDialog() != true) return;
 
-         
             _selectedImageDataUri = FileToDataUri(dlg.FileName);
 
-        
             var bmp = BitmapFromDataUri(_selectedImageDataUri);
             if (bmp != null)
             {
@@ -101,7 +100,6 @@ namespace Metabalance_app.Pages
         {
             try
             {
-                
                 var fullName = (NameBox.Text ?? "").Trim();
                 string? vezeteknev = null;
                 string? keresztnev = null;
@@ -125,7 +123,6 @@ namespace Metabalance_app.Pages
                 var phone = (PhoneBox.Text ?? "").Trim();
                 var gender = (GenderBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
-              
                 var profileImageToSend = _selectedImageDataUri
                                          ?? _loadedProfile?.profile_image;
 
@@ -138,11 +135,9 @@ namespace Metabalance_app.Pages
                     profileImage: string.IsNullOrWhiteSpace(profileImageToSend) ? null : profileImageToSend
                 );
 
-                
                 SideNameText.Text = fullName;
                 SideEmailText.Text = email;
 
-              
                 if (_loadedProfile != null)
                 {
                     _loadedProfile.nev = fullName;
@@ -151,6 +146,9 @@ namespace Metabalance_app.Pages
                     _loadedProfile.gender = gender;
                     _loadedProfile.profile_image = profileImageToSend;
                 }
+
+                var refreshed = await _api.GetOwnProfileAsync();
+                ProfileImageService.SetFromDb(refreshed.profile_image);
 
                 MessageBox.Show("Profil mentve ✅");
             }
@@ -170,7 +168,6 @@ namespace Metabalance_app.Pages
             Metabalance_app.Services.AuthState.token = "";
             NavigationService?.Navigate(new MainPage());
         }
-
 
         private static string FileToDataUri(string filePath)
         {
@@ -213,8 +210,6 @@ namespace Metabalance_app.Pages
             }
             return bmp;
         }
-
-
 
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {

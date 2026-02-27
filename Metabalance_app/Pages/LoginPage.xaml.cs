@@ -1,38 +1,38 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Metabalance_app.Helpers;
+using Metabalance_app.Services;
 using YourAppName.Services;
 
 namespace Metabalance_app.Pages
 {
     public partial class LoginPage : Page
-
     {
-
         private readonly ApiClient _api = new ApiClient();
+
         public LoginPage()
         {
             InitializeComponent();
         }
+
         private void BackToMain_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new MainPage());
         }
+
         private void Registracio_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new RegistrationPage());
         }
+
         private void Go_Dashboard(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Dashboard());
         }
-     
-
 
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
-    
             UIValidation.ClearError(EmailTextBox, EmailError);
             UIValidation.ClearError(PasswordBox, PasswordError);
             UIValidation.HideMessage(GlobalMessage);
@@ -66,9 +66,20 @@ namespace Metabalance_app.Pages
                     return;
                 }
 
+                var me = await _api.GetMeAsync();
+
+                try
+                {
+                    var profile = await _api.GetOwnProfileAsync();
+                    ProfileImageService.SetFromDb(profile.profile_image);
+                }
+                catch
+                {
+                    ProfileImageService.SetFromDb(null);
+                }
+
                 UIValidation.ShowMessage(GlobalMessage, "Sikeres bejelentkezés ✅", success: true);
 
-                var me = await _api.GetMeAsync();
                 NavigationService.Navigate(me.szerepkor == "admin" ? new AdminPage() : new Dashboard());
             }
             catch (Exception ex)

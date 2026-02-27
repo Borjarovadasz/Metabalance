@@ -18,6 +18,7 @@ using LiveCharts;
 
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using Metabalance_app.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -31,12 +32,12 @@ namespace Metabalance_app.Pages
         public Weight()
         {
             InitializeComponent();
+
             DataContext = this;
+
+            ProfileImageAttach.Attach(HeaderProfileImage);
+
             Loaded += async (_, __) => await RefreshWeightAsync();
-            Loaded += async (_, __) =>
-            {
-                await ProfileImageHelper.SetAsync(HeaderProfileImage);
-            };
         }
         private void ProfilePage(object sender, RoutedEventArgs e)
         {

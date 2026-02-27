@@ -1,37 +1,35 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using YourAppName.Services;
 
-namespace Metabalance_app.Helpers
+namespace Metabalance_app.Services
 {
-    public static class ProfileImageHelper
+    public static class ProfileImageService
     {
-        private static readonly ApiClient _api = new ApiClient();
+        public static event Action? ImageChanged;
 
-        public static async Task SetAsync(Image target)
+        private static ImageSource? _current;
+        public static ImageSource Current => _current ??= Default;
+
+        public static ImageSource Default { get; } =
+            new BitmapImage(new Uri("/Pages/img/profileicon-removebg-preview.png", UriKind.Relative));
+
+        public static void SetFromDb(string? profileImage)
         {
-            var me = await _api.GetOwnProfileAsync();
-            Apply(target, me.profile_image);
+            _current = BuildImage(profileImage) ?? Default;
+            ImageChanged?.Invoke();
         }
 
-        public static void Apply(Image target, string? s)
+        private static ImageSource? BuildImage(string? profileImage)
         {
-            if (target == null) return;
-
-            if (string.IsNullOrWhiteSpace(s))
-            {
-                target.Source = null;
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(profileImage)) return null;
 
             try
             {
-                if (s.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+                if (profileImage.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
-                    var base64 = s.Substring(s.IndexOf(",") + 1);
+                    var base64 = profileImage.Substring(profileImage.IndexOf(",") + 1);
                     var bytes = Convert.FromBase64String(base64);
                     using var ms = new MemoryStream(bytes);
 
@@ -41,24 +39,20 @@ namespace Metabalance_app.Helpers
                     bmp.StreamSource = ms;
                     bmp.EndInit();
                     bmp.Freeze();
-
-                    target.Source = bmp;
+                    return bmp;
                 }
-                else
-                {
-                    var bmp = new BitmapImage();
-                    bmp.BeginInit();
-                    bmp.CacheOption = BitmapCacheOption.OnLoad;
-                    bmp.UriSource = new Uri(s, UriKind.RelativeOrAbsolute);
-                    bmp.EndInit();
-                    bmp.Freeze();
 
-                    target.Source = bmp;
-                }
+                var img = new BitmapImage();
+                img.BeginInit();
+                img.CacheOption = BitmapCacheOption.OnLoad;
+                img.UriSource = new Uri(profileImage, UriKind.RelativeOrAbsolute);
+                img.EndInit();
+                img.Freeze();
+                return img;
             }
             catch
             {
-                target.Source = null;
+                return null;
             }
         }
     }

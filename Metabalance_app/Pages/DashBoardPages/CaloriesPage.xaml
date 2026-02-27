@@ -26,10 +26,10 @@
                 <Button Background="{x:Null}" BorderThickness="0" Click="ProfilePage">
 
                     <Image x:Name="HeaderProfileImage"
-Source="img/profileicon-removebg-preview.png"
-Height="38"
-Width="38"
-Stretch="UniformToFill"/>
+                    Source="/Pages/img/profileicon-removebg-preview.png"
+                    Height="38"
+                    Width="38"
+                    Stretch="UniformToFill"/>
                 </Button>
             </StackPanel>
 

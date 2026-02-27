@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YourAppName.Services;
 using Metabalance_app.Helpers;
+using Metabalance_app.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -45,16 +46,16 @@ private void RefreshBindings()
         {
             InitializeComponent();
 
-            DataContext = this;         
-            BuildCalendar(_shownMonth);  
+            DataContext = this;
+            BuildCalendar(_shownMonth);
+
+            ProfileImageAttach.Attach(HeaderProfileImage);
 
             Loaded += async (_, __) =>
             {
                 BuildCalendar(_shownMonth);
                 await RefreshMoodChartAsync();
                 RefreshBindings();
-                  await ProfileImageHelper.SetAsync(HeaderProfileImage);
-                
             };
         }
 

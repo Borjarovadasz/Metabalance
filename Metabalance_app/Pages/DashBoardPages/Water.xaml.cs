@@ -16,6 +16,7 @@ using Metabalance_app.Helpers;
 using System.Windows.Shapes;
 using YourAppName.Services;
 using Metabalance_app.Controls;
+using Metabalance_app.Services;
 
 namespace Metabalance_app.Pages
 {
@@ -30,11 +31,10 @@ namespace Metabalance_app.Pages
         public Water()
         {
             InitializeComponent();
+
+            ProfileImageAttach.Attach(HeaderProfileImage);
+
             Loaded += Water_Loaded;
-            Loaded += async (_, __) =>
-            {
-                await ProfileImageHelper.SetAsync(HeaderProfileImage);
-            };
         }
 
         private async Task LoadWaterGoalAsync()
