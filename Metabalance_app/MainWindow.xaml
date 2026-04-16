@@ -15,7 +15,7 @@
                NavigationUIVisibility="Hidden"/>
 
         <!-- Ez a toast overlay -->
-        <controls:ToastHost x:Name="ToastHost" IsHitTestVisible="False"/>
+        <controls:ToastHost x:Name="ToastHost"/>
 
     </Grid>
 </Window>

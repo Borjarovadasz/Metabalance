@@ -13,7 +13,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!email.trim() || !password.trim()) {
-      alert("Kerlek toltsd ki az osszes mezot!");
+      alert("Kérlek töltsd ki az összes mezőt!");
       return;
     }
 
@@ -26,18 +26,18 @@ export default function LoginPage() {
       const role = user?.szerepkor || "user";
       navigate(role === "admin" ? "/admin" : "/mainpage");
     } catch (err) {
-      alert(err.message || "Bejelentkezesi hiba");
+      alert(err.message || "Bejelentkezési hiba");
     }
   };
 
   return (
     <div className="login-page">
       <div className="login-box">
-        <h1 className="login-title">Udv ujra!</h1>
-        <p className="login-subtitle">Jelentkezz be fiokodba</p>
+        <h1 className="login-title">Üdv újra!</h1>
+        <p className="login-subtitle">Jelentkezz be fiókodba</p>
 
         <form onSubmit={handleSubmit} className="login-form">
-          <label className="login-label">E-mail cim</label>
+          <label className="login-label">E-mail cím</label>
           <input
             type="email"
             className="login-input"
@@ -46,7 +46,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label className="login-label">Jelszo</label>
+          <label className="login-label">Jelszó</label>
           <input
             type="password"
             className="login-input"
@@ -58,21 +58,21 @@ export default function LoginPage() {
           <div className="login-options">
             <label className="remember-me">
               <input type="checkbox" />
-              Emlekezz ram
+              Emlékezz rám
             </label>
           </div>
 
-          <button type="submit" className="login-button">Bejelentkezes</button>
+          <button type="submit" className="login-button">Bejelentkezés</button>
         </form>
 
         <p className="signup-text">
-          Ha meg nincs fiokod{" "}
+          Ha még nincs fiókod{" "}
           <span
             className="signup-link"
             onClick={() => navigate("/register")}
             style={{ cursor: "pointer" }}
           >
-            hozd letre most!
+            hozd létre most!
           </span>
         </p>
       </div>

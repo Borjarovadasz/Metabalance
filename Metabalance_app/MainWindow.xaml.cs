@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Metabalance_app.Helpers;
+using Metabalance_app.Controls;
 using Metabalance_app.Pages;
 
 namespace Metabalance_app
@@ -25,7 +26,7 @@ namespace Metabalance_app
         {
             InitializeComponent();
             ToastFunction.Init(ToastHost);
-            MainFrame.Navigate(new MainPage()); // vagy LoginPage
+            MainFrame.Navigate(new MainPage()); 
         }
 
     }

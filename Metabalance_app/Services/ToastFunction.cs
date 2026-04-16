@@ -26,7 +26,6 @@ namespace Metabalance_app.Helpers
         {
             if (_host == null) return Task.CompletedTask;
 
-            // UI thread biztosítása
             return Application.Current.Dispatcher.InvokeAsync(() => _host.ShowAsync(msg, type, ms)).Task.Unwrap();
         }
     }

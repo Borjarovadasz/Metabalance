@@ -65,7 +65,7 @@ export default function ProfilePage() {
       alert("Profil elmentve");
     } catch (err) {
       console.error(err.message);
-      alert("Nem sikerult menteni");
+      alert("Nem sikerült menteni");
     }
   };
 
@@ -84,36 +84,36 @@ export default function ProfilePage() {
         </aside>
 
         <main className="profile-main">
-          <h2>Profil szerkesztese</h2>
+          <h2>Profil szerkesztése</h2>
 
           <section className="profile-section">
-            <div className="profile-section-title">Profilkep</div>
+            <div className="profile-section-title">Profilkép</div>
             <div className="profile-photo-row">
               <div className="profile-photo">
                 <img src={image} alt="Profil" />
               </div>
               <label className="profile-upload">
-                Kep feltoltese
+                Kép feltöltése
                 <input type="file" accept="image/*" onChange={onImageChange} />
               </label>
             </div>
           </section>
 
           <section className="profile-section">
-            <div className="profile-section-title">Alapveto informaciok</div>
+            <div className="profile-section-title">Alapvető információk</div>
             <div className="profile-form">
               <label>
-                Nev
+                Név
                 <div className="profile-name-row">
                   <input
                     type="text"
-                    placeholder="Vezeteknev"
+                    placeholder="Vezetéknév"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                   />
                   <input
                     type="text"
-                    placeholder="Keresztnev"
+                    placeholder="Keresztnév"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                   />
@@ -124,7 +124,7 @@ export default function ProfilePage() {
                 <input type="email" value={email} disabled />
               </label>
               <label>
-                Telefonszam
+                Telefonszám
                 <input
                   type="text"
                   placeholder="+36 30 123 4567"
@@ -137,9 +137,9 @@ export default function ProfilePage() {
               <label>
                 Nem
                 <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                  <option value="male">Ferfi</option>
-                  <option value="female">No</option>
-                  <option value="other">Egyeb</option>
+                  <option value="male">Férfi</option>
+                  <option value="female">Nő</option>
+                  <option value="other">Egyéb</option>
                   <option value="unknown">Nem adom meg</option>
                 </select>
               </label>
@@ -147,7 +147,7 @@ export default function ProfilePage() {
           </section>
 
           <div className="profile-actions">
-            <button className="profile-save" onClick={saveProfile}>Valtoztatasok mentese</button>
+            <button className="profile-save" onClick={saveProfile}>Változtatások mentése</button>
           </div>
         </main>
       </div>

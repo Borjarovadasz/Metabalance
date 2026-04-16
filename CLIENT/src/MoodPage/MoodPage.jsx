@@ -8,15 +8,27 @@ import MoodLog from "./MoodLog";
 import "./MoodPage.css";
 
 const moods = [
-  { label: "Vidam", value: 6, icon: "😁" },
+  { label: "Vidám", value: 6, icon: "😁" },
   { label: "Boldog", value: 5, icon: "☺️" },
   { label: "Semleges", value: 4, icon: "😶" },
-  { label: "Szomoru", value: 3, icon: "😢" },
-  { label: "Duhos", value: 2, icon: "🤬" },
+  { label: "Szomorú", value: 3, icon: "😢" },
+  { label: "Dühös", value: 2, icon: "🤬" },
   { label: "Stresszes", value: 1, icon: "😬" }
 ];
 
-const toDateKey = (d) => d.toISOString().slice(0, 10);
+const toDateKey = (d) => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const itemDateKey = (item) => {
+  if (!item?.datum) return "";
+  const parsed = new Date(item.datum);
+  if (Number.isNaN(parsed.getTime())) return String(item.datum).slice(0, 10);
+  return toDateKey(parsed);
+};
 
 export default function MoodPage() {
   useAuthGuard();
@@ -46,7 +58,7 @@ export default function MoodPage() {
 
   const saveMood = async () => {
     if (!selectedMood) {
-      alert("Valassz hangulatot!");
+      alert("Válassz hangulatot!");
       return;
     }
     try {
@@ -65,7 +77,7 @@ export default function MoodPage() {
       await load();
     } catch (err) {
       console.error(err.message);
-      alert("Nem sikerult menteni.");
+      alert("Nem sikerült menteni.");
     }
   };
 
@@ -76,7 +88,7 @@ export default function MoodPage() {
       days.push(toDateKey(d));
     }
     return days.map((key) => {
-      const dayItems = items.filter((it) => it.datum && it.datum.slice(0, 10) === key);
+      const dayItems = items.filter((it) => itemDateKey(it) === key);
       const avg =
         dayItems.length === 0
           ? 0
@@ -86,7 +98,7 @@ export default function MoodPage() {
   }, [items]);
 
   const dayEntries = items
-    .filter((it) => it.datum && it.datum.slice(0, 10) === selectedDate)
+    .filter((it) => itemDateKey(it) === selectedDate)
     .map((it) => ({
       time: it.datum ? it.datum.slice(11, 16) : "",
       mood: moods.find((m) => m.value === Number(it.ertek))?.label || "Hangulat",
@@ -112,8 +124,8 @@ export default function MoodPage() {
   const hasEntryMap = useMemo(() => {
     const map = {};
     items.forEach((it) => {
-      if (!it.datum) return;
-      const key = it.datum.slice(0, 10);
+      const key = itemDateKey(it);
+      if (!key) return;
       map[key] = true;
     });
     return map;
@@ -138,7 +150,7 @@ export default function MoodPage() {
         />
 
         <section className="mood-card">
-          <h3>Hangulatelmenyek</h3>
+          <h3>Hangulatélmények</h3>
           <MoodChart data={chartData} />
         </section>
 
@@ -166,10 +178,10 @@ export default function MoodPage() {
           </div>
           <div className="mood-day-details">
             <div className="mood-day-title">
-              Napi bejegyzesek: {selectedDate}
+              Napi bejegyzések: {selectedDate}
             </div>
             {dayEntries.length === 0 ? (
-              <div className="mood-day-empty">Nincs bejegyzes ezen a napon.</div>
+              <div className="mood-day-empty">Nincs bejegyzés ezen a napon.</div>
             ) : (
               <ul className="mood-day-list">
                 {dayEntries.map((entry, idx) => (

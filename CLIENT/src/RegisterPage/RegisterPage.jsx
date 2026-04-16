@@ -34,12 +34,12 @@ export default function RegisterPage() {
     const { firstName, lastName, email, password, confirmPassword, phone, gender } = formData;
 
     if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || !gender) {
-      alert("Kerlek toltsd ki az osszes kotelezo mezot!");
+      alert("Kérlek töltsd ki az összes kötelező mezőt!");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("A ket jelszo nem egyezik!");
+      alert("A két jelszó nem egyezik!");
       return;
     }
 
@@ -55,10 +55,10 @@ export default function RegisterPage() {
           gender
         })
       });
-      alert("Sikeres regisztracio!");
+      alert("Sikeres regisztráció!");
       navigate("/login");
     } catch (err) {
-      alert(err.message || "Hiba tortent!");
+      alert(err.message || "Hiba történt!");
     }
   };
 
@@ -66,17 +66,17 @@ export default function RegisterPage() {
     <div className="register-page">
       <div className="register-container">
 
-        <h1>Regisztracio</h1>
-        <p className="subtitle">Hozd letre fiokodat, es fedezd fel a lehetosegeket.</p>
+        <h1>Regisztráció</h1>
+        <p className="subtitle">Hozd létre fiókodat, és fedezd fel a lehetőségeket.</p>
 
         <form onSubmit={handleSubmit} className="register-form">
 
           <div className="register-row">
             <div className="register-col">
-              <label>Keresztnev</label>
+              <label>Keresztnév</label>
               <input
                 type="text"
-                placeholder="Keresztnev"
+                placeholder="Keresztnév"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
@@ -84,10 +84,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="register-col">
-              <label>Vezeteknev</label>
+              <label>Vezetéknév</label>
               <input
                 type="text"
-                placeholder="Vezeteknev"
+                placeholder="Vezetéknév"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
@@ -104,7 +104,7 @@ export default function RegisterPage() {
             onChange={handleChange}
           />
 
-          <label>Jelszo</label>
+          <label>Jelszó</label>
           <input
             type="password"
             placeholder="********"
@@ -113,7 +113,7 @@ export default function RegisterPage() {
             onChange={handleChange}
           />
 
-          <label>Jelszo megerositese</label>
+          <label>Jelszó megerősítése</label>
           <input
             type="password"
             placeholder="********"
@@ -122,7 +122,7 @@ export default function RegisterPage() {
             onChange={handleChange}
           />
 
-          <label>Telefonszam (opcionalis)</label>
+          <label>Telefonszám (opcionális)</label>
           <input
             type="text"
             placeholder="+36 30 123 4567"
@@ -139,14 +139,14 @@ export default function RegisterPage() {
             value={formData.gender}
             onChange={handleChange}
           >
-            <option value="male">Ferfi</option>
-            <option value="female">No</option>
-            <option value="other">Egyeb</option>
+            <option value="male">Férfi</option>
+            <option value="female">Nő</option>
+            <option value="other">Egyéb</option>
             <option value="unknown">Nem adom meg</option>
           </select>
 
           <button type="submit" className="btn-register">
-            Regisztracio
+            Regisztráció
           </button>
         </form>
 

@@ -3,6 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Környezeti változók – SOHA ne kerüljön gitbe!
+.env
+.env.local
+.env.*.local
+
+# Node modules
+node_modules/
+
 # User-specific files
 *.rsuser
 *.suo

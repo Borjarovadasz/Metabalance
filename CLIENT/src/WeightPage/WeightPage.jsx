@@ -19,13 +19,28 @@ export default function WeightPage() {
 
   const load = async () => {
     try {
-      const goals = await apiFetch("/api/goals?tipus=TESTSULY&aktiv=1");
-      if (goals.length) {
-        setGoal(goals[0]);
-        setGoalWeight(goals[0].celErtek);
+      let selectedGoal = null;
+      const activeGoals = await apiFetch("/api/goals?tipus=TESTSULY&aktiv=1");
+      if (activeGoals.length) {
+        selectedGoal = activeGoals[0];
+      } else {
+        const allGoals = await apiFetch("/api/goals?tipus=TESTSULY");
+        if (allGoals.length) {
+          selectedGoal = allGoals[0];
+        }
+      }
+
+      if (selectedGoal) {
+        setGoal(selectedGoal);
+        setGoalWeight(String(selectedGoal.celErtek ?? ""));
+      } else {
+        setGoal(null);
+        setGoalWeight("");
       }
     } catch (err) {
       console.error("Goal fetch error", err.message);
+      setGoal(null);
+      setGoalWeight("");
     }
     try {
       const today = new Date();
@@ -46,7 +61,8 @@ export default function WeightPage() {
   }, []);
 
   const save = async () => {
-    if (!currentWeight) {
+    const parsedCurrentWeight = Number(currentWeight);
+    if (!Number.isFinite(parsedCurrentWeight) || parsedCurrentWeight <= 0) {
       alert("Add meg a jelenlegi súlyt!");
       return;
     }
@@ -55,13 +71,19 @@ export default function WeightPage() {
         method: "POST",
         body: JSON.stringify({
           tipus: "TESTSULY",
-          ertek: Number(currentWeight),
+          ertek: parsedCurrentWeight,
           mertekegyseg: "kg",
           datum: new Date().toISOString()
         })
       });
-      if (goalWeight) {
-        const body = { celErtek: Number(goalWeight), mertekegyseg: "kg", aktiv: true };
+      const parsedGoalWeight = Number(goalWeight);
+      const hasGoal = goalWeight !== "" && goalWeight !== null && goalWeight !== undefined;
+      if (hasGoal && (!Number.isFinite(parsedGoalWeight) || parsedGoalWeight <= 0)) {
+        alert("A célsúlynak pozitív számnak kell lennie.");
+        return;
+      }
+      if (hasGoal) {
+        const body = { celErtek: parsedGoalWeight, mertekegyseg: "kg", aktiv: true };
         if (goal) {
           await apiFetch(`/api/goals/${goal.id}`, { method: "PUT", body: JSON.stringify(body) });
         } else {
@@ -75,7 +97,7 @@ export default function WeightPage() {
       await load();
     } catch (err) {
       console.error(err.message);
-      alert("Nem sikerult menteni.");
+      alert("Nem sikerült menteni.");
     }
   };
 

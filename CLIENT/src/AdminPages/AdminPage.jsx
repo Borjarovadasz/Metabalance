@@ -65,6 +65,7 @@ export default function AdminPage() {
 
   const saveEdit = async () => {
     if (!editing) return;
+    if (editing.szerepkor === "admin") return;
     try {
       await apiFetch(`/api/admin/users/${editing.azonosito}`, {
         method: "PUT",
@@ -83,18 +84,18 @@ export default function AdminPage() {
       await load();
     } catch (err) {
       console.error(err.message);
-      alert("Nem sikerult menteni");
+      alert("Nem sikerült menteni");
     }
   };
 
   const removeUser = async (u) => {
-    if (!window.confirm("Biztosan torlod ezt a felhasznalot?")) return;
+    if (!window.confirm("Biztosan törlöd ezt a felhasználót?")) return;
     try {
       await apiFetch(`/api/admin/users/${u.azonosito}`, { method: "DELETE" });
       await load();
     } catch (err) {
       console.error(err.message);
-      alert("Nem sikerult torolni");
+      alert("Nem sikerült törölni");
     }
   };
 
@@ -105,7 +106,7 @@ export default function AdminPage() {
 
   const saveCreate = async () => {
     if (!email.trim() || !password.trim() || !firstName.trim() || !lastName.trim()) {
-      alert("Minden mezo kotelezo");
+      alert("Minden mező kötelező");
       return;
     }
     try {
@@ -125,7 +126,7 @@ export default function AdminPage() {
       await load();
     } catch (err) {
       console.error(err.message);
-      alert("Nem sikerult letrehozni");
+      alert("Nem sikerült létrehozni");
     }
   };
 
@@ -134,23 +135,23 @@ export default function AdminPage() {
       <TopNav adminOnly />
       <div className="admin-container">
         <aside className="admin-side">
-          <div className="admin-title">Admin Kezelopult</div>
+          <div className="admin-title">Admin Kezelőpult</div>
           <div className="admin-menu">
-            <div className="admin-menu-item active">Felhasznalok</div>
-            <div className="admin-menu-item" onClick={() => navigate("/admin/reports")}>Jelentesek</div>
+            <div className="admin-menu-item active">Felhasználók</div>
+            <div className="admin-menu-item" onClick={() => navigate("/admin/reports")}>Jelentések</div>
           </div>
         </aside>
 
         <main className="admin-main">
           <div className="admin-header">
-            <div className="admin-header-title">Felhasznalokezeles</div>
-            <button className="admin-add" onClick={openCreate}>+ Uj felhasznalo hozzaadasa</button>
+            <div className="admin-header-title">Felhasználókezelés</div>
+            <button className="admin-add" onClick={openCreate}>+ Új felhasználó hozzáadása</button>
           </div>
 
           <div className="admin-search">
             <input
               type="text"
-              placeholder="Felhasznalok keresese..."
+              placeholder="Felhasználók keresése..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -158,17 +159,24 @@ export default function AdminPage() {
 
           <div className="admin-table">
             <div className="admin-row admin-head">
-              <div>Nev</div>
+              <div>Név</div>
               <div>Email</div>
-              <div>Muveletek</div>
+              <div>Műveletek</div>
             </div>
             {filtered.map((u) => (
               <div className="admin-row" key={u.azonosito}>
                 <div>{u.nev}</div>
                 <div>{u.email}</div>
                 <div className="admin-actions">
-                  <button className="admin-edit" onClick={() => openEdit(u)}>Szerkesztes</button>
-                  <button className="admin-delete" onClick={() => removeUser(u)}>Torles</button>
+                  <button className="admin-edit" onClick={() => openEdit(u)}>Szerkesztés</button>
+                  <button
+                    className="admin-delete"
+                    onClick={() => removeUser(u)}
+                    disabled={u.szerepkor === "admin"}
+                    title={u.szerepkor === "admin" ? "Admin nem törölhető innen" : "Törlés"}
+                  >
+                    Törlés
+                  </button>
                 </div>
               </div>
             ))}
@@ -179,25 +187,46 @@ export default function AdminPage() {
       {editing ? (
         <div className="admin-modal-backdrop" onClick={() => setEditing(null)}>
           <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-modal-title">Felhasznalo szerkesztese</div>
+            <div className="admin-modal-title">Felhasználó szerkesztése</div>
             <label>
               Email
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={editing?.szerepkor === "admin"}
+              />
             </label>
             <label>
-              Jelszo
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              Jelszó
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={editing?.szerepkor === "admin"}
+              />
             </label>
             <label>
-              Szerepkor
-              <select value={role} onChange={(e) => setRole(e.target.value)}>
+              Szerepkör
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                disabled={editing?.szerepkor === "admin"}
+              >
                 <option value="user" disabled={editing?.szerepkor === "admin"}>user</option>
                 <option value="admin">admin</option>
               </select>
             </label>
             <div className="admin-modal-actions">
-              <button className="admin-cancel" onClick={() => setEditing(null)}>Megse</button>
-              <button className="admin-save" onClick={saveEdit}>Mentes</button>
+              <button className="admin-cancel" onClick={() => setEditing(null)}>Mégsem</button>
+              <button
+                className="admin-save"
+                onClick={saveEdit}
+                disabled={editing?.szerepkor === "admin"}
+                title={editing?.szerepkor === "admin" ? "Admin adatai itt nem módosíthatók" : "Mentés"}
+              >
+                Mentés
+              </button>
             </div>
           </div>
         </div>
@@ -206,13 +235,13 @@ export default function AdminPage() {
       {creating ? (
         <div className="admin-modal-backdrop" onClick={() => setCreating(false)}>
           <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-modal-title">Uj felhasznalo</div>
+            <div className="admin-modal-title">Új felhasználó</div>
             <label>
-              Vezeteknev
+              Vezetéknév
               <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
             </label>
             <label>
-              Keresztnev
+              Keresztnév
               <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
             </label>
             <label>
@@ -220,11 +249,11 @@ export default function AdminPage() {
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </label>
             <label>
-              Jelszo
+              Jelszó
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </label>
             <label>
-              Szerepkor
+              Szerepkör
               <select value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="user">user</option>
                 <option value="admin">admin</option>
@@ -233,15 +262,15 @@ export default function AdminPage() {
             <label>
               Nem
               <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                <option value="male">Ferfi</option>
-                <option value="female">No</option>
-                <option value="other">Egyeb</option>
+                <option value="male">Férfi</option>
+                <option value="female">Nő</option>
+                <option value="other">Egyéb</option>
                 <option value="unknown">Nem adom meg</option>
               </select>
             </label>
             <div className="admin-modal-actions">
-              <button className="admin-cancel" onClick={() => setCreating(false)}>Megse</button>
-              <button className="admin-save" onClick={saveCreate}>Letrehozas</button>
+              <button className="admin-cancel" onClick={() => setCreating(false)}>Mégsem</button>
+              <button className="admin-save" onClick={saveCreate}>Létrehozás</button>
             </div>
           </div>
         </div>

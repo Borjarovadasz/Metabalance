@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./TopNav.css";
 import logo from "../styles/Pictures/logo-removebg-preview.png";
@@ -14,30 +14,39 @@ import { apiFetch } from "../api";
 
 export default function TopNav({ adminOnly = false }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [profileImage, setProfileImage] = useState(defaultProfile);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const loadProfile = async () => {
+    const loadUserState = async () => {
       try {
         const user = await apiFetch("/api/users/me");
-        if (user.profile_image) {
-          setProfileImage(user.profile_image);
-        } else {
-          setProfileImage(defaultProfile);
+        setIsAdmin(user?.szerepkor === "admin");
+        if (!adminOnly) {
+          if (user.profile_image) {
+            setProfileImage(user.profile_image);
+          } else {
+            setProfileImage(defaultProfile);
+          }
         }
       } catch {
+        setIsAdmin(false);
         setProfileImage(defaultProfile);
       }
     };
-    if (!adminOnly) {
-      loadProfile();
-    }
+    loadUserState();
   }, [adminOnly]);
 
   const logout = () => {
     apiFetch("/api/auth/logout", { method: "POST" }).finally(() => {
       navigate("/login");
     });
+  };
+
+  const goToOtherView = () => {
+    const inAdminView = location.pathname.startsWith("/admin");
+    navigate(inAdminView ? "/mainpage" : "/admin");
   };
 
   return (
@@ -85,6 +94,11 @@ export default function TopNav({ adminOnly = false }) {
         <div className="topnav-center" />
       )}
       <div className="topnav-right">
+        {isAdmin ? (
+          <button className="view-toggle-btn" onClick={goToOtherView}>
+            {location.pathname.startsWith("/admin") ? "Felhasználói nézet" : "Admin nézet"}
+          </button>
+        ) : null}
         <button className="logout-btn" onClick={logout}>
           <img src={iconLogout} alt="logout" className="nav-img" />
           Kijelentkezés

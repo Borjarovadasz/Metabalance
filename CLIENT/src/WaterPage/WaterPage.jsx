@@ -18,13 +18,28 @@ export default function WaterPage() {
 
   const loadData = async () => {
     try {
-      const goals = await apiFetch("/api/goals?tipus=VIZ&aktiv=1");
-      if (goals.length) {
-        setGoal(goals[0]);
-        setGoalInput(goals[0].celErtek);
+      let selectedGoal = null;
+      const activeGoals = await apiFetch("/api/goals?tipus=VIZ&aktiv=1");
+      if (activeGoals.length) {
+        selectedGoal = activeGoals[0];
+      } else {
+        const allGoals = await apiFetch("/api/goals?tipus=VIZ");
+        if (allGoals.length) {
+          selectedGoal = allGoals[0];
+        }
+      }
+
+      if (selectedGoal) {
+        setGoal(selectedGoal);
+        setGoalInput(Number(selectedGoal.celErtek) || 1500);
+      } else {
+        setGoal(null);
+        setGoalInput(1500);
       }
     } catch (err) {
       console.error("Goal fetch error", err.message);
+      setGoal(null);
+      setGoalInput(1500);
     }
     try {
       const items = await apiFetch("/api/measurements?tipus=VIZ&limit=50");
@@ -39,8 +54,12 @@ export default function WaterPage() {
   }, []);
 
   const saveGoal = async (value) => {
-    if (!value) return;
-    const body = { celErtek: Number(value), mertekegyseg: "ml", aktiv: true };
+    const goalValue = Number(value);
+    if (!Number.isFinite(goalValue) || goalValue <= 0) {
+      alert("A célnak pozitív számnak kell lennie.");
+      return;
+    }
+    const body = { celErtek: goalValue, mertekegyseg: "ml", aktiv: true };
     try {
       if (goal) {
         await apiFetch(`/api/goals/${goal.id}`, { method: "PUT", body: JSON.stringify(body) });
@@ -58,12 +77,16 @@ export default function WaterPage() {
   };
 
   const addMeasurement = async () => {
-    if (!amount) return;
+    const parsedAmount = Number(amount);
+    if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+      alert("A vízmennyiségnek pozitív számnak kell lennie.");
+      return;
+    }
     setLoading(true);
     const nowIso = new Date().toISOString();
     const payload = {
       tipus: "VIZ",
-      ertek: Number(amount),
+      ertek: parsedAmount,
       mertekegyseg: "ml",
       datum: nowIso,
       megjegyzes: "Vízbevitel"

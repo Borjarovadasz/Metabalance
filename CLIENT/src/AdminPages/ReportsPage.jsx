@@ -41,23 +41,23 @@ export default function ReportsPage() {
       <TopNav adminOnly />
       <div className="admin-container">
         <aside className="admin-side">
-          <div className="admin-title">Admin Kezelopult</div>
+          <div className="admin-title">Admin Kezelőpult</div>
           <div className="admin-menu">
-            <div className="admin-menu-item" onClick={() => navigate("/admin")}>Felhasznalok</div>
-            <div className="admin-menu-item active">Jelentesek</div>
+            <div className="admin-menu-item" onClick={() => navigate("/admin")}>Felhasználók</div>
+            <div className="admin-menu-item active">Jelentések</div>
           </div>
         </aside>
 
         <main className="admin-main">
           <div className="admin-header">
-            <div className="admin-header-title">Jelentesek</div>
+            <div className="admin-header-title">Jelentések</div>
           </div>
 
           <div className="admin-table">
             <div className="admin-row admin-head">
-              <div>Ido</div>
+              <div>Idő</div>
               <div>Email</div>
-              <div>Uzenet</div>
+              <div>Üzenet</div>
             </div>
             {errors.map((e) => (
               <div className="admin-row" key={e.id}>

@@ -23,13 +23,28 @@ export default function CaloriesPage() {
 
   const load = async () => {
     try {
-      const goals = await apiFetch("/api/goals?tipus=KALORIA&aktiv=1");
-      if (goals.length) {
-        setGoal(goals[0]);
-        setGoalInput(goals[0].celErtek);
+      let selectedGoal = null;
+      const activeGoals = await apiFetch("/api/goals?tipus=KALORIA&aktiv=1");
+      if (activeGoals.length) {
+        selectedGoal = activeGoals[0];
+      } else {
+        const allGoals = await apiFetch("/api/goals?tipus=KALORIA");
+        if (allGoals.length) {
+          selectedGoal = allGoals[0];
+        }
+      }
+
+      if (selectedGoal) {
+        setGoal(selectedGoal);
+        setGoalInput(Number(selectedGoal.celErtek) || 2000);
+      } else {
+        setGoal(null);
+        setGoalInput(2000);
       }
     } catch (err) {
       console.error("Goal fetch error", err.message);
+      setGoal(null);
+      setGoalInput(2000);
     }
     try {
       const today = new Date();
@@ -50,8 +65,12 @@ export default function CaloriesPage() {
   }, []);
 
   const saveGoal = async (value) => {
-    if (!value) return;
-    const body = { celErtek: Number(value), mertekegyseg: "kcal", aktiv: true };
+    const goalValue = Number(value);
+    if (!Number.isFinite(goalValue) || goalValue <= 0) {
+      alert("A célnak pozitív számnak kell lennie.");
+      return;
+    }
+    const body = { celErtek: goalValue, mertekegyseg: "kcal", aktiv: true };
     try {
       if (goal) {
         await apiFetch(`/api/goals/${goal.id}`, { method: "PUT", body: JSON.stringify(body) });
@@ -69,12 +88,16 @@ export default function CaloriesPage() {
   };
 
   const addMeasurement = async () => {
-    if (!amount) return;
+    const parsedAmount = Number(amount);
+    if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+      alert("A kalóriaértéknek pozitív számnak kell lennie.");
+      return;
+    }
     await apiFetch("/api/measurements", {
       method: "POST",
       body: JSON.stringify({
         tipus: "KALORIA",
-        ertek: Number(amount),
+        ertek: parsedAmount,
         mertekegyseg: "kcal",
         datum: new Date().toISOString(),
         megjegyzes: foodName || null
