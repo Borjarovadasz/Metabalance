@@ -86,3 +86,20 @@
     color: #999;
     font-size: 0.85rem;
 }
+
+@media (max-width: 480px) {
+  .register-container {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 28px 20px;
+    min-height: 100vh;
+  }
+
+  .register-row {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0;
+  }
+}

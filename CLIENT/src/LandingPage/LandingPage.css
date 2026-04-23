@@ -67,3 +67,49 @@ body, p, h1, h2, h3, h4, h5, h6, button, .btn, a, small, span {
     color: #8f8f8f !important;
     font-size: 13px; 
 }
+
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+  }
+
+  .hero-img {
+    max-width: 100%;
+  }
+
+  .features-title {
+    margin-top: 24px;
+    font-size: 17px;
+  }
+
+  .why-section h4 {
+    font-size: 16px;
+  }
+
+  .testimonial-box {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 20px;
+  }
+
+  .features-title {
+    font-size: 15px;
+  }
+
+  .why-section h4 {
+    font-size: 14px;
+  }
+
+  .meta-footer small {
+    font-size: 11px;
+  }
+}

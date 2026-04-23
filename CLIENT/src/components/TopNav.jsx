@@ -17,6 +17,7 @@ export default function TopNav({ adminOnly = false }) {
   const location = useLocation();
   const [profileImage, setProfileImage] = useState(defaultProfile);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);   // ← ÚJ
 
   useEffect(() => {
     const loadUserState = async () => {
@@ -37,6 +38,11 @@ export default function TopNav({ adminOnly = false }) {
     };
     loadUserState();
   }, [adminOnly]);
+
+  // ÚJ: útvonalváltáskor zárja be a menüt
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   const logout = () => {
     apiFetch("/api/auth/logout", { method: "POST" }).finally(() => {
@@ -61,49 +67,59 @@ export default function TopNav({ adminOnly = false }) {
       ) : (
         <div className="topnav-left" />
       )}
+
       {!adminOnly ? (
-        <div className="topnav-center">
+        <div className={`topnav-center ${menuOpen ? "open" : ""}`}>  {/* ← open class */}
           <div className="topnav-links">
-            <Link to="/mainpage" className="topnav-link">
+            <Link to="/mainpage" className={`topnav-link ${location.pathname === "/mainpage" ? "active" : ""}`}>
               <img src={iconHome} alt="Kezelőpult" className="nav-img" />
               Kezelőpult
             </Link>
-            <Link to="/sleep" className="topnav-link">
+            <Link to="/sleep" className={`topnav-link ${location.pathname === "/sleep" ? "active" : ""}`}>
               <img src={iconSleep} alt="Alvás" className="nav-img" />
               Alvás
             </Link>
-            <Link to="/calories" className="topnav-link">
+            <Link to="/calories" className={`topnav-link ${location.pathname === "/calories" ? "active" : ""}`}>
               <img src={iconApple} alt="Kalória" className="nav-img" />
               Kalória
             </Link>
-            <Link to="/water" className="topnav-link">
+            <Link to="/water" className={`topnav-link ${location.pathname === "/water" ? "active" : ""}`}>
               <img src={iconWater} alt="Víz" className="nav-img" />
               Víz
             </Link>
-            <Link to="/mood" className="topnav-link">
+            <Link to="/mood" className={`topnav-link ${location.pathname === "/mood" ? "active" : ""}`}>
               <img src={iconHeart} alt="Hangulat" className="nav-img" />
               Hangulat
             </Link>
-            <Link to="/weight" className="topnav-link">
+            <Link to="/weight" className={`topnav-link ${location.pathname === "/weight" ? "active" : ""}`}>
               <img src={iconWeight} alt="Súly" className="nav-img" />
               Súly
             </Link>
+          </div>
+
+          {/* Mobilos logout a menü alján */}
+          <div className="topnav-mobile-footer">
+            <button className="logout-btn" onClick={logout}>
+              <img src={iconLogout} alt="logout" className="nav-img" />
+              Kijelentkezés
+            </button>
           </div>
         </div>
       ) : (
         <div className="topnav-center" />
       )}
+
       <div className="topnav-right">
-        {isAdmin ? (
+        {isAdmin && (
           <button className="view-toggle-btn" onClick={goToOtherView}>
             {location.pathname.startsWith("/admin") ? "Felhasználói nézet" : "Admin nézet"}
           </button>
-        ) : null}
+        )}
         <button className="logout-btn" onClick={logout}>
           <img src={iconLogout} alt="logout" className="nav-img" />
           Kijelentkezés
         </button>
-        {!adminOnly ? (
+        {!adminOnly && (
           <button
             className="avatar-btn"
             onClick={() => navigate("/profile")}
@@ -112,7 +128,20 @@ export default function TopNav({ adminOnly = false }) {
           >
             <img src={profileImage} alt="Profil" className="avatar-img" />
           </button>
-        ) : null}
+        )}
+
+        {/* Hamburger gomb */}
+        {!adminOnly && (
+          <button
+            className={`hamburger ${menuOpen ? "open" : ""}`}
+            aria-label="Menü"
+            onClick={() => setMenuOpen(prev => !prev)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        )}
       </div>
     </div>
   );

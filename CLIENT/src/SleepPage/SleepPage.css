@@ -101,3 +101,32 @@
   font-size: 12px;
   line-height: 1.5;
 }
+
+
+@media (max-width: 480px) {
+  .sleep-container {
+    margin: 12px auto 32px;
+    padding: 0 8px;
+    gap: 12px;
+  }
+
+  .sleep-card {
+    padding: 12px 14px;
+  }
+
+  .sleep-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sleep-form-row button {
+    width: 100%;
+  }
+
+  .sleep-total {
+    font-size: 22px;
+  }
+
+  .sleep-chart-placeholder {
+    height: 150px;
+  }
+}

@@ -140,3 +140,42 @@
   font-size: 11px;
   margin-top: 30px;
 }
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+    gap: 16px;
+    margin: 10px 0 20px;
+  }
+
+  .hero-img-wrap {
+    display: none;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .mp-container {
+    padding: 10px 10px 30px;
+  }
+
+  .hero {
+    padding: 18px 14px;
+  }
+
+  .hero-text h1 {
+    font-size: 20px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+}

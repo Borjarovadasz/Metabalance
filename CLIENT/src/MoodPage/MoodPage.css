@@ -167,3 +167,47 @@
   display: grid;
   gap: 4px;
 }
+
+@media (max-width: 768px) {
+  .mood-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mood-calendar {
+    gap: 4px;
+  }
+
+  .mood-cal-cell {
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-container {
+    margin: 12px auto 32px;
+    padding: 0 8px;
+    gap: 12px;
+  }
+
+  .mood-card {
+    padding: 12px 14px;
+  }
+
+  .mood-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .mood-cal-head {
+    font-size: 10px;
+  }
+
+  .mood-cal-cell {
+    height: 26px;
+    font-size: 10px;
+  }
+
+  .mood-chart-placeholder {
+    height: 150px;
+  }
+}

@@ -171,3 +171,30 @@
   background: #e55353;
   border: 2px solid #e55353;
 }
+
+
+@media (max-width: 480px) {
+  .water-container {
+    margin: 12px auto 40px;
+    padding: 0 8px;
+  }
+
+  .water-title {
+    font-size: 18px;
+    margin: 12px 0 16px;
+  }
+
+  .water-input-row {
+    grid-template-columns: 34px 1fr 34px 44px;
+    gap: 6px;
+  }
+
+  .water-slider-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .water-slider-value {
+    text-align: left;
+  }
+}

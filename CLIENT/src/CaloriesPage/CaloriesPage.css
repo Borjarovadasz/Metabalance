@@ -198,3 +198,66 @@
   font-size: 11px;
   padding: 12px 0;
 }
+
+
+@media (max-width: 768px) {
+  .cal-container {
+    margin: 20px auto 48px;
+    padding: 0 12px;
+    gap: 12px;
+  }
+
+  .cal-input-col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cal-input-col button {
+    grid-column: 1 / -1;
+    height: 36px;
+  }
+
+  .cal-summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cal-summary-note {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .cal-container {
+    margin: 12px auto 32px;
+    padding: 0 8px;
+  }
+
+  .cal-title {
+    font-size: 17px;
+  }
+
+  .cal-card {
+    padding: 12px 14px;
+  }
+
+  .cal-input-col {
+    grid-template-columns: 1fr;
+  }
+
+  .cal-input-col button {
+    grid-column: unset;
+  }
+
+  .cal-slider-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cal-slider-value {
+    text-align: left;
+  }
+
+  .cal-chart-placeholder {
+    height: 150px;
+  }
+}
